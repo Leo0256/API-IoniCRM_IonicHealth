@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "r+havm3mE9s0Zsl1Es5ssB/vbnLn4iBs2hbNUKRYlHxBzZwpM5Xne7+o/xK9aIsrSdJ0FUAGeTEhdY3wiIf1aw==",
+  "success": true,
+  "projectFilePath": "D:\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\IoniCRM.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yggdr\\.nuget\\packages\\npgsql\\5.0.10\\npgsql.5.0.10.nupkg.sha512",
+    "C:\\Users\\yggdr\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.6.0\\system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}
