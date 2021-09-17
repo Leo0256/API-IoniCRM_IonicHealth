@@ -13,7 +13,7 @@ Criar um CRM `(Customer Relationship Management)` Web Online para o gerenciament
 > A plataforma web deve realizar a organização dos contatos, a gestão de pipeline, o monitoramento e acompanhamento de clientes.
 > 
 > Seu layout deve ser de fácil personalização, possuindo templates pré definidos, trazendo autonomia 
-para a gestão da plataforma."
+para a gestão da plataforma.", Ionic Health.
 
 
 ## :busts_in_silhouette: Equipe Líder: Integrantes
