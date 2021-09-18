@@ -27,6 +27,8 @@ para a gestão da plataforma.", Ionic Health.
 
 - [![](https://img.shields.io/badge/Matheus%20Emboaba%20Mello%20de%20Souza-white?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/MatheusEmboabaTeteu "Scrum Team")
 
+- [![](https://img.shields.io/badge/Sarah%20da%20Boa%20Viagem%20Santana-white?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/Sarah781 "Scrum Team")
+
 - [![](https://img.shields.io/badge/Thiago%20da%20Silva-white?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/tsilvaBR "Scrum Master")
 
 
