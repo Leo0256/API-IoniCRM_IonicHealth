@@ -1,9 +1,9 @@
 # Sprint 1 - Documentações, Banco de Dados e Protótipo (Wireframes)
-#### :calendar: 30/08 - 19/09
+###### :calendar: 30/08 - 19/09
 ---
 
 ## :dart: Objetivo
-Entregar ao Cliente um protótipo visual `(wireframe)`, a arquitetura e codificação do banco de dados e alguns códigos iniciais, além de alguns diagramas para a ilustração das funcionalidades do sistema.
+Entregar ao Cliente um protótipo visual `(wireframe)`, a arquitetura e codificação do banco de dados e alguns códigos iniciais (sistema de login), além de alguns diagramas para a ilustração das funcionalidades do sistema.
 
 
 ## :clipboard: Backlog - Sprint 1
@@ -13,7 +13,7 @@ Entregar ao Cliente um protótipo visual `(wireframe)`, a arquitetura e codifica
 
 
 ## :page_with_curl: Wireframes
-###### Desenvolvidos através do [Figma](https://www.figma.com/). `falta o link do Figma`
+###### Desenvolvidos através do [Figma](https://www.figma.com/file/6BJJym43ssfnVHOuOOVHJf/IoniCRM?node-id=0%3A1).
 <p align="center">
     <img width="400" height="300" src="https://via.placeholder.com/400x300/444444"><br>
     <img width="400" height="300" src="https://via.placeholder.com/400x300/444444">
@@ -39,7 +39,7 @@ Entregar ao Cliente um protótipo visual `(wireframe)`, a arquitetura e codifica
   <img src="https://via.placeholder.com/300x300/444444">
 </p>
 
-## :scroll: Sistema: Códigos
+## :scroll: Sistema: Códigos `colocar links para os códigos dentro da branch`
 - [Código fonte](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/sistema)
 - [Banco de Dados.sql](https://google.com)
 
@@ -65,8 +65,8 @@ Entregar ao Cliente um protótipo visual `(wireframe)`, a arquitetura e codifica
 [![](https://img.shields.io/badge/-C%23-783bd2?style=flat&logo=csharp&logoColor=white)](https://docs.microsoft.com/pt-br/dotnet/csharp/ "C#") [![](https://img.shields.io/badge/-PostgreSQL-00758f?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/ "PostgreSQL")
 
 
-## :chart_with_downwards_trend: Burndown 
+## Burndown :chart_with_downwards_trend:
 <p align="center">
-  <img src="https://via.placeholder.com/600x250/444444">
+  <img src="https://via.placeholder.com/800x250/444444">
 </p>
 
