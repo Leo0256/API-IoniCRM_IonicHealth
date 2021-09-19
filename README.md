@@ -54,12 +54,12 @@ para a gestão da plataforma.", Ionic Health.
 
 ## :clipboard: Backlog Total
 <p align="center">
-  <img src="https://via.placeholder.com/400x600/444444" width="400" height="600">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Backlog%20Total%20v1.5.jpg">
 </p>
 
 ## :clipboard: Card - [Sprint 1](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_1)
 <p align="center">
-  <img src="https://via.placeholder.com/400x300/444444" width="400" height="300">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Card%20Sprint%201.png">
 </p>
 
 ## :bar_chart: Diagrama de Caso de Uso
