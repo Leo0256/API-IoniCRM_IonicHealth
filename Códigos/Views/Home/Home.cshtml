@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    ViewData["permission"] = 0;
+}
+
+<div class="text-left">
+    <div class="container">
+        <div class="row">
+            @for (int x = 0; x < 4; x++)
+            {
+                <div class="container mb-4 bg-light rounded h-100 w-auto box-shadow">
+                    
+                    <div class="row">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>
+                                    <img src="~/images/logo-icon-1.png" class="main-logo align-top" />
+                                </td>
+                            
+                                <td>
+                                    <h3 class="text-center m-2 mt-3">Cliente A</h3>
+                                </td>
+                            </tr>
+                                
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <table class="table table-borderless text-left text-dark">
+                            <tr>
+                                <td>
+                                    <h4>Nome:</h4>
+                                </td>
+                                <td>
+                                    <h3>X</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h4>Apelido:</h4>
+                                </td>
+                                <td>
+                                    <h3>X</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h4>Descrição:</h4>
+                                </td>
+                                <td>
+                                    <h3>X</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h4>Website:</h4>
+                                </td>
+                                <td>
+                                    <h3>X</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h4>Contato:</h4>
+                                </td>
+                                <td>
+                                    <h3>X</h3>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
