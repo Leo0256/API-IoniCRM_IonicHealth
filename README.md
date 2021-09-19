@@ -57,10 +57,15 @@ para a gestão da plataforma.", Ionic Health.
   <img src="https://via.placeholder.com/400x600/444444" width="400" height="600">
 </p>
 
-## Card - [Sprint 1](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_1)
+## :clipboard: Card - [Sprint 1](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_1)
 <p align="center">
   <img src="https://via.placeholder.com/400x300/444444" width="400" height="300">
 </p>
 
+## :bar_chart: Diagrama de Caso de Uso
+> **Nota:** Este diagrama ilustra as funcionalidades do sistema.
+<p align="center">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Diagrama%20de%20Caso%20de%20Uso.jpeg" width="450" height="770">
+</p>
 
 
