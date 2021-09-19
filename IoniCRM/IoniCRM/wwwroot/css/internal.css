@@ -34,59 +34,82 @@ a {
     border-radius: 15px 15px;
 }
 
-.title-icon {
-    background-image: url(../images/logo-icon-1.png);
+.bg-1 {
+    background-color: #f3f2c9;
+    border: none;
+}
+
+.main-logo {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 64px;
+    width: auto;
+    border: none;
+}
+
+.image-full {
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 45px;
+    width: 203px;
+}
+
+.image-mobile {
+    display: none;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 45px;
     width: 45px;
-    border: 0px solid transparent;
 }
 
-.main-logo {
-    background-image: url(../images/logo-1.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 64px;
-    width: 289px;
-    border: none;
+.align-text-left{
+    text-align: left;
 }
 
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
+@media(max-width: 768px){
+    .main-logo {
+        height: 45px;
+    }
+}
+
 @media (min-width: 768px) {
     html {
-    font-size: 16px;
+        font-size: 16px;
     }
 
-    .title-icon {
-        background-image: url(../images/logo-1.png);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 45px;
-        width: 203px;
-        border: 0px solid transparent;
-    }
-
-  /*
-    .main-logo {
-        background-image: url(../images/logo-1.png);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 64px;
-        width: 289px;
-        border: none; 
-    }
-      */
 }
+
+.w {
+    width: 75%;
+}
+
+/*Configurações para o Mibile*/
+@media (max-width: 576px){
+    .image-full {
+        display: none;
+    }
+
+    .image-mobile {
+        display: block;
+    }
+
+    .w{
+        width: auto;
+    }
+}
+
+
 
 .border-top {
   border-top: 1px solid #e5e5e5;
@@ -94,6 +117,7 @@ html {
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
 }
+
 
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);

@@ -8,31 +8,54 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/css/internal.css" rel="stylesheet" />
 </head>
+@{ 
+
+}
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light-blue border-bottom border-dark box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand border-0" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img class="title-icon border-0 mb-0"/>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
-                        </li>
-
-                    </ul>
-                </div>
+                @{
+                    if (ViewData["permission"] != null && int.Parse(ViewData["permission"].ToString()) != -1)
+                    {
+                        int permission = int.Parse(ViewData["permission"].ToString());
+                        if (permission == 0)
+                        {
+                        <a class="navbar-brand border-0" asp-area="" asp-controller="Home" asp-action="Home">
+                            <div>
+                                <img src="~/images/logo-1.png" class="image-full mb-0" />
+                                <img src="~/images/logo-icon-1.png" class="image-mobile mb-0" />
+                            </div>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+                                </li>
+                                <!--
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
+                                    </li>
+                                -->
+                            </ul>
+                        </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <img src="~/images/logo-1.png" class="image-full mb-0" />
+                            <img src="~/images/logo-icon-1.png" class="image-mobile mb-0" />
+                        </div>
+                    }
+                }
             </div>
         </nav>
     </header>
@@ -44,7 +67,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.Now.Year - IoniCRM - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - IoniCRM
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

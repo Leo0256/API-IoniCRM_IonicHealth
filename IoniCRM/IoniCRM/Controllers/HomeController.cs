@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,17 +12,18 @@ namespace IoniCRM.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        
         private PostgreSQLConnection pgsqlcon;
 
-        public static readonly string teste = "I'm a simple text.";
+        public static int permision = -1;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
+            pgsqlcon = new();
         }
+        
 
-        public IActionResult Index()
+        public IActionResult Home()
         {
             return View();
         }
@@ -33,7 +35,6 @@ namespace IoniCRM.Controllers
 
         public IActionResult Contacts()
         {
-            ViewData["teste"] = teste;
             return View();
         }
 

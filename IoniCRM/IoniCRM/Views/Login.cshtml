@@ -1,0 +1,49 @@
+﻿@using IoniCRM.Models;
+@{
+    ViewData["Title"] = "Login";
+    ViewData["permission"] = -1;
+}
+
+<div class="text-center">
+    <div class="container bg-main-card w">
+        <img src="~/images/logo-1.png" class="main-logo mt-4 mb-3" />
+
+        <section>
+            @using (Html.BeginForm("MakeLogin", "Login", FormMethod.Post))
+            {
+                <div class="form-group container w-75 p-3">
+                    <div class="text-left mb-3">
+                        <h2><label for="emailTextBox" class="text-white font-weight-bold mb-0"> E-mail</label></h2>
+                        <input id="emailTextBox" class="form-control rounded" type="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" value="@ViewData["email"]" />
+                        @{
+                            if (ViewData["emailNotInformed"] != null)
+                            {
+                                <small id="emailHelp" class="form-text text-warning font-weight-bold w-auto ml-2">@ViewData["emailNotInformed"]</small>
+                            }
+                        }
+
+
+                        <h2><label for="senhaTextBox" class="text-white font-weight-bold mb-0">Senha</label></h2>
+                        <input id="senhaTextBox" class="form-control rounded" type="password" name="senha" aria-describedby="passHelp" placeholder="Password" value="@ViewData["senha"]" />
+                        @{
+                            if (ViewData["passNotInformed"] != null)
+                            {
+                                <small id="passHelp" class="form-text text-warning font-weight-bold w-auto ml-2">@ViewData["passNotInformed"]</small>
+                            }
+                        }
+                    </div>
+                    <button type="submit" class="btn btn-primary bg-light-blue rounded-pill border-dark shadow">
+                        <h4 class="m-1">Login</h4>
+                    </button>
+                    @{
+                        if (ViewData["emailOrPassWrong"] != null)
+                        {
+                            <small id="passHelp" class="form-text text-warning font-weight-bold w-auto ml-2">@ViewData["emailOrPassWrong"]</small>
+                        }
+                    }
+
+                </div>
+            }
+        </section>
+    </div>
+</div>
