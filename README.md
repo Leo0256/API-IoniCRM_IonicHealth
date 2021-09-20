@@ -75,6 +75,6 @@ Entregar ao Cliente um protótipo visual `(wireframe)`, a arquitetura e codifica
 
 ## Burndown :chart_with_downwards_trend:
 <p align="center">
-  <img src="https://via.placeholder.com/800x250/444444">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_1/burndown.jpg">
 </p>
 
