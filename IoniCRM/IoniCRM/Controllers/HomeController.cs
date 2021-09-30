@@ -1,4 +1,5 @@
 ﻿using IoniCRM.Models;
+using IoniCRM.Controllers.Objects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace IoniCRM.Controllers
 {
@@ -14,8 +16,8 @@ namespace IoniCRM.Controllers
     {
         
         private PostgreSQLConnection pgsqlcon;
-
-        public static int permision = -1;
+        public Usuario usuario;
+        
 
         public HomeController()
         {
@@ -25,6 +27,22 @@ namespace IoniCRM.Controllers
 
         public IActionResult Home()
         {
+            //session here
+            string sql = String.Format(@"select * from Usuario where pk_usuario = {0}", HttpContext.Session.GetInt32(Session.SessionKeyName));
+            DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+
+            foreach (DataRow row in rows)
+            {
+                ViewBag.Usuario = new Usuario(
+                    int.Parse(row["pk_usuario"].ToString()),
+                    int.Parse(row["nivel"].ToString()),
+                    row["nome"].ToString(),
+                    row["email"].ToString(),
+                    row["cargo"].ToString()
+                    );
+            }
+                
+
             return View();
         }
 

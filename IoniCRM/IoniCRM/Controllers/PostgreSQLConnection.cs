@@ -34,10 +34,10 @@ namespace IoniCRM.Controllers
                     Adpt.Fill(table);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 /*Mensagem de erro : ("Erro na Execução: " + ex.Message);*/
-                throw ex;
+                throw;
             }
             finally
             {
@@ -53,10 +53,10 @@ namespace IoniCRM.Controllers
             {
                 conn.Open();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Close();
-                throw ex;
+                throw;
                 /*Mensagem de erro : ("Erro: " + ex.Message);*/
             }
         }

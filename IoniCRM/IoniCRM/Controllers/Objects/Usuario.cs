@@ -9,18 +9,22 @@ namespace IoniCRM.Controllers.Objects
     {
         private int pk_usuario;
         private int nivel;
-        public String nome;
-        private String email;
-        private String hash_senha;
-        public String cargo;
+        public string nome;
+        private string email;
+        public string cargo;
 
-        public Usuario(int pk_usuario, int nivel, string nome, string email, string hash_senha, string cargo)
+        public Usuario(int pk_usuario, int nivel)
+        {
+            this.pk_usuario = pk_usuario;
+            this.nivel = nivel;
+        }
+
+        public Usuario(int pk_usuario, int nivel, string nome, string email, string cargo)
         {
             this.pk_usuario = pk_usuario;
             this.nivel = nivel;
             this.nome = nome;
             this.email = email;
-            this.hash_senha = hash_senha;
             this.cargo = cargo;
         }
 
@@ -30,20 +34,18 @@ namespace IoniCRM.Controllers.Objects
         public void SetNivel(int nivel) => this.nivel = nivel;
         public int GetNivel() => this.nivel;
 
-        public void SetNome(String nome) => this.nome = nome;
-        public String GetNome() => this.nome;
+        public void SetNome(string nome) => this.nome = nome;
+        public string GetNome() => this.nome;
 
-        public void SetEmail(String email) => this.email = email;
-        public String GetEmail() => this.email;
+        public void SetEmail(string email) => this.email = email;
+        public string GetEmail() => this.email;
 
-        public void SetSenha(String senha)
+        public void SetSenha(string senha)
         {
             //Falta um meio de gerar um código hash para a senha
-            this.hash_senha = senha;
         }
-        public String GetHash_Senha() => this.hash_senha;
 
-        public void SetCargo(String cargo) => this.cargo = cargo;
-        public String GetCargo() => this.cargo;
+        public void SetCargo(string cargo) => this.cargo = cargo;
+        public string GetCargo() => this.cargo;
     }
 }

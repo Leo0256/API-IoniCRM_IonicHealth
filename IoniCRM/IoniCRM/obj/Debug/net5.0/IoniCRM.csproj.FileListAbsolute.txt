@@ -41,3 +41,4 @@ D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Home\Con
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\Npgsql.dll
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Home\Home.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Login.cshtml.g.cs
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\Newtonsoft.Json.dll
