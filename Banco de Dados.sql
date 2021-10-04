@@ -16,12 +16,14 @@ create table Usuario(
 	cargo varchar(40)
 );
 
-create table Cliente( /*trocar o nome para Lead?*/
+create table Cliente(
 	pk_cliente serial primary key,
 	fk_emp integer,
+	cpf_cnpj varchar(20) not null unique,
+	crm varchar(15),
 	nome varchar(80) not null,
-	apelido varchar(25) not null unique,
-	cargo varchar(40),
+	razao_social varchar(250) unique, /*ou apelido*/
+	categoria varchar(40), /*ou cargo*/
 	descr varchar(200),
 	foreign key (fk_emp) references Cliente (pk_cliente)
 );
@@ -29,9 +31,8 @@ create table Cliente( /*trocar o nome para Lead?*/
 create table Cliente_Info(
 	pk_info serial primary key,
 	fk_cliente integer not null,
+	endereco varchar(200),
 	website varchar(50),
-	cidade varchar(100),
-	pais varchar(25),
 	foreign key (fk_cliente) references Cliente (pk_cliente)
 );
 
@@ -115,9 +116,9 @@ begin
 end $$;
 
 /*
-select cadastrarUsuario(<dados> json);
+select addUsuario(<dados> json);
 */
-create or replace function cadastrarUsuario(dados json)
+create or replace function addUsuario(dados json)
 returns void
 language plpgsql
 as $$
@@ -147,13 +148,15 @@ create or replace function dadosCliente(id_cliente integer)
 returns table(
 	emp varchar,
 	nome varchar,
-	apelido varchar,
-	cargo varchar,
+	cpf_cnpj varchar,
+	crm varchar,
+	razao_social varchar,
+	categoria varchar,
 	descr varchar,
 	website varchar,
 	endereco varchar,
-	tipo_contatos varchar,
-	contatos varchar
+	tipo_contato varchar,
+	contato varchar
 )
 language plpgsql
 as $$
@@ -166,8 +169,8 @@ begin
 		cli_info as (
 			select 
 				fk_cliente as fk,
-				string_agg(Cliente_Info.website,';' order by cidade)::varchar as website,
-				string_agg(concat_ws('/',cidade,pais),';' order by cidade)::varchar as endereco
+				string_agg(Cliente_Info.website,';' order by Cliente_Info.endereco)::varchar as website,
+				string_agg(Cliente_Info.endereco,';' order by Cliente_Info.endereco)::varchar as endereco
 			from Cliente_Info
 			group by fk_cliente
 		),
@@ -175,27 +178,29 @@ begin
 		cli_contato as (
 			select 
 				fk_cliente as fk,
-				string_agg(tipo::text,';' order by tipo)::varchar as tipo_contato,
-				string_agg(contato,';' order by tipo)::varchar as contato
+				string_agg(Cliente_Contato.tipo::text,';' order by tipo)::varchar as tipo_contato,
+				string_agg(Cliente_Contato.contato,';' order by tipo)::varchar as contato
 			from Cliente_Contato
 			group by fk_cliente
 		),
 
 		emp_x as (
-			select pk_cliente as pk_emp, nome from Cliente
+			select Cliente.pk_cliente as pk_emp, Cliente.razao_social as nome from Cliente
 			where fk_emp is null
 		)
 
 	select
 		(
 			case when cli_x.nome not like emp_x.nome
-			then emp_x.nome
-			else null
+				then emp_x.nome
+				else null
 			end
 		),
 		cli_x.nome,
-		cli_x.apelido,
-		cli_x.cargo,
+		cli_x.cpf_cnpj,
+		cli_x.crm,
+		cli_x.razao_social,
+		cli_x.categoria,
 		cli_x.descr,
 		cli_info.website,
 		cli_info.endereco,
@@ -223,9 +228,9 @@ end $$;
 
 
 /*
-select cadastarCliente(<dados> json);
+select addCliente(<dados> json);
 */
-create or replace function cadastrarCliente(dados json)
+create or replace function addCliente(dados json)
 returns void
 language plpgsql
 as $$
@@ -234,36 +239,110 @@ begin
 	(
 		default,
 		(dados->>'fk_emp')::integer,
+		dados->>'cpf_cnpj',
+		dados->>'crm',
 		dados->>'nome',
-		dados->>'apelido',
-		dados->>'cargo',
+		dados->>'razao_social',
+		dados->>'categoria',
 		dados->>'descr'
 	)
-	on conflict (apelido) do update
+	on conflict (cpf_cnpj) do update
 	set
 		fk_emp = excluded.fk_emp,
+		crm = excluded.crm,
 		nome = excluded.nome,
-		cargo = excluded.cargo,
+		razao_social = excluded.razao_social,
+		categoria = excluded.categoria,
 		descr = excluded.descr;
 end $$;
 
 /*
-select atualizarApelido(<antigo> varchar, <novo> varchar);
+select atualizarCPF_CNPJ(<antigo> varchar, <novo> varchar);
 */
-create or replace function atualizarApelido(antigo varchar, novo varchar)
+create or replace function atualizarCPF_CNPJ(antigo varchar, novo varchar)
 returns void
 language plpgsql
 as $$
 begin
 	update Cliente
-		set apelido = novo
-		where apelido = antigo;
+		set cpf_cnpj = novo
+		where cpf_cnpj = antigo;
+end $$;
+
+
+/*
+select addClienteInfo(<dados> json);
+*/
+create or replace function addClienteInfo(dados json)
+returns void
+language plpgsql
+as $$
+begin
+	insert into Cliente_Info values
+	(
+		default,
+		(dados->>'fk_cliente')::integer,
+		dados->>'endereco',
+		dados->>'website'
+	);
+end $$;
+
+
+/*
+select updateClienteInfo(<dados> json);
+*/
+create or replace function updateClienteInfo(id_info integer, dados json)
+returns void
+language plpgsql
+as $$
+begin
+	update Cliente_Info
+	set
+		fk_cliente = (dados->>'fk_cliente')::integer,
+		endereco = dados->>'endereco',
+		website = dados->>'website'
+	where pk_info = id_info;
+end $$;
+
+
+/*
+select addClienteContato(<dados> json);
+*/
+create or replace function addClienteContato(dados json)
+returns void
+language plpgsql
+as $$
+begin
+	insert into Cliente_Contato values
+	(
+		default,
+		(dados->>'fk_cliente')::integer,
+		(dados->>'tipo')::integer,
+		dados->>'contato'
+	);
+end $$;
+
+
+/*
+select updateClienteContato(<dados> json);
+*/
+create or replace function updateClienteContato(id_contato integer, dados json)
+returns void
+language plpgsql
+as $$
+begin
+	update Cliente_Contato
+	set
+		fk_cliente = (dados->>'fk_cliente')::integer,
+		tipo = (dados->>'tipo')::integer,
+		contato = dados->>'contato'
+	where pk_info = id_info;
 end $$;
 
 
 /*----------------*/
 
-create or replace function dadosDeal(id_deal integer)
+create or replace function getDeal(id_deal integer)
 returns table(
 	pipeline varchar,
 	nome varchar,
@@ -327,7 +406,7 @@ begin
 end $$;
 
 
-create or replace function novaDeal(dados json)
+create or replace function addDeal(dados json)
 returns void
 language plpgsql
 as $$
@@ -377,7 +456,7 @@ begin
 	
 end $$;
 
-create or replace function atualizarDeal(dados json)
+create or replace function updateDeal(dados json)
 returns void
 language plpgsql
 as $$
