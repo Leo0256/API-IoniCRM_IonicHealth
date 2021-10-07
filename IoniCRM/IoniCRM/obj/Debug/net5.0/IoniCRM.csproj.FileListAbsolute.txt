@@ -9,7 +9,8 @@ D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\ref\IoniCRM.dll
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\IoniCRM.pdb
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\IoniCRM.Views.dll
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\IoniCRM.Views.pdb
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csprojAssemblyReference.cache
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\Npgsql.dll
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.GeneratedMSBuildEditorConfig.editorconfig
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.AssemblyInfoInputs.cache
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.AssemblyInfo.cs
@@ -23,7 +24,10 @@ D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\scopedcss\bundle\Ion
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.TagHelpers.input.cache
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.TagHelpers.output.cache
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.RazorCoreGenerate.cache
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Home\Home.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Listagem\Clientes.cshtml.g.cs
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Login.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -32,13 +36,9 @@ D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\_ViewSta
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.RazorTargetAssemblyInfo.cache
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.RazorTargetAssemblyInfo.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.Views.pdb
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csproj.CopyComplete
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.dll
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\ref\IoniCRM.dll
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.pdb
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.genruntimeconfig.cache
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csproj.CopyComplete
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Home\Contacts.cshtml.g.cs
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\Npgsql.dll
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Home\Home.cshtml.g.cs
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Login.cshtml.g.cs
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csprojAssemblyReference.cache

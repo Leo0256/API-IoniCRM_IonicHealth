@@ -6,11 +6,9 @@
     <title>@ViewData["Title"] - IoniCRM</title>
     <link rel="shortcut icon" href="~/images/logo-icon-1.png" sizes="32x32">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/css/internal.css" rel="stylesheet" />
+    <link runat="server" rel="stylesheet" type="text/css" media="screen" href="~/css/internal.css" />
+
 </head>
-@{
-    
-}
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light-blue border-bottom border-dark box-shadow mb-3">
@@ -34,12 +32,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Listagem" asp-action="Clientes">Clientes</a>
+                                    </li>
+
                                     <!--
                                         <li class="nav-item">
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
                                         </li>
                                     -->
                                 </ul>
@@ -53,99 +52,14 @@
                             </div>
                             break;
                     }
-                    //if (ViewBag.Usuario != null && ViewBag.Usuario.GetNivel() != -1)
-                    /*
-                    if()
-                    {
-                        if (ViewBag.Usuario.GetNivel() == 0)
-                        {
-                            <a class="navbar-brand border-0" asp-area="" asp-controller="Home" asp-action="Home">
-                                <div>
-                                    <img src="~/images/logo-1.png" class="image-full mb-0" />
-                                    <img src="~/images/logo-icon-1.png" class="image-mobile mb-0" />
-                                </div>
-                            </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
-                                    </li>
-                                    <!--
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
-                                        </li>
-                                    -->
-                                </ul>
-                            </div>
-                        }
-                    }
-                    else
-                    {
-                        <div>
-                            <img src="~/images/logo-1.png" class="image-full mb-0" />
-                            <img src="~/images/logo-icon-1.png" class="image-mobile mb-0" />
-                        </div>
-                    }
-                    */
-
-
-                    /*
-                    if (ViewData["permission"] != null && int.Parse(ViewData["permission"].ToString()) != -1)
-                    {
-                        int permission = int.Parse(ViewData["permission"].ToString());
-                        if (permission == 0)
-                        {
-                        <a class="navbar-brand border-0" asp-area="" asp-controller="Home" asp-action="Home">
-                            <div>
-                                <img src="~/images/logo-1.png" class="image-full mb-0" />
-                                <img src="~/images/logo-icon-1.png" class="image-mobile mb-0" />
-                            </div>
-                        </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
-                                </li>
-                                <!--
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
-                                    </li>
-                                -->
-                            </ul>
-                        </div>
-                        }
-                    }
-                    else
-                    {
-                        <div>
-                            <img src="~/images/logo-1.png" class="image-full mb-0" />
-                            <img src="~/images/logo-icon-1.png" class="image-mobile mb-0" />
-                        </div>
-                    }
-                    */
                 }
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted">
         <div class="container">

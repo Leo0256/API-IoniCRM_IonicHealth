@@ -10,6 +10,7 @@ create database "IoniCRM"
 create table Usuario(
 	pk_usuario serial primary key,
 	nivel integer not null,
+	img varchar default 'https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/sistema/IoniCRM/IoniCRM/wwwroot/images/logo-icon-1.png',
 	nome varchar(80) not null,
 	email varchar(100) unique not null,
 	hash_senha varchar(50) not null,
@@ -21,10 +22,11 @@ create table Cliente(
 	fk_emp integer,
 	cpf_cnpj varchar(20) not null unique,
 	crm varchar(15),
+	img varchar default 'https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/sistema/IoniCRM/IoniCRM/wwwroot/images/logo-icon-1.png',
 	nome varchar(80) not null,
 	razao_social varchar(250) unique, /*ou apelido*/
 	categoria varchar(40), /*ou cargo*/
-	descr varchar(200),
+	descr varchar,
 	foreign key (fk_emp) references Cliente (pk_cliente)
 );
 
@@ -40,6 +42,10 @@ create table Cliente_Contato(
 	pk_contato serial primary key,
 	fk_cliente integer not null,
 	tipo integer,
+	/*tipo:
+		0 - Telefone
+		1 - E-mail
+	*/
 	contato varchar(80),
 	foreign key (fk_cliente) references Cliente (pk_cliente)
 );
@@ -93,7 +99,45 @@ create table Usuario_Pipeline(
 );
 
 /**/
+/*Triggers*/
+create or replace function Usuario_img_default()
+returns trigger
+language plpgsql
+as $$
+begin
+	if New.img is null then
+		update Usuario
+			set img = default
+		where pk_usuario = New.pk_usuario;
+	end if;
+	return New;
+end $$;
 
+create trigger Usuario_img_null
+after insert or update on Usuario
+for each row execute procedure Usuario_img_default();
+
+
+create or replace function Cliente_img_default()
+returns trigger
+language plpgsql
+as $$
+begin
+	if New.img is null then
+		update Cliente
+			set img = default
+		where pk_cliente = New.pk_cliente;
+	end if;
+	return New;
+end $$;
+
+create trigger Cliente_img_null
+after insert or update on Cliente
+for each row execute procedure Cliente_img_default();
+/*/Triggers*/
+
+
+/*Funções Encapsuladas*/
 /*
 select login(<email> varchar, <hash_senha> varchar);
 */
@@ -116,6 +160,47 @@ begin
 end $$;
 
 /*
+select * from dadosUsuario(<id_usuario> integer/varchar);
+*/
+create or replace function dadosUsuario(id_usuario integer)
+returns table(
+	pk_usuario integer,
+	nivel integer,
+	img varchar,
+	nome varchar,
+	email varchar
+)
+language plpgsql
+as $$
+begin
+	return query 
+	select
+		x.pk_usuario, x.nivel,
+		x.img, x.nome, x.email
+	from Usuario as x
+	where x.pk_usuario = id_usuario;
+end $$;
+
+create or replace function dadosUsuario(email_usuario varchar)
+returns table(
+	pk_usuario integer,
+	nivel integer,
+	img varchar,
+	nome varchar,
+	email varchar
+)
+language plpgsql
+as $$
+begin
+	return query 
+	select
+		x.pk_usuario, x.nivel,
+		x.img, x.nome, x.email
+	from Usuario as x
+	where x.email = email_usuario;
+end $$;
+
+/*
 select addUsuario(<dados> json);
 */
 create or replace function addUsuario(dados json)
@@ -127,6 +212,7 @@ begin
 	(
 		default,
 		(dados->>'nivel')::integer,
+		dados->>'img',
 		dados->>'nome',
 		dados->>'email',
 		dados->>'hash_senha',
@@ -135,6 +221,7 @@ begin
 	on conflict (email) do update
 	set
 		nivel = excluded.nivel,
+		img = excluded.img,
 		nome = excluded.nome,
 		hash_senha = excluded.hash_senha,
 		cargo = excluded.cargo;
@@ -146,6 +233,7 @@ select * from dadosCliente(<pk_cliente> integer);
 */
 create or replace function dadosCliente(id_cliente integer)
 returns table(
+	pk integer,
 	emp varchar,
 	nome varchar,
 	cpf_cnpj varchar,
@@ -185,11 +273,21 @@ begin
 		),
 
 		emp_x as (
-			select Cliente.pk_cliente as pk_emp, Cliente.razao_social as nome from Cliente
-			where fk_emp is null
+			select x.pk_cliente as pk_emp, x.nome as nome
+			from 
+				Cliente as x,
+				Cliente as y
+			where 
+				(
+					x.fk_emp is null
+					or
+					x.pk_cliente = y.fk_emp
+				)
+				and x.pk_cliente = y.fk_emp
 		)
 
 	select
+		cli_x.pk_cliente,
 		(
 			case when cli_x.nome not like emp_x.nome
 				then emp_x.nome
@@ -214,13 +312,18 @@ begin
 		cli_contato
 
 	where 
-		cli_x.pk_cliente = id_cliente
-	and cli_x.pk_cliente = cli_info.fk
+		cli_x.pk_cliente = cli_info.fk
 	and cli_info.fk = cli_contato.fk
 	and emp_x.pk_emp = (
 			case when cli_x.fk_emp is null
 			then cli_x.pk_cliente
 			else cli_x.fk_emp
+			end
+		)
+	and (
+			case when id_cliente is not null
+				then cli_x.pk_cliente = id_cliente
+				else cli_x.pk_cliente is not null
 			end
 		);
 

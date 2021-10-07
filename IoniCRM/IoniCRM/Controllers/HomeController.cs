@@ -28,30 +28,29 @@ namespace IoniCRM.Controllers
         public IActionResult Home()
         {
             //session here
-            string sql = String.Format(@"select * from Usuario where pk_usuario = {0}", HttpContext.Session.GetInt32(Session.SessionKeyName));
-            DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
-
-            foreach (DataRow row in rows)
+            if (HttpContext.Session.GetInt32(Session.SessionKeyName) != default)
             {
-                ViewBag.Usuario = new Usuario(
-                    int.Parse(row["pk_usuario"].ToString()),
-                    int.Parse(row["nivel"].ToString()),
-                    row["nome"].ToString(),
-                    row["email"].ToString(),
-                    row["cargo"].ToString()
-                    );
-            }
-                
+                string sql = String.Format(@"select * from Usuario where pk_usuario = {0}", HttpContext.Session.GetInt32(Session.SessionKeyName));
+                DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
 
-            return View();
+                foreach (DataRow row in rows)
+                {
+                    ViewBag.Usuario = new Usuario(
+                        int.Parse(row["pk_usuario"].ToString()),
+                        int.Parse(row["nivel"].ToString()),
+                        row["nome"].ToString(),
+                        row["email"].ToString(),
+                        row["cargo"].ToString()
+                        );
+                }
+
+
+                return View();
+            }
+            return RedirectToAction("Login", "Login");
         }
 
         public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult Contacts()
         {
             return View();
         }

@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="position-sticky sticky-top">
+    <div class="sidebar container text-left rounded-right">
+        <div class="show d-md-flex pt-2 pl-0">
+            <ul class="nav flex-column flex-nowrap overflow-hidden">
+
+                <li class="nav-item">
+                    <button class="nav-link  btn btn-primary bg-light-blue rounded border-dark px-2 mb-3" href="#sidebar" data-toggle="collapse" data-target="#sidebar">
+                        <img src="~/images/list.svg" class="wh-25" />
+                    </button>
+                </li>
+
+                <li>
+                    <div class="collapse sidebar-content" id="sidebar" aria-expanded="false">
+                        <ul class="nav flex-column flex-nowrap">
+                            @Html.Raw(ViewBag.Lista)
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="container text-center col-auto">
+
+    @foreach (var item in ViewBag.Clientes as List<IoniCRM.Controllers.Cliente>)
+    {
+        <div class="container bg-card w">
+
+
+        </div>
+    }
+</div>
+
+

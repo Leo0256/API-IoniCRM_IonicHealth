@@ -1,5 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification */
 
 a.navbar-brand {
   white-space: normal;
@@ -7,21 +6,43 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-/* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
 }
 
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-image: url(../images/background-1.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .bg-light-blue {
@@ -34,9 +55,11 @@ a {
     border-radius: 15px 15px;
 }
 
-.bg-1 {
-    background-color: #f3f2c9;
+.bg-card {
+    background-color: #BFE4E5;
     border: none;
+    opacity: 75%;
+    border-radius: 15px 15px;
 }
 
 .main-logo {
@@ -66,35 +89,56 @@ a {
     width: 45px;
 }
 
-.align-text-left{
+.align-text-left {
     text-align: left;
 }
 
+/*
+    Precisa resolver o bug no height quando tem muitos elementos na lista
+*/
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    font-size: 14px;
+.sidebar {
+    background-color: #53B8BB;
+    margin-left: 0%;
+    width: max-content;
+    position: absolute;
 }
+
+.sidebar-content {
+    display: inline-block;
+    max-height: 200px;
+    min-height: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 
 @media(max-width: 768px){
-    .main-logo {
-        height: 45px;
-    }
-}
-
-@media (min-width: 768px) {
     html {
         font-size: 16px;
     }
 
+    .main-logo {
+        height: 45px;
+    }
 }
 
 .w {
     width: 75%;
 }
 
-/*Configurações para o Mibile*/
+.wh-15 {
+    width: 15px;
+    height: 15px;
+}
+
+.wh-25 {
+    width: 25px;
+    height: 25px;
+}
+
+
+/*Configurações para o Mobile*/
 @media (max-width: 576px){
     .image-full {
         display: none;
@@ -104,9 +148,16 @@ html {
         display: block;
     }
 
-    .w{
+    .w {
         width: auto;
     }
+
+    /*
+    .sidebar {
+        position: initial;
+    }
+    */
+
 }
 
 
@@ -128,28 +179,5 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
 
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-  background-image: url(../images/background-1.jpeg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
-}

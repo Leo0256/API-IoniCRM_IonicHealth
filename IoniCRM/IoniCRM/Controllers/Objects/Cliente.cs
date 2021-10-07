@@ -1,47 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace IoniCRM.Controllers
 {
-    public class Cliente
+    public class Cliente : EqualityComparer<Cliente>
     {
         private int pk_cliente;
-        private int fk_emp;
-        public String nome;
-        public String apelido;
-        public String cargo;
-        public String descr;
+        private string emp;
+        public string nome;
+        public string cpf_cnpj;
+        public string razaoSocial;
+        public string categoria;
+        public string descr;
 
-        public Cliente(int pk_cliente, int fk_emp, string nome, string apelido, string cargo, string descr)
+        public List<string[]> info;
+        public List<string[]> contato;
+
+        public List<Cliente> funcionarios;
+
+        public Cliente(int pk_cliente, string emp, string nome) 
         {
             this.pk_cliente = pk_cliente;
-            this.fk_emp = fk_emp;
+            this.emp = emp;
             this.nome = nome;
-            this.apelido = apelido;
-            this.cargo = cargo;
-            this.descr = descr;
+            funcionarios = new();
         }
 
-        public Cliente() { }
+        public Cliente(
+            int pk_cliente, string emp, string nome, string cpf_cnpj, string razaoSocial, 
+            string categoria, string descr, List<string[]> info, List<string[]> contato
+            )
+        {
+            this.pk_cliente = pk_cliente;
+            this.emp = emp;
+            this.nome = nome;
+            this.cpf_cnpj = cpf_cnpj;
+            this.razaoSocial = razaoSocial;
+            this.categoria = categoria;
+            this.descr = descr;
+            this.info = info;
+            this.contato = contato;
+            funcionarios = new();
+        }
 
+        public int GetPk_Cliente() => pk_cliente;
         public void SetPk_Cliente(int pk_cliente) => this.pk_cliente = pk_cliente;
-        public int GetPk_Cliente() => this.pk_cliente;
 
-        public void SetFk_Emp(int fk_emp) => this.fk_emp = fk_emp;
-        public int GetFk_Emp() => this.fk_emp;
+        public string GetEmp() => emp;
+        public void SetEmp(string emp) => this.emp = emp;
 
-        public void SetNome(string nome) => this.nome = nome;
-        public String GetNome() => this.nome;
+        public void AddFuncionario(Cliente cliente) => funcionarios.Add(cliente);
 
-        public void SetApelido(string apelido) => this.apelido = apelido;
-        public String GetApelido() => this.apelido;
+        
 
-        public void SetCargo(string cargo) => this.cargo = cargo;
-        public String GetCargo() => this.cargo;
+        public override bool Equals(Cliente x, Cliente y) =>
+            x.pk_cliente == y.pk_cliente;
 
-        public void SetDescr(string descr) => this.descr = descr;
-        public String GetDescr() => this.descr;
+        public override int GetHashCode([DisallowNull] Cliente obj) =>
+            throw new NotImplementedException();
+        
     }
 }
