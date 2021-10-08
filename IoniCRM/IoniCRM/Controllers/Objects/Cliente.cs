@@ -12,13 +12,15 @@ namespace IoniCRM.Controllers
         private string emp;
         public string nome;
         public string cpf_cnpj;
+        private string crm;
         public string razaoSocial;
         public string categoria;
         public string descr;
 
-        public List<string[]> info;
-        public List<string[]> contato;
-
+        public string[] websites;
+        public string[] enderecos;
+        
+        public List<string[]> contatos;
         public List<Cliente> funcionarios;
 
         public Cliente(int pk_cliente, string emp, string nome) 
@@ -30,19 +32,21 @@ namespace IoniCRM.Controllers
         }
 
         public Cliente(
-            int pk_cliente, string emp, string nome, string cpf_cnpj, string razaoSocial, 
-            string categoria, string descr, List<string[]> info, List<string[]> contato
+            int pk_cliente, string emp, string nome, string cpf_cnpj, string crm, string razaoSocial, 
+            string categoria, string descr, string[] websites, string[] enderecos, List<string[]> contatos
             )
         {
             this.pk_cliente = pk_cliente;
             this.emp = emp;
             this.nome = nome;
             this.cpf_cnpj = cpf_cnpj;
+            this.crm = crm;
             this.razaoSocial = razaoSocial;
             this.categoria = categoria;
             this.descr = descr;
-            this.info = info;
-            this.contato = contato;
+            this.websites = websites;
+            this.enderecos = enderecos;
+            this.contatos = contatos;
             funcionarios = new();
         }
 
@@ -52,9 +56,10 @@ namespace IoniCRM.Controllers
         public string GetEmp() => emp;
         public void SetEmp(string emp) => this.emp = emp;
 
-        public void AddFuncionario(Cliente cliente) => funcionarios.Add(cliente);
+        public void SetCRM(string crm) => this.crm = crm;
+        public string GetCRM() => crm;
 
-        
+        public void AddFuncionario(Cliente cliente) => funcionarios.Add(cliente);
 
         public override bool Equals(Cliente x, Cliente y) =>
             x.pk_cliente == y.pk_cliente;

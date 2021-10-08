@@ -42,7 +42,7 @@ namespace IoniCRM.Controllers
             var menuUi = menuRecursion.GetMenu();
             ViewBag.Lista = menuUi;
 
-            ViewBag.Clientes = clientes;
+            ViewBag.Clientes = GetCliente("null");
 
             return View();
         }
@@ -89,7 +89,41 @@ namespace IoniCRM.Controllers
                         }
                     }
                 }
+            }
+            return data;
+        }
 
+        public List<Cliente> GetCliente(string pk_cliente)
+        {
+            string sql = string.Format(@"select * from dadosCliente({0})", pk_cliente);
+            DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+
+            List<Cliente> data = new();
+            foreach (DataRow row in rows)
+            {
+                var tipo_contato = row["tipo_contato"].ToString().Split(";");
+                var contato = row["contato"].ToString().Split(";");
+                List<string[]> contatos = new();
+
+                for (int x = 0; x < tipo_contato.Length; x++)
+                    contatos.Add(new[] { tipo_contato[x], contato[x] });
+
+
+                Cliente cliente = new(
+                        int.Parse(row["pk"].ToString()),
+                        row["emp"].ToString(),
+                        row["nome"].ToString(),
+                        row["cpf_cnpj"].ToString(),
+                        row["crm"].ToString(),
+                        row["razao_social"].ToString(),
+                        row["categoria"].ToString(),
+                        row["descr"].ToString(),
+                        row["website"].ToString().Split(";"),
+                        row["endereco"].ToString().Split(";"),
+                        contatos
+                        );
+
+                data.Add(cliente);
             }
             return data;
         }

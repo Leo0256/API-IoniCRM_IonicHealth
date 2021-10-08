@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WdeEaJn0fVwpxpj8yrV8FSXb+M0LJJLtFonRFc5GrTWU6eQLzjxTcEfWWq+4i3d9ieSaQK07jQ9JDx44+MD6aQ==",
+  "dgSpecHash": "j61NMPgRLVzbj40zk9MqIhIsjthN/FiOO304kD72F7FrnR6GC25AtbppB/k16vl9R4FcRC24E0BTAjTu/n1gYw==",
   "success": true,
-  "projectFilePath": "D:\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\IoniCRM.csproj",
+  "projectFilePath": "C:\\Users\\yggdr\\Desktop\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\IoniCRM.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yggdr\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\yggdr\\.nuget\\packages\\npgsql\\5.0.10\\npgsql.5.0.10.nupkg.sha512",

@@ -26,13 +26,118 @@
 </div>
 
 
-<div class="container text-center col-auto">
+<div class="container text-center row mx-0">
 
     @foreach (var item in ViewBag.Clientes as List<IoniCRM.Controllers.Cliente>)
     {
-        <div class="container bg-card w">
+        <div class="container text-justify mb-4 p-2 bg-card rounded h-100 w-auto box-shadow">
+            <div class="d-md-flex row mx-0">
+                <ul class="nav d-sm-inline-flex justify-content-start">
+                    <li>
+                        <img src="~/images/logo-icon-1.png" class="main-logo align-top pr-3" />
+                        
+                        <h3 class="text-center m-2 mt-3 flex-wrap">@item.nome</h3>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-md-flex row mx-0">
+                <div class="d-sm-inline-flex justify-content-between">
+                    <ul class="nav flex-column flex-nowrap">
+                        
+                        <li>
+                            <h4 class="pb-1">Razão Social:</h4>
+
+                            <h5 class="text-break pb-4">@item.razaoSocial</h5>
+                        </li>
+
+                        @if (item.GetEmp() != null)
+                        {
+                            <li>
+                                <h4 class="pb-1">Empresa:</h4>
+
+                                <h5 class="flex-wrap pb-4">@item.GetEmp()</h5>
+                            </li>
+                        }
+                        
+
+                        
+                        <li>
+                            <h4 class="pb-1">CPF/CNPJ:</h4>
+
+                            <h5 class="flex-wrap pb-4">@item.cpf_cnpj</h5>
+                        </li>
+
+                        @if (item.GetCRM() != null)
+                        {
+                            <li>
+                                <h4 class="pb-1">CRM:</h4>
+
+                                <h5 class="flex-wrap pb-4">@item.GetCRM()</h5>
+                            </li>
+                        }
+                        
+
+                        <li>
+                            <h4 class="pb-1">Categoria:</h4>
+
+                            <h5 class="flex-wrap pb-4">@item.categoria</h5>
+                        </li>
+
+                    </ul>
 
 
+
+                    <ul class="nav flex-column flex-nowrap">
+
+
+                        <li>
+                            <h4 class="pb-1">Descrição:</h4>
+
+                            <h5 class="text-break pb-4">@item.descr</h5>
+                        </li>
+
+
+
+                        @if (item.websites != null && item.websites.Length > 0)
+                        {
+                            <li>
+                                <h4 class="pb-1">Websites:</h4>
+
+                                @foreach (var web in item.websites)
+                                {
+                                    <h5 class="flex-wrap pb-4">@web</h5>
+                                }
+                            </li>
+                        }
+
+                        @if (item.enderecos != null && item.enderecos.Length > 0)
+                        {
+                            <li>
+                                <h4 class="pb-1">Endereços:</h4>
+
+                                @foreach (var end in item.enderecos)
+                                {
+                                    <h5 class="flex-wrap pb-4">@end</h5>
+                                }
+                            </li>
+                        }
+
+                        @if (item.contatos != null && item.contatos.Count > 0)
+                        {
+                            <li>
+                                <h4 class="pb-1">Contatos</h4>
+
+                                @foreach (var cont in item.contatos)
+                                {
+                                    <h5 class="flex-wrap pb-4">@cont[1]</h5>
+                                }
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
         </div>
     }
 </div>
