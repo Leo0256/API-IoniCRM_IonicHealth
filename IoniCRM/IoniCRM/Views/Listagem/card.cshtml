@@ -1,0 +1,110 @@
+﻿@foreach (var item in ViewBag.Itens as List<IoniCRM.Controllers.Cliente>)
+{
+    <div class="container text-justify mx-auto mb-4 p-2 bg-card rounded h-100 w-auto box-shadow">
+        <div class="d-md-flex row mx-0">
+            <ul class="nav w-100">
+                <li class=" d-flex d-sm-inline-flex flex-row justify-content-start">
+                    <img title="@item.nome - imagem perfil" src="~/images/logo-icon-1.png" class="perfil-icon rounded-circle align-top m-2" />
+
+                    <div class="text-card-title my-auto pl-5 flex-wrap">@item.nome</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="d-md-flex row mx-0">
+            <div class="d-sm-inline-flex justify-content-between">
+                <ul class="nav flex-row flex-wrap">
+
+                    <li class="mr-auto px-1 pb-3">
+
+                        @if (string.IsNullOrEmpty(item.GetCRM()))
+                        {
+                            <div class="text-card-title pb-1">Razão Social: </div>
+                        }
+                        else
+                        {
+                            <div class="text-card-title pb-1">Nome Completo: </div>
+                        }
+
+                        <div class="text-card text-break flex-wrap">@item.razaoSocial</div>
+                    </li>
+
+
+                    @if (!string.IsNullOrEmpty(item.GetEmp()))
+                    {
+                        <li class="mr-auto px-1 pb-3">
+                            <div class="text-card-title pb-1">Empresa/Chefe:</div>
+
+                            <div class="text-card text-break flex-wrap">@item.GetEmp()</div>
+                        </li>
+                    }
+
+                    <li class="mr-auto px-1 pb-3">
+                        <div class="text-card-title pb-1">Categoria:</div>
+
+                        <div class="text-card text-break flex-wrap">@item.categoria</div>
+                    </li>
+
+                    <li class="mr-auto px-1 pb-3">
+                        <div class="text-card-title pb-1">CPF/CNPJ:</div>
+
+                        <div class="text-card text-break flex-wrap">@item.cpf_cnpj</div>
+                    </li>
+
+                    @if (!string.IsNullOrEmpty(item.GetCRM()))
+                    {
+                        <li class="mr-auto px-1 pb-3">
+                            <div class="text-card-title pb-1">CRM:</div>
+
+                            <div class="text-card text-break flex-wrap">@item.GetCRM()</div>
+                        </li>
+                    }
+
+
+                    @if (!string.IsNullOrEmpty(item.websites[0]) && item.websites.Length > 0)
+                    {
+                        <li class="mr-auto px-1 pb-3">
+                            <div class="text-card-title pb-1">Websites:</div>
+
+                            @foreach (var web in item.websites)
+                            {
+                                <div class="text-card text-break flex-wrap">@web</div>
+                            }
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrEmpty(item.enderecos[0]) && item.enderecos.Length > 0)
+                    {
+                        <li class="mr-auto px-1 pb-3">
+                            <div class="text-card-title pb-1">Endereços:</div>
+
+                            @foreach (var end in item.enderecos)
+                            {
+                                <div class="text-card text-break flex-wrap">@end</div>
+                            }
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrEmpty(item.contatos[0][0]) && item.contatos.Count > 0)
+                    {
+                        <li class="mr-auto px-1 pb-3">
+                            <div class="text-card-title pb-1">Contatos</div>
+
+                            @foreach (var cont in item.contatos)
+                            {
+                                <div class="text-card text-break flex-wrap">@cont[1]</div>
+                            }
+                        </li>
+                    }
+
+                    <li class="mr-auto px-1 pb-3">
+                        <div class="text-card-title pb-1">Descrição:</div>
+
+                        <div class="text-card text-break flex-wrap">@item.descr</div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+}

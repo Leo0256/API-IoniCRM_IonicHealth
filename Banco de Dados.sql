@@ -287,7 +287,7 @@ begin
 		)
 
 	select
-		cli_x.pk_cliente,
+		distinct cli_x.pk_cliente,
 		(
 			case when cli_x.nome not like emp_x.nome
 				then emp_x.nome
@@ -326,6 +326,38 @@ begin
 				else cli_x.pk_cliente is not null
 			end
 		);
+
+end $$;
+
+
+/*
+select * from dadosFuncionarios(<id_cliente> integer);
+*/
+create or replace function dadosFuncionarios(id_cliente integer)
+returns table(
+	pk integer,
+	emp varchar,
+	nome varchar,
+	cpf_cnpj varchar,
+	crm varchar,
+	razao_social varchar,
+	categoria varchar,
+	descr varchar,
+	website varchar,
+	endereco varchar,
+	tipo_contato varchar,
+	contato varchar
+)
+language plpgsql
+as $$
+begin
+	return query
+	select x.* 
+		from dadosCliente(null) as x, Cliente as y
+	where 
+		y.pk_cliente = id_cliente 
+		and
+		x.emp ilike y.nome;
 
 end $$;
 

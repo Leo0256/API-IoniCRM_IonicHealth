@@ -115,28 +115,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\yggdr\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\yggdr\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yggdr\\Desktop\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\IoniCRM.csproj",
+      "projectUniqueName": "D:\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\IoniCRM.csproj",
       "projectName": "IoniCRM",
-      "projectPath": "C:\\Users\\yggdr\\Desktop\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\IoniCRM.csproj",
+      "projectPath": "D:\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\IoniCRM.csproj",
       "packagesPath": "C:\\Users\\yggdr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yggdr\\Desktop\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\obj\\",
+      "outputPath": "D:\\API-IoniCRM_IonicHealth\\IoniCRM\\IoniCRM\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\yggdr\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\yggdr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -182,7 +180,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

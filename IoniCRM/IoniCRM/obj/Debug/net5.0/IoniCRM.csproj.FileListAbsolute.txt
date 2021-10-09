@@ -41,7 +41,6 @@ D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.dll
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\ref\IoniCRM.dll
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.pdb
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.genruntimeconfig.cache
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csprojAssemblyReference.cache
 C:\Users\yggdr\Desktop\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\yggdr\Desktop\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\appsettings.json
 C:\Users\yggdr\Desktop\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\bin\Debug\net5.0\IoniCRM.exe
@@ -86,3 +85,5 @@ C:\Users\yggdr\Desktop\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\
 C:\Users\yggdr\Desktop\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.pdb
 C:\Users\yggdr\Desktop\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.genruntimeconfig.cache
 C:\Users\yggdr\Desktop\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csproj.AssemblyReference.cache
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csprojAssemblyReference.cache
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Listagem\card.cshtml.g.cs

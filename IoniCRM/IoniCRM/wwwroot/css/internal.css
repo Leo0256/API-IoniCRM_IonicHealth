@@ -39,6 +39,12 @@ body {
     border-color: #1861ac;
 }
 
+.btn-list {
+    padding: 0.5rem;
+    width: auto;
+    height: auto;
+}
+
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #1b6ec2;
@@ -58,8 +64,19 @@ body {
 .bg-card {
     background-color: #BFE4E5;
     border: none;
+    max-width: 30rem;
     opacity: 75%;
     border-radius: 15px 15px;
+}
+
+.text-card {
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+.text-card-title {
+    font-size: 1.5rem;
+    font-weight: 500;
 }
 
 .main-logo {
@@ -71,11 +88,25 @@ body {
     border: none;
 }
 
+.perfil-icon {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    width: auto;
+    max-height: 7rem;
+    max-width: 7rem;
+    border: 0.5px solid black;
+}
+
 .image-full {
     display: block;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.image-full-navbar {
     height: 45px;
     width: 203px;
 }
@@ -85,6 +116,9 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.image-mobile-navbar {
     height: 45px;
     width: 45px;
 }
@@ -113,7 +147,9 @@ body {
 }
 
 
-@media(max-width: 768px){
+
+
+@media(max-width: 768px) {
     html {
         font-size: 16px;
     }
@@ -151,6 +187,7 @@ body {
     .w {
         width: auto;
     }
+
 
 
     /*

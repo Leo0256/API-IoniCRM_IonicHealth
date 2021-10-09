@@ -36,27 +36,24 @@ namespace IoniCRM.Controllers
             clientes ??= SetList();
         }
 
-        public IActionResult Clientes()
+        public IActionResult Clientes(string id)
         {
             var menuRecursion = new MenuRecursion(clientes);
             var menuUi = menuRecursion.GetMenu();
             ViewBag.Lista = menuUi;
 
-            ViewBag.Clientes = GetCliente("null");
+            if (string.IsNullOrEmpty(id))
+                ViewBag.Clientes = GetData("Cliente", "null");
 
+            else
+            {
+                ViewBag.Clientes = GetData("Cliente", id);
+                ViewBag.Funcionarios = GetData("Funcionarios", id);
+            }
+            
             return View();
         }
 
-        /*testes*/
-        public IActionResult Cliente(string value)
-        {
-            ViewData["teste"] = value;
-            var menuRecursion = new MenuRecursion(clientes);
-            var menuUi = menuRecursion.GetMenu();
-            ViewBag.Lista = menuUi;
-            return View(view);
-        }
-        /*/testes*/
 
         private bool flag = false;
         public List<Cliente> SetList()
@@ -93,9 +90,9 @@ namespace IoniCRM.Controllers
             return data;
         }
 
-        public List<Cliente> GetCliente(string pk_cliente)
+        public List<Cliente> GetData(string dataFrom,string pk_cliente)
         {
-            string sql = string.Format(@"select * from dadosCliente({0})", pk_cliente);
+            string sql = string.Format(@"select * from dados{0}({1})", dataFrom, pk_cliente);
             DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
 
             List<Cliente> data = new();
@@ -149,16 +146,37 @@ namespace IoniCRM.Controllers
             }
         }
 
+        public List<Cliente> GetFuncionarios(int pk_cliente, List<Cliente> clientes)
+        {
+            List<Cliente> cliente = null;
+            if (clientes.Exists(x => x.GetPk_Cliente() == pk_cliente))
+            {
+                cliente = clientes.Find(x => x.GetPk_Cliente() == pk_cliente).funcionarios;
+                if (cliente[0] == null || cliente.Count == 0)
+                    cliente = null;
+                
+            }
+            else    
+                foreach (Cliente c in clientes)
+                {
+                    cliente = GetFuncionarios(pk_cliente, c.funcionarios);
+                    if (cliente != null)
+                        break;
+                    
+                }
+            
+            return cliente;
+        }
+
         public class MenuRecursion
         {
             List<Cliente> clientes;
-            private PostgreSQLConnection pgsqlcon;
 
             /*Precisa melhorar isso depois*/
-            public string OpenItem(string nome)
+            public string OpenItem(string nome, int id)
             {
                 return "<li class=\"nav-item\">" +
-                            "<a class=\"nav-link p-1\" >" +
+                            "<a class=\"nav-link text-dark align-middle p-1\" href=\"Clientes?id=" + id + "\" >" +
                                 nome +
                             "</a>" +
                         "</li>";
@@ -166,15 +184,15 @@ namespace IoniCRM.Controllers
 
             public string OpenItemWithSubs(string nome, int id)
             {
-                return "<li class=\"nav-item border-bottom border-dark\">" + 
-                            "<div class=\"d-flex flex-row\">" +
-                                "<a class=\"nav-link p-1\" >" +
+                return "<li class=\"nav-item border-bottom border-dark\">" +
+                            "<div class=\"d-flex flex-row align-middle\">" +
+                                "<a class=\"nav-link text-dark p-1\" href=\"Clientes?id=" + id + "\">" +
                                     nome +
                                 "</a>" +
 
                                 "<a class=\"nav-link\" href=\"#submenu-" + id +
                                     "\" data-toggle=\"collapse\" data-target=\"#submenu-" + id + "\">" +
-                                    "<img src=\"/images/arrow-down-circle.svg\" class=\"wh-15\" />" +
+                                    "<img src=\"/images/arrow-down-circle.svg\" class=\"align-top wh-15\" />" +
                                 "</a>" +
                             "</div>" +
                             "<div class=\"collapse\" id=\"submenu-" + id + "\" aria-expanded=\"false\">" +
@@ -187,17 +205,11 @@ namespace IoniCRM.Controllers
 
             public MenuRecursion(List<Cliente> clientes)
             {
-                pgsqlcon = new();
                 this.clientes = clientes;
                 strBuilder = new(GenerateMenuUi());
             }
 
             public string GetMenu() => strBuilder.ToString();
-
-            
-
-            
-            
 
             public string GenerateMenuUi()
             {
@@ -208,7 +220,7 @@ namespace IoniCRM.Controllers
                 {
                     List<Cliente> childItems = parentcat.funcionarios;
                     if (childItems.Count == 0)
-                        builder.Append(OpenItem(parentcat.nome));
+                        builder.Append(OpenItem(parentcat.nome, parentcat.GetPk_Cliente()));
                     
                     else
                     {
@@ -230,7 +242,7 @@ namespace IoniCRM.Controllers
                 {
                     List<Cliente> subChilds = cItem.funcionarios;
                     if (subChilds.Count == 0)
-                        builder.Append(OpenItem(cItem.nome));
+                        builder.Append(OpenItem(cItem.nome, cItem.GetPk_Cliente()));
 
                     else
                     {
