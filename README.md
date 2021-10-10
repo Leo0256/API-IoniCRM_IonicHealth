@@ -38,8 +38,8 @@ para a gestão da plataforma.", Ionic Health.
 [![](https://img.shields.io/badge/-C%23-783bd2?style=flat&logo=csharp&logoColor=white)](https://docs.microsoft.com/pt-br/dotnet/csharp/ "C#") [![](https://img.shields.io/badge/-PostgreSQL-00758f?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/ "PostgreSQL")
 
 ### :calendar: Cronograma & Entregas
-- [ ] [Sprint 1](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_1) :left_right_arrow: 30/08 - 19/09
-- [ ] [Sprint 2](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_2) :left_right_arrow: 20/09 - 10/10
+- [X] [Sprint 1](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_1) :left_right_arrow: 30/08 - 19/09
+- [X] [Sprint 2](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_2) :left_right_arrow: 20/09 - 10/10
 - [ ] Semana de Recesso :left_right_arrow: 11/10 - 17/10
 - [ ] [Sprint 3](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_3) :left_right_arrow: 18/10 - 07/11
 - [ ] [Sprint 4](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_4) :left_right_arrow: 08/11 - 28/11
