@@ -17,13 +17,9 @@ para a gestão da plataforma.", Ionic Health.
 
 
 ## :busts_in_silhouette: Equipe Líder: Integrantes
-- [![](https://img.shields.io/badge/Daniela%20dos%20Santo%20Meirelles-white?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/DanielaMeirelles "Scrum Team")
-
 - [![](https://img.shields.io/badge/%20-João%20Vitor%20Evaristo%20da%20Silva-white?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/Joaoevr "Scrum Team")
 
 - [![](https://img.shields.io/badge/-Leonardo%20Gustavo%20Ribeiro-white?style=flat&logo=github&logoColor=white&labelColor=black)](https://www.github.com/Leo0256 "Product Owner")
-
-- [![](https://img.shields.io/badge/Luiz%20Gustavo%20Vieira-white?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/UkitakeKazui "Scrum Team")
 
 - [![](https://img.shields.io/badge/Matheus%20Emboaba%20Mello%20de%20Souza-white?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/MatheusEmboabaTeteu "Scrum Team")
 
