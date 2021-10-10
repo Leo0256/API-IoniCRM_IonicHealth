@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="position-sticky sticky-top">
+    <div class="sidebar container text-left rounded-right show d-md-flex pt-2 pb-0 px-2">
+        
+        <ul class="nav flex-column flex-nowrap overflow-hidden">
+
+            <li class="nav-item">
+                <button class="nav-link btn btn-primary btn-list bg-light-blue mb-3 rounded border-dark" href="#sidebar" data-toggle="collapse" data-target="#sidebar">
+                    <img src="~/images/list.svg" class="image-full wh-25" />
+                    <img src="~/images/arrow-down-circle.svg" class="image-mobile wh-15" />
+                </button>
+            </li>
+
+            <li>
+                <div class="collapse sidebar-content" id="sidebar" aria-expanded="false">
+                    <ul class="nav flex-column flex-nowrap">
+                        @Html.Raw(ViewBag.Lista)
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        
+    </div>
+</div>
+
+<div class="container text-center row mx-auto pt-5">
+
+    @{
+        ViewBag.Itens = new List<IoniCRM.Controllers.Cliente>();
+        ViewBag.Itens = ViewBag.Clientes;
+    }
+
+    @Html.Partial("card")
+
+</div>
+
+@{
+    if (ViewBag.Funcionarios != null)
+    {
+
+        List<IoniCRM.Controllers.Cliente> foo = ViewBag.Funcionarios;
+
+
+        if (foo.Count > 0)
+        {
+            <h1 class="text-center text-dark bg-light-blue rounded-pill mx-4">Funcionarios</h1>
+            <div class="container text-center row mx-auto pt-5">
+                @{
+                    ViewBag.Itens = new List<IoniCRM.Controllers.Cliente>();
+                    ViewBag.Itens = ViewBag.Funcionarios;
+                }
+
+                @Html.Partial("card")
+            </div>
+        }
+    }
+}
