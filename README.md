@@ -15,7 +15,7 @@ Entregar algumas funcionalidades com relação à "árvore de clientes" (ou ista
 ## :page_with_curl: Wireframes
 ###### Desenvolvidos através do [Figma](https://www.figma.com/file/6BJJym43ssfnVHOuOOVHJf/IoniCRM?node-id=0%3A1).
 <p align="center">
-    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_2/Wireframes/Listagem%20dos%20Clientes.pmg"><br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_2/Wireframes/Listagem%20dos%20Clientes.png"><br>
     <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_2/Wireframes/Visão%20do%20Cliente.png">
 </p>
 
