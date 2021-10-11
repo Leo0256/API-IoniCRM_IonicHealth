@@ -7,6 +7,7 @@ Entregar algumas funcionalidades com relação à "árvore de clientes" (ou ista
 
 
 ## :clipboard: Backlog - Sprint 2
+> **Nota:** Não foi possível realizar a entrega de todas as funcionalidades.
 <p align="center">
   <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_2/Card%20Sprint%202.png">
 </p>
@@ -64,7 +65,8 @@ Entregar algumas funcionalidades com relação à "árvore de clientes" (ou ista
 
 
 ## Burndown :chart_with_downwards_trend:
+> **Nota:** Não foi possível realizar a entrega de todas as funcionalidades.
 <p align="center">
-  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_2/burndown.jpg">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_2/burndown.png">
 </p>
 
