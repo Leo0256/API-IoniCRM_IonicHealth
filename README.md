@@ -50,7 +50,7 @@ para a gestão da plataforma.", Ionic Health.
 
 ## :clipboard: Backlog Total
 <p align="center">
-  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Backlog%20Total%20.jpg">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Backlog%20Total.png">
 </p>
 
 
