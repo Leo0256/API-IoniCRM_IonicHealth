@@ -40,7 +40,7 @@ para a gestão da plataforma.", Ionic Health.
 ### :calendar: Cronograma & Entregas
 - [X] [Sprint 1](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_1) :left_right_arrow: 30/08 - 19/09
 - [X] [Sprint 2](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_2) :left_right_arrow: 20/09 - 10/10
-- [ ] Semana de Recesso :left_right_arrow: 11/10 - 17/10
+- [X] Semana de Recesso :left_right_arrow: 11/10 - 17/10
 - [ ] [Sprint 3](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_3) :left_right_arrow: 18/10 - 07/11
 - [ ] [Sprint 4](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_4) :left_right_arrow: 08/11 - 28/11
 - [ ] Apresentação Final :left_right_arrow: 29/11 - 05/12
@@ -50,12 +50,19 @@ para a gestão da plataforma.", Ionic Health.
 
 ## :clipboard: Backlog Total
 <p align="center">
-  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Backlog%20Total%20v1.5.jpg">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Backlog%20Total%20.jpg">
 </p>
 
-## :clipboard: Card - [Sprint 1](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_1)
+
+## Cards
+### :clipboard: [Sprint 1](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_1)
 <p align="center">
   <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Card%20Sprint%201.png">
+</p>
+
+### :clipboard: [Sprint 2](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_2)
+<p align="center">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/main/Card%20Sprint%202.png">
 </p>
 
 ## :bar_chart: Diagrama de Caso de Uso
