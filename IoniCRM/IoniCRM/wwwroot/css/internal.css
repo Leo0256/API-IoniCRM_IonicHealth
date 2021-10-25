@@ -79,6 +79,11 @@ body {
     font-weight: 500;
 }
 
+.title {
+    font-size: 2rem;
+    padding-left: 3rem;
+}
+
 .main-logo {
     background-position: center;
     background-repeat: no-repeat;
@@ -188,7 +193,9 @@ body {
         width: auto;
     }
 
-
+    .title {
+        padding-left: 0.5rem;
+    }
 
     /*
     .sidebar {
