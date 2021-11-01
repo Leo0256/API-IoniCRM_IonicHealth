@@ -2,4 +2,114 @@
     ViewData["Title"] = "Pipeline";
 }
 
-<h1>Hello World</h1>
+<div class="row mx-auto pt-5">
+    @for (int x = 0; x < 4; x++)
+    {
+    <div class="mx-auto mb-4 px-2">
+        <div class="container text-justify p-2 bg-card rounded mh-100 mw-auto-content box-shadow">
+            <div class="row border-bottom border-dark mx-0">
+                <ul class="w-auto mb-2 px-1">
+                    <li class="row mx-1">
+                        <div class="bg-white rounded border border-light shadow-sm flex-wrap my-auto px-1">
+                            <h2 class="mb-1">Nome da Coluna</h2>
+                        </div>
+                    </li>
+                    <li class="row mx-1">
+                        <div class="d-inline flex-wrap text-card-title text-muted pl-1 pr-3">
+                            Total de Deals
+                        </div>
+
+                        <div class="d-inline flex-wrap text-card-title text-muted pl-1">
+                            Valor Total
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="row mx-0">
+                <ul class="nav flex-column">
+
+                    <!--
+                        
+                    Lembrete: 
+                        Limitar o total de cards mostrados a 2 ou 3, 
+                        mais do que isso aparece o scrollbar.
+
+                        Falta ligar o layout com os dados
+                    -->
+
+                    @for(int y = 0; y < 5; y++)
+                    {
+                        @Html.Partial("../Pipelines/card_deal")
+                    }
+
+                    <!--Card das Deals->
+                    <li class="border-bottom border-dark px-1 pb-3">
+
+                        <div class="row justify-content-between align-items-center mx-2 pb-1">
+
+                            <div class="text-card-title">Nome da Deal</div>
+
+
+                            <div class="text-card text-right">
+                                01/01/2000 
+                                <br>
+                                12:30
+                            </div>
+
+                        </div>
+
+                        <div class="row align-items-center mx-0">
+
+                            <img title="x - imagem perfil" src="/images/logo-icon-1.png" class="perfil-icon mw-6 rounded-circle mx-2">
+                            <div class="border-right border-dark pl-1 pr-2 mr-2" style="
+">
+                                <div class="text-card-title">Apelido Cliente</div>
+                                <div class="text-card">Razão Social da Empresa</div>
+                            </div>
+
+                            <div class="text-card">R$ 25</div>
+
+                        </div>
+                    </li>
+                    <--/Card das Deals->
+
+
+                    <li class="mr-auto px-1 pb-3">
+                        <div class="text-card-title pb-1">Empresa/Chefe:</div>
+
+                        <div class="text-card text-break flex-wrap">x</div>
+                    </li>
+
+
+                    <li class="mr-auto px-1 pb-3">
+                        <div class="text-card-title pb-1">Categoria:</div>
+
+                        <div class="text-card text-break flex-wrap">x</div>
+                    </li>
+
+                    <li class="mr-auto px-1 pb-3">
+                        <div class="text-card-title pb-1">CPF/CNPJ:</div>
+
+                        <div class="text-card text-break flex-wrap">x</div>
+                    </li>
+
+                    <li class="mr-auto px-1 pb-3">
+                        <div class="text-card-title pb-1">CRM:</div>
+
+                        <div class="text-card text-break flex-wrap">x</div>
+                    </li>
+
+                    <li class="mr-auto px-1 pb-3">
+                        <div class="text-card-title pb-1">Descrição:</div>
+
+                        <div class="text-card text-break flex-wrap">x</div>
+                    </li>
+                        -->
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    }
+</div>

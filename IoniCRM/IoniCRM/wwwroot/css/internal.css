@@ -10,6 +10,10 @@ a {
   color: #0366d6;
 }
 
+.text-shadow {
+    text-shadow: 0.05rem 0.1rem 0 rgb(0 0 0 / 15%);
+}
+
 html {
     font-size: 14px;
     position: relative;
@@ -82,6 +86,7 @@ body {
 .title {
     font-size: 2rem;
     padding-left: 3rem;
+    padding-right: 3rem;
 }
 
 .main-logo {
@@ -104,32 +109,40 @@ body {
     border: 0.5px solid black;
 }
 
+.mw-6 {
+    max-width: 7rem;
+}
+
 .image-full {
+    height: 45px;
+    width: 203px;
+}
+
+.image-full-navbar {
     display: block;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.image-full-navbar {
+.image-mobile {
     height: 45px;
-    width: 203px;
+    width: 45px;
 }
 
-.image-mobile {
+.image-mobile-navbar {
     display: none;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.image-mobile-navbar {
-    height: 45px;
-    width: 45px;
-}
-
 .align-text-left {
     text-align: left;
+}
+
+.mw-auto-content {
+    max-width: max-content;
 }
 
 /*
@@ -151,7 +164,11 @@ body {
     overflow-x: hidden;
 }
 
-
+.pipeline-content {
+    display: inline-block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 
 @media(max-width: 768px) {
@@ -181,11 +198,11 @@ body {
 
 /*Configurações para o Mobile*/
 @media (max-width: 576px){
-    .image-full {
+    .image-full-navbar {
         display: none;
     }
 
-    .image-mobile {
+    .image-mobile-navbar {
         display: block;
     }
 
