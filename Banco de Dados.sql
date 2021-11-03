@@ -52,7 +52,7 @@ create table Cliente_Contato(
 
 create table Pipeline(
 	pk_pipeline serial primary key,
-	nome varchar(80) not null,
+	nome varchar(80) not null unique,
 	prioridade integer default 0,
 	descr varchar(200)
 );
@@ -475,26 +475,209 @@ begin
 end $$;
 
 
-/*----------------*/
+/*
+select upsertPipeline(<dados> json);
+*/
+create or replace function upsertPipeline(dados json)
+returns void
+language 'plpgsql'
+as $$
+begin
+	insert into Pipeline values
+	(
+		default,
+		dados->>'nome',
+		(dados->>'prioridade')::integer,
+		dados->>'descr'
+	)
+	on conflict (nome) do update
+	set
+		prioridade = excluded.prioridade,
+		descr = excluded.descr;
+end $$;
 
-create or replace function getDeal(id_deal integer)
+
+/*
+select renamePipeline(<antigo> varchar, <novo> varchar);
+*/
+create or replace function renamePipeline(antigo varchar, novo varchar)
+returns void
+language 'plpgsql'
+as $$
+begin
+	update Pipeline 
+		set nome = novo
+		where nome like antigo;
+end $$;
+
+
+/*
+select * from dadosPipeline(<id_pipe> integer);
+*/
+create or replace function dadosPipeline(id_pipe integer)
 returns table(
+	id_deal integer,
 	pipeline varchar,
 	nome varchar,
+	cliente varchar,
+	empresa varchar,
 	estagio integer,
 	d_status integer,
 	valor numeric,
-	cliente varchar,
-	apelido varchar,
-	probabilidade integer,
 	abertura timestamp,
 	fechamento timestamp,
+	probabilidade integer,
 	descr varchar
 )
 language plpgsql
 as $$
 begin
-	return query with 
+	return query
+	select x.* 
+		from dadosDeal(null) as x, Pipeline as y
+	where 
+		y.pk_pipeline = id_pipe
+	and x.pipeline like y.nome;
+	
+end $$;
+
+
+/*teste
+select delPipeline(<id_pipe> integer);
+*/
+create or replace function delPipeline(id_pipe integer)
+returns void
+language plpgsql
+as $$
+declare id_deal integer;
+begin
+
+	for id_deal in 
+		select * from dadosPipeline(id_pipe)
+	loop
+		select delDeal(next id_deal);
+	end loop;
+	/*
+	delete from Pipeline
+		where pk_pipeline = id_pipe;*/
+end $$;
+
+
+/*
+select addDeal(<dados> json);
+*/
+create or replace function addDeal(dados json)
+returns void
+language plpgsql
+as $$
+declare
+	id_cli integer := (select pk_cliente from Cliente
+		where nome = dados->>'cliente');
+	deal_open timestamp := to_timestamp(dados->>'abertura', 'DD/MM/YYYY HH24:MI:SS');
+	deal_close timestamp := to_timestamp(dados->>'fechamento', 'DD/MM/YYYY HH24:MI:SS');
+	fk_df integer;
+	pipe integer;
+	deal integer;
+begin
+	
+	insert into Deal_Info values
+	(
+		default,
+		deal_open,
+		deal_close,
+		(dados->>'probabilidade')::integer,
+		dados->>'descr'
+	);
+	fk_df := (select pk_df from Deal_Info order by pk_df desc limit 1);
+	
+	pipe := (select p.pk_pipeline from Pipeline p 
+		where p.nome like dados->>'pipeline');
+	
+	insert into Deal values
+	(
+		default,
+		pipe,
+		fk_df,
+		dados->>'nome',
+		(dados->>'estagio')::integer,
+		(dados->>'d_status')::integer,
+		(dados->>'valor')::numeric
+	);
+	deal := (select pk_deal from Deal order by pk_deal desc limit 1);
+	
+	insert into Deal_Cliente values
+	(
+		default,
+		deal,
+		id_cli
+	);
+
+end $$;
+
+
+/*
+select updateDeal(<dados> json);
+*/
+create or replace function updateDeal(dados json)
+returns void
+language plpgsql
+as $$
+declare
+	id_cli integer := (select pk_cliente from Cliente
+		where nome = dados->>'cliente');
+	deal_open timestamp := to_timestamp(dados->>'abertura', 'DD/MM/YYYY HH24:MI:SS');
+	deal_close timestamp := to_timestamp(dados->>'fechamento', 'DD/MM/YYYY HH24:MI:SS');
+	id_deal integer := (dados->>'id_deal')::integer;
+	id_df integer := (select fk_df from Deal where pk_deal = id_deal);
+begin
+	
+	update Deal_Info 
+		set
+			abertura = deal_open,
+			fechamento = deal_close,
+			probabilidade = (dados->>'probabilidade')::integer,
+			descr = dados->>'descr'
+		where pk_df = id_df;
+	
+	update Deal 
+		set
+			fk_df = id_df,
+			nome = dados->>'nome',
+			estagio = (dados->>'estagio')::integer,
+			d_status = (dados->>'d_status')::integer,
+			valor = (dados->>'valor')::numeric
+		where pk_deal = id_deal;
+	
+	update Deal_Cliente
+		set fk_cliente = id_cli
+		where fk_deal = id_deal;
+
+end $$;
+
+
+/*
+select * from dadosDeal(<deal> integer);
+*/
+create or replace function dadosDeal(deal integer)
+returns table(
+	id_deal integer,
+	pipeline varchar,
+	nome varchar,
+	cliente varchar,
+	empresa varchar,
+	estagio integer,
+	d_status integer,
+	valor numeric,
+	abertura timestamp,
+	fechamento timestamp,
+	probabilidade integer,
+	descr varchar
+)
+language plpgsql
+as $$
+begin
+	return query 
+	with 
 		deal_x as (
 			select * from Deal
 		),
@@ -504,27 +687,27 @@ begin
 		),
 		
 		cli as (
-			select Cliente.nome, Cliente.apelido, Deal_Cliente.fk_deal
-				from Cliente, Deal_Cliente
-				where Deal_Cliente.fk_cliente = Cliente.pk_cliente
+			select x.nome, x.emp, y.fk_deal
+				from Deal_Cliente y, dadosCliente(y.fk_cliente) x
 		),
 		
 		pipe as (
-			select nome from Pipeline
+			select p.nome, p.pk_pipeline from Pipeline p
 		)
 		
 		select
+			deal_x.pk_deal,
 			pipe.nome,
 			deal_x.nome,
+			cli.nome,
+			cli.emp,
 			deal_x.estagio,
 			deal_x.d_status,
 			deal_x.valor,
-			cli.nome,
-			cli.apelido,
-			dinfo.probabilidade,
 			dinfo.abertura,
 			dinfo.fechamento,
-			deal_x.descr
+			dinfo.probabilidade,
+			dinfo.descr
 		
 		from
 			deal_x,
@@ -533,7 +716,12 @@ begin
 			pipe
 		
 		where
-			deal_x.pk_deal = id_deal
+			(
+				case when deal is not null
+					then deal_x.pk_deal = deal
+					else deal_x.pk_deal is not null
+				end
+			)
 		and deal_x.fk_pipeline = pipe.pk_pipeline
 		and deal_x.fk_df = dinfo.pk_df
 		and deal_x.pk_deal = cli.fk_deal;
@@ -541,102 +729,25 @@ begin
 end $$;
 
 
-create or replace function addDeal(dados json)
+/*
+select delDeal(<id_deal> integer)
+*/
+create or replace function delDeal(id_deal integer)
 returns void
 language plpgsql
 as $$
 declare
-	id_cli integer := (select pk_cliente from Cliente
-		where apelido = dados->>'apelido');
-	deal_open timestamp := to_timestamp(dados->>'abertura', 'MM/DD/YYYY HH24:MI:SS');
-	deal_close timestamp := to_timestamp(dados->>'fechamento', 'MM/DD/YYYY HH24:MI:SS');
+	fk_df integer := (select x.fk_df from Deal x where pk_deal = id_deal);
 begin
-	with dinfo as (
-		insert into Deal_Info values
-		(
-			default,
-			deal_open,
-			deal_close,
-			dados->>'probabilidade',
-			dados->>'descr'
-		)
-		returning pk_df
-	),
+	delete from Deal_Cliente
+		where fk_deal = id_deal;
 	
-	pipe as (
-		select pk_pipeline from Pipeline
-			where nome = dados->>'pipeline'
-	),
+	delete from Deal 
+		where pk_deal = id_deal;
 	
-	deal_x as (
-		insert into Deal values
-		(
-			default,
-			pipe.pk_pipeline,
-			dinfo.pk_df,
-			dados->>'nome',
-			(dados->>'estagio')::integer,
-			(dados->>'d_status')::integer,
-			(dados->>'valor')::numeric
-		)
-		returning pk_deal
-	)
-		
-	insert into Deal_Cliente values
-	(
-		default,
-		deal_x.pk_deal,
-		id_cli
-	);
-	
+	delete from Deal_Info
+		where pk_df = fk_df;
 end $$;
-
-create or replace function updateDeal(dados json)
-returns void
-language plpgsql
-as $$
-declare
-	id_cli integer := (select pk_cliente from Cliente
-		where apelido = dados->>'apelido');
-	deal_open timestamp := to_timestamp(dados->>'abertura', 'MM/DD/YYYY HH24:MI:SS');
-	deal_close timestamp := to_timestamp(dados->>'fechamento', 'MM/DD/YYYY HH24:MI:SS');
-begin
-	with dinfo as (
-		update Deal_Info 
-		set
-			abertura = deal_open,
-			fechamento = deal_close,
-			probabilidade = dados->>'probabilidade',
-			descr = dados->>'descr'
-		where pk_df = (dados->>'fk_df')::integer
-		returning pk_df
-	),
-	
-	pipe as (
-		select pk_pipeline from Pipeline
-			where nome = dados->>'pipeline'
-	),
-	
-	deal_x as (
-		update Deal 
-		set
-			fk_pipeline = pipe.pk_pipeline,
-			fk_df = dinfo.pk_df,
-			nome = dados->>'nome',
-			estagio = (dados->>'estagio')::integer,
-			d_status = (dados->>'d_status')::integer,
-			valor = (dados->>'valor')::numeric
-		where pk_deal = dados->>'id_deal'
-		returning pk_deal
-	)
-		
-	update Deal_Cliente 
-		set fk_cliente = id_cli
-		where fk_deal = deal_x.pk_deal;
-	
-end $$;
-
-
 
 
 
