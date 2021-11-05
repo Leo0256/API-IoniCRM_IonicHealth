@@ -11,7 +11,7 @@
             {
                 <div class="form-group container w-75 p-3">
                     <div class="text-left mb-3">
-                        <h2><label for="emailTextBox" class="text-white font-weight-bold mb-0"> E-mail</label></h2>
+                        <h2><label for="emailTextBox" class="borda-texto"> E-mail</label></h2>
                         <input id="emailTextBox" class="form-control rounded" type="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" value="@ViewData["email"]" />
                         @{
                             if (ViewData["emailNotInformed"] != null)
@@ -21,7 +21,7 @@
                         }
 
 
-                        <h2><label for="senhaTextBox" class="text-white font-weight-bold mb-0">Senha</label></h2>
+                        <h2><label for="senhaTextBox" class="borda-texto">Senha</label></h2>
                         <input id="senhaTextBox" class="form-control rounded" type="password" name="senha" aria-describedby="passHelp" placeholder="Password" value="@ViewData["senha"]" />
                         @{
                             if (ViewData["passNotInformed"] != null)
@@ -31,7 +31,7 @@
                         }
                     </div>
                     <button type="submit" class="btn btn-primary bg-light-blue rounded-pill border-dark shadow">
-                        <h4 class="m-1">Login</h4>
+                        <h4 class="borda-texto">Login</h4>
                     </button>
                     @{
                         if (ViewData["emailOrPassWrong"] != null)

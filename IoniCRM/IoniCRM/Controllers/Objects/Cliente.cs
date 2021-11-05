@@ -13,6 +13,7 @@ namespace IoniCRM.Controllers
         public string nome;
         public string cpf_cnpj;
         private string crm;
+        public string img;
         public string razaoSocial;
         public string categoria;
         public string descr;
@@ -32,7 +33,7 @@ namespace IoniCRM.Controllers
         }
 
         public Cliente(
-            int pk_cliente, string emp, string nome, string cpf_cnpj, string crm, string razaoSocial, 
+            int pk_cliente, string emp, string nome, string cpf_cnpj, string crm, string img, string razaoSocial, 
             string categoria, string descr, string[] websites, string[] enderecos, List<string[]> contatos
             )
         {
@@ -41,6 +42,7 @@ namespace IoniCRM.Controllers
             this.nome = nome;
             this.cpf_cnpj = cpf_cnpj;
             this.crm = crm;
+            this.img = img;
             this.razaoSocial = razaoSocial;
             this.categoria = categoria;
             this.descr = descr;

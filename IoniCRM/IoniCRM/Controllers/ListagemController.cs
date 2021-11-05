@@ -112,6 +112,7 @@ namespace IoniCRM.Controllers
                         row["nome"].ToString(),
                         row["cpf_cnpj"].ToString(),
                         row["crm"].ToString(),
+                        row["img"].ToString(),
                         row["razao_social"].ToString(),
                         row["categoria"].ToString(),
                         row["descr"].ToString(),

@@ -238,6 +238,7 @@ returns table(
 	nome varchar,
 	cpf_cnpj varchar,
 	crm varchar,
+	img varchar,
 	razao_social varchar,
 	categoria varchar,
 	descr varchar,
@@ -297,6 +298,7 @@ begin
 		cli_x.nome,
 		cli_x.cpf_cnpj,
 		cli_x.crm,
+		cli_x.img,
 		cli_x.razao_social,
 		cli_x.categoria,
 		cli_x.descr,
@@ -340,6 +342,7 @@ returns table(
 	nome varchar,
 	cpf_cnpj varchar,
 	crm varchar,
+	img varchar,
 	razao_social varchar,
 	categoria varchar,
 	descr varchar,
@@ -519,8 +522,10 @@ returns table(
 	id_deal integer,
 	pipeline varchar,
 	nome varchar,
+	id_cli integer,
 	cliente varchar,
 	empresa varchar,
+	img varchar,
 	estagio integer,
 	d_status integer,
 	valor numeric,
@@ -663,8 +668,10 @@ returns table(
 	id_deal integer,
 	pipeline varchar,
 	nome varchar,
+	id_cli integer,
 	cliente varchar,
 	empresa varchar,
+	img varchar,
 	estagio integer,
 	d_status integer,
 	valor numeric,
@@ -687,7 +694,7 @@ begin
 		),
 		
 		cli as (
-			select x.nome, x.emp, y.fk_deal
+			select x.pk, x.nome, x.emp, x.img, y.fk_deal
 				from Deal_Cliente y, dadosCliente(y.fk_cliente) x
 		),
 		
@@ -699,8 +706,10 @@ begin
 			deal_x.pk_deal,
 			pipe.nome,
 			deal_x.nome,
+			cli.pk_cliente,
 			cli.nome,
 			cli.emp,
+			cli.img
 			deal_x.estagio,
 			deal_x.d_status,
 			deal_x.valor,

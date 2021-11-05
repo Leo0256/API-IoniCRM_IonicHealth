@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace IoniCRM.Controllers
 {
-    public class PipelineController : Controller
+    public class DealController : Controller
     {
         private string view = "/Views/Pipelines/Pipeline.cshtml";
         private PostgreSQLConnection pgsqlcon;
@@ -25,10 +25,9 @@ namespace IoniCRM.Controllers
         private int[] totalDeals = new int[5];
         private double[] totalValor = new double[5];
 
-        public PipelineController()
+        public DealController()
         {
             pgsqlcon = new();
-            pipelines = ViewBag.Pipelines ?? SetList();
         }
 
         public IActionResult Pipeline(string act, string id)
