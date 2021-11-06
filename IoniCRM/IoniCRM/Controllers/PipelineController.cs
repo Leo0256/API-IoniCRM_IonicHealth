@@ -11,30 +11,47 @@ using System.Linq;
 using System.Threading.Tasks;
 using IoniCRM.Controllers;
 using System.Globalization;
+using System.Drawing;
+using Newtonsoft.Json.Linq;
 
 namespace IoniCRM.Controllers
 {
     public class PipelineController : Controller
     {
-        private string view = "/Views/Pipelines/Pipeline.cshtml";
+        private readonly string view = "/Views/Pipelines/Pipeline.cshtml";
         private PostgreSQLConnection pgsqlcon;
 
-        private List<Pipeline> pipelines;
+        private List<Pipeline> pipelines = new();
 
         //teste
         private int[] totalDeals = new int[5];
         private double[] totalValor = new double[5];
 
+        private readonly string[] color = {
+            "#00ffff", // 1
+            "#26d9d9", // 2
+            "#4fbfbf", // 3
+            "#59a6a6", // 4
+            "#738c8c", // 5
+            "#808080", // 6
+            "#8c7373", // 7
+            "#a65959", // 8
+            "#bf4040", // 9
+            "#ff0000"  // 10
+        };
+
         public PipelineController()
         {
             pgsqlcon = new();
-            pipelines = ViewBag.Pipelines ?? SetList();
+            pipelines = ViewBag.TotasPipelines ?? SetList(null);
         }
 
-        public IActionResult Pipeline(string act, string id)
+        public IActionResult Pipeline(string id)
         {
-            ViewBag.Pipelines = pipelines;
-            
+            ViewBag.TodasPipelines = pipelines;
+
+            ViewBag.Pipelines = SetList(id);
+
             string[] estagio = {
                 "Qualificação",     // 0
                 "Proposta",         // 1
@@ -46,30 +63,21 @@ namespace IoniCRM.Controllers
             ViewBag.totalDeals = totalDeals;
             ViewBag.totalValor = totalValor;
 
-            switch (act)
-            {
-                case "selecionar":
-                    ToDeal(id);
-                    break;
-
-                case "adicionar":
-                    AddDeal();
-                    break;
-
-                case "deletar":
-                    DelDeal(id);
-                    break;
-
-                default:
-                    break;
-            }
+            ViewBag.CorPrioridade = color;
 
             return View(view);
         }
 
-        private List<Pipeline> SetList()
+        
+
+        private List<Pipeline> SetList(string id_pipe)
         {
-            string sql = string.Format(@"select * from Pipeline");
+            string sql;
+            if (string.IsNullOrEmpty(id_pipe))
+                sql = string.Format(@"select * from Pipeline");
+            else
+                sql = string.Format(@"select * from Pipeline where pk_pipeline = {0}",id_pipe);
+
             DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
 
             List<Pipeline> data = new();
@@ -118,20 +126,55 @@ namespace IoniCRM.Controllers
             return data;
         }
 
-        private void ToDeal(string id_deal)
+        // Ações com as Deals
+        public IActionResult DelDeal(string id_deal)
         {
-            view = "/View/Pipeline/Deal.cshtml?id=" + id_deal;
-        }
-
-        private void AddDeal()
-        {
-            view = "/View/Pipeline/Deal.cshtml";
-        }
-
-        private void DelDeal(string id_deal)
-        {
-            string sql = string.Format(@"select delDeal({0})",id_deal);
+            string sql = string.Format(@"select delDeal({0})", id_deal);
             pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+
+            return RedirectToAction("Pipeline", "Pipeline");
         }
+
+
+        //
+
+        // Ações na Pipeline
+        public IActionResult AddPipeline(string id)
+        {
+            ViewBag.Pipeline = int.Parse(id) != 0 ? SetList(id).First() : new Pipeline();
+            ViewBag.CorPrioridade = color;
+
+            return View("/Views/Pipelines/AddPipeline.cshtml");
+        }
+
+        public IActionResult DelPipeline(string id)
+        {
+            string sql = string.Format(@"select delPipeline({0})", id);
+            _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+            return RedirectToAction("Pipeline", "Pipeline");
+        }
+
+        public IActionResult UpsertPipe(string id_pipe, string nomeOriginal, string nome, string prioridade, string descr)
+        {
+            string sql;
+            JObject dados = JObject.Parse("{" +
+                    "\"nome\":\"" + nome + "\"," +
+                    "\"prioridade\":" + prioridade + "," +
+                    "\"descr\":\"" + descr + "\"" +
+                    "}");
+
+            if (!string.Equals(nomeOriginal, nome) && int.Parse(id_pipe) > 0)
+            {
+                sql = string.Format(@"select renamePipeline('{0}','{1}')", nomeOriginal, nome);
+                _ = pgsqlcon.ExecuteCmdAsync(sql);
+            }
+
+            sql = string.Format(@"select upsertPipeline('{0}')", dados);
+            _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+            return RedirectToAction("Pipeline","Pipeline");
+        }
+        //
     }
 }

@@ -15,7 +15,7 @@ a {
 }
 
 .borda-texto{
-    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgb(88,89,91);
     /* font-size: 3em; */
     color: #fff;
@@ -77,7 +77,6 @@ body {
     background-color: #BFE4E5;
     border: none;
     max-width: 30rem;
-    opacity: 75%;
     border-radius: 15px 15px;
 }
 
@@ -130,6 +129,10 @@ body {
     max-width: 30rem;
 }
 
+.mw-85p {
+    max-width: 85%;
+}
+
 .image-full {
     height: 45px;
     width: 203px;
@@ -145,6 +148,11 @@ body {
 .image-mobile {
     height: 45px;
     width: 45px;
+}
+
+.circle {
+    min-width: 2.2rem;
+    min-height: 2.2rem;
 }
 
 .image-mobile-navbar {

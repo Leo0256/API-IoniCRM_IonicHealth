@@ -88,5 +88,6 @@ C:\Users\yggdr\Desktop\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Listagem\card.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Pipelines\Pipeline.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Pipelines\card_deal.cshtml.g.cs
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csprojAssemblyReference.cache
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Pipelines\Deal.cshtml.g.cs
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Pipelines\AddPipeline.cshtml.g.cs
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csprojAssemblyReference.cache

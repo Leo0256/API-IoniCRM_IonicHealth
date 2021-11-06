@@ -10,7 +10,8 @@
                 </div>
                 
                 <div class="col-1 ml-1 py-1">
-                    <a class="nav-link p-0" href="Pipeline?act=deletar&id=@ViewBag.Deal.getId()">
+                    <a class="nav-link p-0" asp-controller="Pipeline" asp-action="Pipeline" 
+                       asp-route-id="@ViewBag.Deal.getId()" asp-route-act="deletar_deal">
                         <img class="btn-2" title="Remover Deal" src="~/images/del.png" />
                     </a>
                 </div>

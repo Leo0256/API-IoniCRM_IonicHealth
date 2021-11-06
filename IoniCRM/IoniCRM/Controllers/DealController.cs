@@ -16,52 +16,35 @@ namespace IoniCRM.Controllers
 {
     public class DealController : Controller
     {
-        private string view = "/Views/Pipelines/Pipeline.cshtml";
+        private string view = "/Views/Pipelines/Deal.cshtml";
         private PostgreSQLConnection pgsqlcon;
 
         private List<Pipeline> pipelines;
 
         //teste
-        private int[] totalDeals = new int[5];
-        private double[] totalValor = new double[5];
+        private readonly string[] color = {
+            "#00ffff", // 1
+            "#26d9d9", // 2
+            "#4fbfbf", // 3
+            "#59a6a6", // 4
+            "#738c8c", // 5
+            "#808080", // 6
+            "#8c7373", // 7
+            "#a65959", // 8
+            "#bf4040", // 9
+            "#ff0000"  // 10
+        };
 
         public DealController()
         {
             pgsqlcon = new();
         }
 
-        public IActionResult Pipeline(string act, string id)
+        public IActionResult Deal(string id, string act)
         {
-            ViewBag.Pipelines = pipelines;
-            
-            string[] estagio = {
-                "Qualificação",     // 0
-                "Proposta",         // 1
-                "Negociação",       // 2
-                "Fechado - Ganho",  // 3
-                "Fechado - Perda"   // 4
-            };
-            ViewBag.estagio = estagio;
-            ViewBag.totalDeals = totalDeals;
-            ViewBag.totalValor = totalValor;
+            ViewBag.teste = id + " - " + act;
 
-            switch (act)
-            {
-                case "selecionar":
-                    ToDeal(id);
-                    break;
-
-                case "adicionar":
-                    AddDeal();
-                    break;
-
-                case "deletar":
-                    DelDeal(id);
-                    break;
-
-                default:
-                    break;
-            }
+            ViewBag.cor = color;
 
             return View(view);
         }
@@ -105,8 +88,6 @@ namespace IoniCRM.Controllers
                         );
 
                     deals.Add(deal);
-                    totalDeals[deal.estagio]++;
-                    totalValor[deal.estagio] += deal.valor;
                 }
 
                 pipeline.deals = deals;
@@ -115,22 +96,6 @@ namespace IoniCRM.Controllers
 
             }
             return data;
-        }
-
-        private void ToDeal(string id_deal)
-        {
-            view = "/View/Pipeline/Deal.cshtml?id=" + id_deal;
-        }
-
-        private void AddDeal()
-        {
-            view = "/View/Pipeline/Deal.cshtml";
-        }
-
-        private void DelDeal(string id_deal)
-        {
-            string sql = string.Format(@"select delDeal({0})",id_deal);
-            pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
         }
     }
 }

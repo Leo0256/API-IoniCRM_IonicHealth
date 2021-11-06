@@ -1,8 +1,149 @@
 ﻿@{
-    ViewData["Title"] = "Pipeline";
+    ViewData["Title"] = "Deal";
 }
 
-<div class="row mx-auto pt-5">
-    <h1>Hello World :)</h1>
-    <h4>This is the "@ViewBag.teste.nome" deal.</h4>
+<div class="container pt-5">
+    <div class="bg-light-blue rounded border border-dark shadow">
+
+        <h1 class="borda-texto px-3 pt-3 m-0">Pipeline</h1>
+        <h5 class="border-bottom border-dark px-3 pt-1 pb-3 m-0">Descrição</h5>
+
+        <section>
+            @using (Html.BeginForm("UpsertDeal", "Deal", FormMethod.Post))
+            {
+                <input type="hidden" name="pk_deal" value="0" />
+
+                <div class="form-group container w-75 p-3">
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="nomeTextBox" class="borda-texto m-0">Nome</label>
+                            </h2>
+
+                            <input id="nomeTextBox" class="form-control rounded m-0" type="email" name="nome" placeholder="Informe um nome" value="" />
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="valorTextBox" class="borda-texto m-0">Valor</label>
+                            </h2>
+                            <input id="valorTextBox" class="form-control rounded" type="text" name="valor" placeholder="Informe um valor" value="" />
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="statusOptions" class="borda-texto m-0">Status</label>
+                            </h2>
+
+                            <select id="statusOptions" class="form-control">
+                                <option selected>Aberto</option>
+                                <option>Ganho</option>
+                                <option>Perda</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="estagioOptions" class="borda-texto m-0">Estagio da Deal</label>
+                            </h2>
+
+                            <select name="estagio" id="estagioOptions" class="form-control">
+                                <option selected>Qualificação</option>
+                                <option>Proposta</option>
+                                <option>Negociação</option>
+                                <option>Fechado - Ganho</option>
+                                <option>Fechado - Perda</option>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="probTextBox" class="borda-texto m-0">% de Ganho</label>
+                            </h2>
+                            <input id="probTextBox" class="form-control rounded" type="number" name="prob" value="" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h2 class="my-1">
+                                <label for="clienteOptions" class="borda-texto m-0">Cliente Envolvido</label>
+                            </h2>
+                            <input type="hidden" name="id_cli" value="0" />
+                            <select id="clienteOptions" class="form-control">
+                                <option>Fulano</option>
+                                <option>Beltrano</option>
+                                <option>Ciclano</option>
+                                <option>Outro maluco</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="aberturaDateTime" class="borda-texto m-0">Abertura</label>
+                            </h2>
+                            <div class="form-row m-0" id="aberturaDateTime">
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="aberturaDia" value="" />
+
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="time" name="aberturaHora" value="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="fechamentoDateTime" class="borda-texto m-0">Fechamento</label>
+                            </h2>
+                            <div class="form-row m-0" id="fechamentoDateTime">
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="fechamentoDia" value="" />
+
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="time" name="fechamentoHora" value="" />
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h2 class="my-1">
+                                <label for="descrTextArea" class="borda-texto m-0">Descrição</label>
+                            </h2>
+                            <textarea id="descrTextArea" class="form-control rounded" type="text" name="descr" rows="5" value=""></textarea>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row align-items-center justify-content-between">
+                        <button type="submit" class="btn btn-primary bg-light-blue rounded-pill border-dark shadow mt-3">
+                            <h4 class="borda-texto m-1">Salvar</h4>
+                        </button>
+
+                        <button type="submit" class="btn btn-danger rounded-pill border-dark shadow mt-3">
+                            <h4 class="borda-texto m-1">Deletar</h4>
+                        </button>
+                    </div>
+                </div>
+            }
+
+        </section>
+
+    </div>
 </div>

@@ -10,7 +10,7 @@ create database "IoniCRM"
 create table Usuario(
 	pk_usuario serial primary key,
 	nivel integer not null,
-	img varchar default 'https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/sistema/IoniCRM/IoniCRM/wwwroot/images/logo-icon-1.png',
+	img varchar default 'https://raw.githubusercontent.com/Leo0256/API-IoniCRM_IonicHealth/sistema/IoniCRM/IoniCRM/wwwroot/images/logo-icon-1.png',
 	nome varchar(80) not null,
 	email varchar(100) unique not null,
 	hash_senha varchar(50) not null,
@@ -22,7 +22,7 @@ create table Cliente(
 	fk_emp integer,
 	cpf_cnpj varchar(20) not null unique,
 	crm varchar(15),
-	img varchar default 'https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/sistema/IoniCRM/IoniCRM/wwwroot/images/logo-icon-1.png',
+	img varchar default 'https://raw.githubusercontent.com/Leo0256/API-IoniCRM_IonicHealth/sistema/IoniCRM/IoniCRM/wwwroot/images/logo-icon-1.png',
 	nome varchar(80) not null,
 	razao_social varchar(250) unique, /*ou apelido*/
 	categoria varchar(40), /*ou cargo*/
@@ -562,9 +562,9 @@ begin
 	loop
 		select delDeal(next id_deal);
 	end loop;
-	/*
+	
 	delete from Pipeline
-		where pk_pipeline = id_pipe;*/
+		where pk_pipeline = id_pipe;
 end $$;
 
 

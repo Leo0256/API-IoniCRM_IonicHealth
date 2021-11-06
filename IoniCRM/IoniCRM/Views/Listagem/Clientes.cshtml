@@ -9,8 +9,8 @@
 
             <li class="nav-item">
                 <button class="nav-link btn btn-primary btn-list bg-light-blue mb-3 rounded border-dark" href="#sidebar" data-toggle="collapse" data-target="#sidebar">
-                    <img src="~/images/list.svg" class="image-full wh-25" />
-                    <img src="~/images/arrow-down-circle.svg" class="image-mobile wh-15" />
+                    <img src="~/images/list.svg" class="image-full-navbar wh-25" title="Abrir lista" />
+                    <img src="~/images/arrow-down-circle.svg" class="image-mobile-navbar wh-15" title="Abrir lista" />
                 </button>
             </li>
 
@@ -46,7 +46,7 @@
 
         if (foo.Count > 0)
         {
-            <h1 class=".borda-texto">Funcionarios</h1>
+            <h1 class="bg-light-blue rounded text-center borda-texto text-shadow m-3">Funcionarios</h1>
             <div class="container text-center row mx-auto pt-5">
                 @{
                     ViewBag.Itens = new List<IoniCRM.Controllers.Cliente>();

@@ -17,6 +17,14 @@ namespace IoniCRM.Controllers.Objects
         // remover depois?
         private Usuario usuario;
 
+        public Pipeline() 
+        {
+            pk_pipeline = 0;
+            nome = new(string.Empty);
+            prioridade = 1;
+            descr = new(string.Empty);
+        }
+
         public Pipeline(int pk_pipeline, string nome, int prioridade, 
             string descr)
         {

@@ -47,6 +47,27 @@ namespace IoniCRM.Controllers
             return table;
         }
 
+        public async void ExecuteCmdAsyncNoReturn(string query)
+        {
+            try
+            {
+                await using (conn = new NpgsqlConnection(connString))
+                {
+                    conn.Open();
+                    using NpgsqlCommand command = new(query, conn);
+                }
+            }
+            catch (Exception)
+            {
+                /*Mensagem de erro : ("Erro na Execução: " + ex.Message);*/
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public void Open()
         {
             try
