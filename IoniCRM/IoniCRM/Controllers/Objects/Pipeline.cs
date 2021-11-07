@@ -20,9 +20,9 @@ namespace IoniCRM.Controllers.Objects
         public Pipeline() 
         {
             pk_pipeline = 0;
-            nome = new(string.Empty);
+            nome = string.Empty;
             prioridade = 1;
-            descr = new(string.Empty);
+            descr = string.Empty;
         }
 
         public Pipeline(int pk_pipeline, string nome, int prioridade, 
@@ -35,5 +35,26 @@ namespace IoniCRM.Controllers.Objects
         }
 
         public int GetId() => pk_pipeline;
+
+        public int GetTotalDeals(int estagio)
+        {
+            int total = 0;
+            foreach(Deal deal in deals)
+            {
+                if (deal.estagio == estagio)
+                    total++;
+            }
+            return total;
+        }
+        public double GetTotalValor(int estagio)
+        {
+            double valor = 0;
+            foreach(Deal deal in deals)
+            {
+                if(deal.estagio == estagio)
+                    valor += deal.valor;
+            }
+            return valor;
+        }
     }
 }

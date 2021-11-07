@@ -29,7 +29,7 @@
 <div class="container text-center row mx-auto pt-5">
 
     @{
-        ViewBag.Itens = new List<IoniCRM.Controllers.Cliente>();
+        ViewBag.Itens = new List<IoniCRM.Controllers.Objects.Cliente>();
         ViewBag.Itens = ViewBag.Clientes;
     }
 
@@ -41,7 +41,7 @@
     if (ViewBag.Funcionarios != null)
     {
 
-        List<IoniCRM.Controllers.Cliente> foo = ViewBag.Funcionarios;
+        List<IoniCRM.Controllers.Objects.Cliente> foo = ViewBag.Funcionarios;
 
 
         if (foo.Count > 0)
@@ -49,7 +49,7 @@
             <h1 class="bg-light-blue rounded text-center borda-texto text-shadow m-3">Funcionarios</h1>
             <div class="container text-center row mx-auto pt-5">
                 @{
-                    ViewBag.Itens = new List<IoniCRM.Controllers.Cliente>();
+                    ViewBag.Itens = new List<IoniCRM.Controllers.Objects.Cliente>();
                     ViewBag.Itens = ViewBag.Funcionarios;
                 }
 

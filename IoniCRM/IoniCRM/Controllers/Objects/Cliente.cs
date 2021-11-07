@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IoniCRM.Controllers
+namespace IoniCRM.Controllers.Objects
 {
     public class Cliente : EqualityComparer<Cliente>
     {
@@ -24,11 +24,19 @@ namespace IoniCRM.Controllers
         public List<string[]> contatos;
         public List<Cliente> funcionarios;
 
-        public Cliente(int pk_cliente, string emp, string nome) 
+        public Cliente()
+        {
+            pk_cliente = 0;
+            emp = string.Empty;
+            nome = string.Empty;
+        }
+
+        public Cliente(int pk_cliente, string emp, string nome, string img) 
         {
             this.pk_cliente = pk_cliente;
             this.emp = emp;
             this.nome = nome;
+            this.img = img;
             funcionarios = new();
         }
 

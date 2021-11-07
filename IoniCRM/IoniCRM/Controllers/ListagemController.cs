@@ -58,7 +58,7 @@ namespace IoniCRM.Controllers
         private bool flag = false;
         public List<Cliente> SetList()
         {
-            string sql = string.Format(@"select pk, emp, nome from dadosCliente(null)");
+            string sql = string.Format(@"select pk, emp, nome, img from dadosCliente(null)");
             DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
 
             List<Cliente> data = new();
@@ -67,7 +67,8 @@ namespace IoniCRM.Controllers
                 Cliente cliente = new(
                         int.Parse(row["pk"].ToString()),
                         row["emp"].ToString(),
-                        row["nome"].ToString()
+                        row["nome"].ToString(),
+                        row["img"].ToString()
                         );
 
                 if (string.IsNullOrEmpty(row["emp"].ToString()))

@@ -54,22 +54,26 @@
     @foreach (var pipeline in ViewBag.Pipelines as List<IoniCRM.Controllers.Objects.Pipeline>)
     {
         <div class="bg-light-blue rounded row justify-content-between align-items-center w-100 pt-2 pb-3 px-3 m-3">
-            <div class="mw-85p m-0">
+            <div class="mw-70p m-0">
                 <h1 class="borda-texto m-0">@pipeline.nome</h1>
                 <h6 class="m-0">@pipeline.descr</h6>
             </div>
 
-            <div>
-                <div class="border border-dark rounded-circle circle shadow p-1 m-2"
+            <div class="row align-items-center m-0">
+                <a class="nav-link p-0 m-1" asp-controller="Deal" asp-action="Deal" asp-route-id="0" asp-route-pipe="@pipeline.GetId()">
+                    <img class="btn-2" title="Adicionar nova Deal" src="~/images/add.png" />
+                </a>
+
+                <a class="nav-link p-0 m-1" asp-controller="Pipeline" asp-action="AddPipeline" asp-route-id="@pipeline.GetId()">
+                    <img class="btn-2" title="Configurar Pipeline" src="~/images/gear-fill.svg" />
+                </a>
+
+                <div class="border border-dark rounded-circle circle shadow w-25 p-1 m-1"
                      style="background-color:@ViewBag.CorPrioridade[pipeline.prioridade-1]">
                     <div class=" text-center borda-texto">
                         @pipeline.prioridade
                     </div>
                 </div>
-
-                <a class="nav-link" asp-controller="Pipeline" asp-action="AddPipeline" asp-route-id="@pipeline.GetId()">
-                    <img class="btn-2" src="~/images/gear-fill.svg" />
-                </a>
             </div>
         </div>
 
@@ -84,19 +88,15 @@
                                     <div class="flex-wrap my-auto mr-3 px-1">
                                         <h2 class="font-weight-bold borda-texto text-shadow">@ViewBag.estagio[x]</h2>
                                     </div>
-
-                                    <a class="nav-link p-0" asp-controller="Deal" asp-action="Deal" asp-route-act="adicionar">
-                                        <img class="btn-2" title="Adicionar nova Deal" src="~/images/add.png" />
-                                    </a>
                                 </li>
 
                                 <li class="row mx-1">
                                     <div class="d-inline flex-wrap text-card-title text-muted pl-1 pr-3">
-                                        @ViewBag.totalDeals[x] Deals
+                                        @pipeline.GetTotalDeals(x) Deals
                                     </div>
 
                                     <div class="d-inline flex-wrap text-card-title text-muted pl-1">
-                                        Total: R$ @ViewBag.totalValor[x]
+                                        Total: R$ @pipeline.GetTotalValor(x)
                                     </div>
                                 </li>
                             </ul>

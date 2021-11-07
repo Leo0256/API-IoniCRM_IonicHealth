@@ -23,9 +23,6 @@ namespace IoniCRM.Controllers
 
         private List<Pipeline> pipelines = new();
 
-        //teste
-        private int[] totalDeals = new int[5];
-        private double[] totalValor = new double[5];
 
         private readonly string[] color = {
             "#00ffff", // 1
@@ -60,8 +57,6 @@ namespace IoniCRM.Controllers
                 "Fechado - Perda"   // 4
             };
             ViewBag.estagio = estagio;
-            ViewBag.totalDeals = totalDeals;
-            ViewBag.totalValor = totalValor;
 
             ViewBag.CorPrioridade = color;
 
@@ -94,28 +89,35 @@ namespace IoniCRM.Controllers
                 DataRow[] foo = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
                 
                 List<Deal> deals = new();
+                DateTime? abertura;
+                DateTime? fechamento;
                 foreach(DataRow dataRow in foo)
                 {
+                    abertura = string.IsNullOrEmpty(dataRow["abertura"].ToString()) ?
+                        null : DateTime.Parse(dataRow["abertura"].ToString());
+
+                    fechamento = string.IsNullOrEmpty(dataRow["fechamento"].ToString()) ?
+                        null : DateTime.Parse(dataRow["fechamento"].ToString());
+
                     Deal deal = new(
                         int.Parse(dataRow["id_deal"].ToString()),
                         dataRow["nome"].ToString(),
                         int.Parse(dataRow["estagio"].ToString()),
                         int.Parse(dataRow["d_status"].ToString()),
                         double.Parse(dataRow["valor"].ToString()),
-                        dataRow["abertura"].ToString(),
-                        dataRow["fechamento"].ToString(),
+                        abertura,
+                        fechamento,
                         int.Parse(dataRow["probabilidade"].ToString()),
                         dataRow["descr"].ToString(),
                         new Cliente(
                             int.Parse(dataRow["id_cli"].ToString()),
                             dataRow["empresa"].ToString(),
-                            dataRow["cliente"].ToString()
+                            dataRow["cliente"].ToString(),
+                            dataRow["img"].ToString()
                             )
                         );
 
                     deals.Add(deal);
-                    totalDeals[deal.estagio]++;
-                    totalValor[deal.estagio] += deal.valor;
                 }
 
                 pipeline.deals = deals;
@@ -127,15 +129,13 @@ namespace IoniCRM.Controllers
         }
 
         // Ações com as Deals
-        public IActionResult DelDeal(string id_deal)
+        public IActionResult DelDeal(string id)
         {
-            string sql = string.Format(@"select delDeal({0})", id_deal);
-            pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+            string sql = string.Format(@"select delDeal({0})", id);
+            _ = pgsqlcon.ExecuteCmdAsync(sql);
 
             return RedirectToAction("Pipeline", "Pipeline");
         }
-
-
         //
 
         // Ações na Pipeline

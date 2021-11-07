@@ -5,13 +5,14 @@
 <div class="container pt-5">
     <div class="bg-light-blue rounded border border-dark shadow">
 
-        <h1 class="borda-texto px-3 pt-3 m-0">Pipeline</h1>
-        <h5 class="border-bottom border-dark px-3 pt-1 pb-3 m-0">Descrição</h5>
+        <h1 class="borda-texto px-3 pt-3 m-0">@ViewBag.Pipeline.nome</h1>
+        <h5 class="border-bottom border-dark px-3 pt-1 pb-3 m-0">@ViewBag.Pipeline.descr</h5>
 
         <section>
             @using (Html.BeginForm("UpsertDeal", "Deal", FormMethod.Post))
             {
-                <input type="hidden" name="pk_deal" value="0" />
+                <input type="hidden" name="id_deal" value="@ViewBag.Deal.getId()" />
+                <input type="hidden" name="id_pipe" value="@ViewBag.Pipeline.GetId()" />
 
                 <div class="form-group container w-75 p-3">
                     <div class="form-row align-items-baseline">
@@ -21,18 +22,30 @@
                                 <label for="nomeTextBox" class="borda-texto m-0">Nome</label>
                             </h2>
 
-                            <input id="nomeTextBox" class="form-control rounded m-0" type="email" name="nome" placeholder="Informe um nome" value="" />
+                            <input id="nomeTextBox" class="form-control rounded m-0" type="text" name="nome" placeholder="Informe um nome" value="@ViewBag.Deal.nome" />
 
                         </div>
+
 
                         <div class="form-group col-md-6">
                             <h2 class="my-1">
                                 <label for="valorTextBox" class="borda-texto m-0">Valor</label>
                             </h2>
-                            <input id="valorTextBox" class="form-control rounded" type="text" name="valor" placeholder="Informe um valor" value="" />
+
+                            <div class="input-group mb-3">
+
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">R$</span>
+                                </div>
+
+                                <input type="number" id="valorTextBox" class="form-control" name="valor" placeholder="00" aria-label="00" value="@ViewBag.Deal.valor">
+                            
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+
+                            </div>
                         </div>
-
-
 
                     </div>
 
@@ -43,10 +56,18 @@
                                 <label for="statusOptions" class="borda-texto m-0">Status</label>
                             </h2>
 
-                            <select id="statusOptions" class="form-control">
-                                <option selected>Aberto</option>
-                                <option>Ganho</option>
-                                <option>Perda</option>
+                            <select id="statusOptions" name="status" class="form-control">
+                                @for (int status = 0; status < ViewBag.Status.Length; status++)
+                                {
+                                    if (status == ViewBag.Deal.d_status)
+                                    {
+                                        <option selected>@ViewBag.Status[status]</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@ViewBag.Status[status]</option>
+                                    }
+                                }
                             </select>
                         </div>
 
@@ -55,12 +76,18 @@
                                 <label for="estagioOptions" class="borda-texto m-0">Estagio da Deal</label>
                             </h2>
 
-                            <select name="estagio" id="estagioOptions" class="form-control">
-                                <option selected>Qualificação</option>
-                                <option>Proposta</option>
-                                <option>Negociação</option>
-                                <option>Fechado - Ganho</option>
-                                <option>Fechado - Perda</option>
+                            <select id="estagioOptions" class="form-control" name="estagio">
+                                @for (int estagio = 0; estagio < ViewBag.Estagio.Length; estagio++)
+                                {
+                                    if (estagio == ViewBag.Deal.estagio)
+                                    {
+                                        <option selected>@ViewBag.Estagio[estagio]</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@ViewBag.Estagio[estagio]</option>
+                                    }
+                                }
                             </select>
 
                         </div>
@@ -69,7 +96,7 @@
                             <h2 class="my-1">
                                 <label for="probTextBox" class="borda-texto m-0">% de Ganho</label>
                             </h2>
-                            <input id="probTextBox" class="form-control rounded" type="number" name="prob" value="" />
+                            <input id="probTextBox" class="form-control rounded" type="number" name="prob" value="@ViewBag.Deal.probabilidade" />
                         </div>
 
                     </div>
@@ -80,12 +107,19 @@
                             <h2 class="my-1">
                                 <label for="clienteOptions" class="borda-texto m-0">Cliente Envolvido</label>
                             </h2>
-                            <input type="hidden" name="id_cli" value="0" />
-                            <select id="clienteOptions" class="form-control">
-                                <option>Fulano</option>
-                                <option>Beltrano</option>
-                                <option>Ciclano</option>
-                                <option>Outro maluco</option>
+                            
+                            <select id="clienteOptions" class="form-control" name="nome_cli">
+                                @foreach(var cliente in ViewBag.Clientes as List<IoniCRM.Controllers.Objects.Cliente>)
+                                {
+                                    if(cliente.GetPk_Cliente() == ViewBag.Deal.cliente.GetPk_Cliente())
+                                    {
+                                        <option selected>@cliente.nome</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@cliente.nome</option>
+                                    }
+                                }
                             </select>
                         </div>
 
@@ -98,9 +132,9 @@
                                 <label for="aberturaDateTime" class="borda-texto m-0">Abertura</label>
                             </h2>
                             <div class="form-row m-0" id="aberturaDateTime">
-                                <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="aberturaDia" value="" />
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="aberturaDia" value="@ViewBag.aberturaDia" />
 
-                                <input class="form-control col-sm rounded mx-1 mb-1" type="time" name="aberturaHora" value="" />
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="time" name="aberturaHora" value="@ViewBag.aberturaHora" />
                             </div>
                         </div>
 
@@ -109,13 +143,11 @@
                                 <label for="fechamentoDateTime" class="borda-texto m-0">Fechamento</label>
                             </h2>
                             <div class="form-row m-0" id="fechamentoDateTime">
-                                <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="fechamentoDia" value="" />
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="fechamentoDia" value="@ViewBag.fechamentoDia" />
 
-                                <input class="form-control col-sm rounded mx-1 mb-1" type="time" name="fechamentoHora" value="" />
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="time" name="fechamentoHora" value="@ViewBag.fechamentoHora" />
                             </div>
                         </div>
-
-
 
                     </div>
 
@@ -125,7 +157,7 @@
                             <h2 class="my-1">
                                 <label for="descrTextArea" class="borda-texto m-0">Descrição</label>
                             </h2>
-                            <textarea id="descrTextArea" class="form-control rounded" type="text" name="descr" rows="5" value=""></textarea>
+                            <textarea id="descrTextArea" class="form-control rounded" type="text" name="descr" rows="5" value="@ViewBag.Deal.descr"></textarea>
                         </div>
 
                     </div>
@@ -136,10 +168,14 @@
                             <h4 class="borda-texto m-1">Salvar</h4>
                         </button>
 
-                        <button type="submit" class="btn btn-danger rounded-pill border-dark shadow mt-3">
-                            <h4 class="borda-texto m-1">Deletar</h4>
-                        </button>
-                    </div>
+                        @if (ViewBag.Deal.getId() != 0)
+                        {
+                            <a class="btn btn-danger rounded-pill border-dark shadow mt-3"
+                               asp-controller="Pipeline" asp-action="DelDeal" asp-route-id="@ViewBag.Deal.getId()">
+                                <h4 class="borda-texto m-1">Deletar</h4>
+                            </a>
+                        }
+                        </div>
                 </div>
             }
 

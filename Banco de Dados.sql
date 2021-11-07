@@ -577,7 +577,7 @@ language plpgsql
 as $$
 declare
 	id_cli integer := (select pk_cliente from Cliente
-		where nome = dados->>'cliente');
+		where razao_social = dados->>'cliente');
 	deal_open timestamp := to_timestamp(dados->>'abertura', 'DD/MM/YYYY HH24:MI:SS');
 	deal_close timestamp := to_timestamp(dados->>'fechamento', 'DD/MM/YYYY HH24:MI:SS');
 	fk_df integer;
@@ -629,7 +629,7 @@ language plpgsql
 as $$
 declare
 	id_cli integer := (select pk_cliente from Cliente
-		where nome = dados->>'cliente');
+		where razao_social = dados->>'cliente');
 	deal_open timestamp := to_timestamp(dados->>'abertura', 'DD/MM/YYYY HH24:MI:SS');
 	deal_close timestamp := to_timestamp(dados->>'fechamento', 'DD/MM/YYYY HH24:MI:SS');
 	id_deal integer := (dados->>'id_deal')::integer;
