@@ -1,0 +1,49 @@
+﻿
+<li class="border-bottom border-dark mt-2 px-1 pb-3">
+
+    <div class="row mx-2 pb-1">
+        <div class="col p-0">
+
+            <div class="row m-0">
+                <div class="col p-0">
+                    <div class="text-card-title text-wrap">@ViewBag.Deal.nome</div>
+                </div>
+
+                <div class="col-1 ml-2 py-1 px-0">
+                    <a class="nav-link p-0" asp-controller="Deal" asp-action="Deal"
+                       asp-route-id="@ViewBag.Deal.getId()">
+                        <img class="btn-2" title="Ver Deal" src="~/images/gear-fill.svg" />
+                    </a>
+                </div>
+
+                <div class="col-1 ml-3 py-1 px-0">
+                    <a class="nav-link p-0" asp-controller="Pipeline" asp-action="DelDeal"
+                       asp-route-id="@ViewBag.Deal.getId()">
+                        <img class="btn-2" title="Remover Deal" src="~/images/del.png" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="row justify-content-between mx-0">
+                <div class="text-card">@ViewBag.Deal.abertura</div>
+                <h5 class="borda-texto my-0 mx-1">></h5>
+                <div class="text-card">@ViewBag.Deal.fechamento</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-between mx-0">
+        <div class="row align-items-center border-dark border-right pr-2 mx-0">
+            
+            <img title="imagem perfil" src="@ViewBag.Deal.cliente.img" class="perfil-icon mw-6 rounded-circle mx-2">
+            
+            <div class="border-right px-2">
+                <div class="text-card-title">@ViewBag.Deal.cliente.nome</div>
+                <div class="text-card">@ViewBag.Deal.cliente.GetEmp()</div>
+            </div>
+        </div>
+
+        <div class="text-card mx-2">R$ @ViewBag.Deal.valor</div>
+
+    </div>
+</li>

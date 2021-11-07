@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Pipeline";
+}
+
+<div class="position-sticky sticky-top">
+    <div class="sidebar container text-left rounded-right shadow-sm d-md-flex pt-2 pb-0 px-2">
+
+        <ul class="nav flex-column flex-nowrap overflow-hidden">
+
+            <li class="nav-item">
+                <button class="nav-link btn btn-primary btn-list bg-light-blue mb-3 rounded border-dark" href="#sidebar" data-toggle="collapse" data-target="#sidebar">
+                    <img src="~/images/list.svg" class="image-full-navbar wh-25" title="Abrir lista" />
+                    <img src="~/images/arrow-down-circle.svg" class="image-mobile-navbar wh-15" title="Abrir lista" />
+                </button>
+            </li>
+
+            <li>
+                <div class="collapse sidebar-content" id="sidebar" aria-expanded="false">
+                    <ul class="nav flex-column flex-nowrap">
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Pipeline" asp-action="AddPipeline" asp-route-id="0">
+                                <img class="btn-2" title="Adicionar nova Pipeline" src="~/images/add.png" />
+                            </a>
+                        </li>
+
+                        @foreach (var pipe in ViewBag.TodasPipelines as List<IoniCRM.Controllers.Objects.Pipeline>)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark align-middle p-1"
+                                   asp-controller="Pipeline" asp-action="Pipeline" asp-route-id="@pipe.GetId()">
+
+                                    @pipe.nome
+                                </a>
+
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="row w-100 pt-5 m-0">
+
+    <!--
+    Lembrete:
+        Limitar o total de cards mostrados a 2 ou 3,
+        mais do que isso aparece o scrollbar.
+    -->
+
+    @foreach (var pipeline in ViewBag.Pipelines as List<IoniCRM.Controllers.Objects.Pipeline>)
+    {
+        <div class="bg-light-blue rounded row justify-content-between align-items-center w-100 pt-2 pb-3 px-3 m-3">
+            <div class="mw-70p m-0">
+                <h1 class="borda-texto m-0">@pipeline.nome</h1>
+                <h6 class="m-0">@pipeline.descr</h6>
+            </div>
+
+            <div class="row align-items-center m-0">
+                <a class="nav-link p-0 m-1" asp-controller="Deal" asp-action="Deal" asp-route-id="0" asp-route-pipe="@pipeline.GetId()">
+                    <img class="btn-2" title="Adicionar nova Deal" src="~/images/add.png" />
+                </a>
+
+                <a class="nav-link p-0 m-1" asp-controller="Pipeline" asp-action="AddPipeline" asp-route-id="@pipeline.GetId()">
+                    <img class="btn-2" title="Configurar Pipeline" src="~/images/gear-fill.svg" />
+                </a>
+
+                <div class="border border-dark rounded-circle circle shadow w-25 p-1 m-1"
+                     style="background-color:@ViewBag.CorPrioridade[pipeline.prioridade-1]">
+                    <div class=" text-center borda-texto">
+                        @pipeline.prioridade
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mx-auto m-0">
+            @for (int x = 0; x < 5; x++)
+            {
+                <div class="mw-30 mx-auto mb-4 px-2">
+                    <div class="container text-justify p-2 bg-card rounded mh-100 mw-auto-content box-shadow">
+                        <div class="row border-bottom border-dark mx-0">
+                            <ul class="w-auto mb-2 px-1">
+                                <li class="row align-items-center mx-1">
+                                    <div class="flex-wrap my-auto mr-3 px-1">
+                                        <h2 class="font-weight-bold borda-texto text-shadow">@ViewBag.estagio[x]</h2>
+                                    </div>
+                                </li>
+
+                                <li class="row mx-1">
+                                    <div class="d-inline flex-wrap text-card-title text-muted pl-1 pr-3">
+                                        @pipeline.GetTotalDeals(x) Deals
+                                    </div>
+
+                                    <div class="d-inline flex-wrap text-card-title text-muted pl-1">
+                                        Total: R$ @pipeline.GetTotalValor(x)
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="row mx-0">
+                            <ul class="nav flex-column">
+
+                                @{ 
+                                    foreach (var deal in pipeline.deals)
+                                    {
+                                        ViewBag.Deal = deal;
+                                        if (deal.estagio == x)
+                                        {
+                                            @Html.Partial("../Pipelines/card_deal");
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
