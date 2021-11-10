@@ -11,6 +11,7 @@ namespace IoniCRM.Controllers.Objects
         private int nivel;
         public string nome;
         private string email;
+        public string img;
         public string cargo;
 
         public Usuario(int pk_usuario, int nivel)
@@ -19,7 +20,7 @@ namespace IoniCRM.Controllers.Objects
             this.nivel = nivel;
         }
 
-        public Usuario(int pk_usuario, int nivel, string nome, string email, string cargo)
+        public Usuario(int pk_usuario, int nivel, string nome, string email, string img, string cargo)
         {
             this.pk_usuario = pk_usuario;
             this.nivel = nivel;

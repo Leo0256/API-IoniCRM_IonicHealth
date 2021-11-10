@@ -12,54 +12,36 @@ using Microsoft.AspNetCore.Http;
 
 namespace IoniCRM.Controllers
 {
-    public class HomeController : Controller
+    public class SessionConfig : Controller
     {
-
         private PostgreSQLConnection pgsqlcon;
-        private readonly SessionConfig session;
+        public Usuario usuario;
         
-
-        public HomeController()
+        public SessionConfig(PostgreSQLConnection connection)
         {
-            pgsqlcon = new();
-            session = new(pgsqlcon);
-
-            session.VerifySession("Home","Home");
-            ViewBag.Usuario = session.usuario;
+            pgsqlcon = connection;
         }
         
-
-        public IActionResult Home()
+        public IActionResult VerifySession(string redirectController, string redirectview)
         {
-            /*
             if (HttpContext.Session.GetInt32(Session.SessionKeyName) != default)
             {
                 string sql = String.Format(@"select * from Usuario where pk_usuario = {0}", HttpContext.Session.GetInt32(Session.SessionKeyName));
-                DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+                DataRow user = pgsqlcon.ExecuteCmdAsync(sql).Result.Select()[0];
 
-                foreach (DataRow row in rows)
-                {
-                    ViewBag.Usuario = new Usuario(
-                        int.Parse(row["pk_usuario"].ToString()),
-                        int.Parse(row["nivel"].ToString()),
-                        row["nome"].ToString(),
-                        row["email"].ToString(),
-                        row["cargo"].ToString()
-                        );
-                }
+                usuario = new Usuario(
+                    int.Parse(user["pk_usuario"].ToString()),
+                    int.Parse(user["nivel"].ToString()),
+                    user["nome"].ToString(),
+                    user["email"].ToString(),
+                    user["img"].ToString(),
+                    user["cargo"].ToString()
+                    );
+                
 
-
-                return View();
+                return RedirectToAction(redirectController, redirectview);
             }
             return RedirectToAction("Login", "Login");
-            */
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
