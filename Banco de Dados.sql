@@ -98,6 +98,14 @@ create table Usuario_Pipeline(
 	foreign key (fk_pipeline) references Pipeline (pk_pipeline)
 );
 
+create table Historico (
+	pk_h serial primary key,
+	fk_usuario integer not null,
+	data timestamp default current_timestamp,
+	descr varchar default '...',
+	foreign key (fk_usuario) references Usuario (pk_usuario)
+);
+
 /**/
 /*Triggers*/
 create or replace function Usuario_img_default()
@@ -134,6 +142,33 @@ end $$;
 create trigger Cliente_img_null
 after insert or update on Cliente
 for each row execute procedure Cliente_img_default();
+
+
+create or replace function Update_Historico()
+returns trigger
+language plpgsql
+as $$
+begin
+	if New.data is null then
+		update Historico
+			set data = default
+		where pk_h = New.pk_h;
+	end if;
+	
+	if New.descr is null then
+		update Historico
+			set descr = default
+		where pk_h = New.pk_h;
+	end if;
+	
+	delete from Historico where
+		data < current_timestamp - interval '2 years';
+	return null;
+end $$;
+
+create trigger delete_old_records_historico
+after insert or update on Historico
+for each row execute procedure Update_Historico();
 /*/Triggers*/
 
 
@@ -168,7 +203,8 @@ returns table(
 	nivel integer,
 	img varchar,
 	nome varchar,
-	email varchar
+	email varchar,
+	cargo varchar
 )
 language plpgsql
 as $$
@@ -176,7 +212,8 @@ begin
 	return query 
 	select
 		x.pk_usuario, x.nivel,
-		x.img, x.nome, x.email
+		x.img, x.nome, x.email,
+		x.cargo
 	from Usuario as x
 	where x.pk_usuario = id_usuario;
 end $$;
@@ -187,7 +224,8 @@ returns table(
 	nivel integer,
 	img varchar,
 	nome varchar,
-	email varchar
+	email varchar,
+	cargo varchar
 )
 language plpgsql
 as $$
@@ -195,7 +233,8 @@ begin
 	return query 
 	select
 		x.pk_usuario, x.nivel,
-		x.img, x.nome, x.email
+		x.img, x.nome, x.email,
+		x.cargo
 	from Usuario as x
 	where x.email = email_usuario;
 end $$;
@@ -759,7 +798,41 @@ begin
 end $$;
 
 
+/*
+select * from dadosHistorico();
+*/
+create or replace function dadosHistorico()
+returns table(
+	pk_h integer,
+	fk_usuario integer,
+	data timestamp,
+	descr varchar
+)
+language plpgsql
+as $$
+begin
+	return query
+		select * from Historico
+		order by data;
+end $$;
 
+
+/*
+select addHistorico(<dados> json);
+*/
+create or replace function addHistorico(dados json)
+returns void
+language plpgsql
+as $$
+begin
+	insert into Historico values
+	(
+		default,
+		(dados->>'pk_usuario')::integer,
+		(dados->>'data')::timestamp,
+		dados->>'descr'
+	);
+end $$;
 
 
 

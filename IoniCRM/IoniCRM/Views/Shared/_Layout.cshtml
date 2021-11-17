@@ -9,12 +9,12 @@
     <link runat="server" rel="stylesheet" type="text/css" media="screen" href="~/css/internal.css" />
 
 </head>
-<body>
+<body class="bg-theme-login">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light-blue border-bottom border-dark box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm nav-dark border-bottom border-dark box-shadow mb-3">
             <div class="container">
                 @{
-                    switch (SessionValues.GetPermission(this.Context.Session))
+                    switch (Session.GetPermission(this.Context.Session))
                     {
                         case 2:
                             <a class="navbar-brand border-0" asp-area="" asp-controller="Home" asp-action="Home">
@@ -23,27 +23,38 @@
                                     <img src="~/images/logo-icon-1.png" class="image-mobile image-mobile-navbar mb-0" />
                                 </div>
                             </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light pt-1">
+                                    <svg class="sun" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" />
+                                </button>
+                                <button class="btn btn-outline-secondary pt-1" disabled>
+                                    <svg class="moon-fill" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" />
+                                </button>
+                            </div>
+
+                            <button class="navbar-toggler btn-secondary bg-theme-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
+                                <img src="~/images/list.svg" class="wh-25" title="Abrir Menu" />
+                                <!--<span class="navbar-toggler-icon"></span>-->
                             </button>
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                                 <ul class="navbar-nav flex-grow-1">
                                     <li class="nav-item">
-                                        <a class="nav-link text-white text-shadow font-weight-bold" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+                                        <a class="nav-link text-theme-dark text-shadow font-weight-bold" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-white text-shadow font-weight-bold" asp-area="" asp-controller="Listagem" asp-action="Clientes">Clientes</a>
+                                        <a class="nav-link text-theme-dark text-shadow font-weight-bold" asp-area="" asp-controller="Listagem" asp-action="Clientes">Clientes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-white text-shadow font-weight-bold" asp-area="" asp-controller="Pipeline" asp-action="Pipeline">Pipeline</a>
+                                        <a class="nav-link text-theme-dark text-shadow font-weight-bold" asp-area="" asp-controller="Pipeline" asp-action="Pipeline">Pipeline</a>
                                     </li>
 
                                     <!--
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                        </li>
-                                    -->
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        -->
                                 </ul>
                             </div>
                             break;
@@ -53,6 +64,16 @@
                                 <img src="~/images/logo-1.png" class="image-full image-full-navbar mb-0" />
                                 <img src="~/images/logo-icon-1.png" class="image-mobile image-mobile-navbar mb-0" />
                             </div>
+
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light pt-1">
+                                    <svg class="sun" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" />
+                                </button>
+                                <button class="btn btn-outline-secondary pt-1" disabled>
+                                    <svg class="moon-fill" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" />
+                                </button>
+                            </div>
+
                             break;
                     }
                 }
@@ -64,7 +85,7 @@
         @RenderBody()
     </main>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-light">
         <div class="container">
             &copy; @DateTime.Now.Year - IoniCRM
         </div>

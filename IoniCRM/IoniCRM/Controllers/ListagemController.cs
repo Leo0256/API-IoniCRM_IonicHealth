@@ -18,7 +18,6 @@ namespace IoniCRM.Controllers
 {
     public class ListagemController : Controller
     {
-        private readonly ILogger<ListagemController> _logger;
         private readonly string view = "/Views/Listagem/Clientes.cshtml";
 
         readonly LoginModel login = new();
@@ -29,15 +28,20 @@ namespace IoniCRM.Controllers
         public List<Cliente> clientes;
 
 
-        public ListagemController(ILogger<ListagemController> logger)
+        public ListagemController()
         {
-            _logger = logger;
             pgsqlcon = new();
             clientes ??= SetList();
         }
 
         public IActionResult Clientes(string id)
         {
+            if (Session.Empty(HttpContext.Session))
+                return RedirectToAction("Login", "Login");
+
+            ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
+
+
             var menuRecursion = new MenuRecursion(clientes);
             var menuUi = menuRecursion.GetMenu();
             ViewBag.Lista = menuUi;
@@ -178,7 +182,7 @@ namespace IoniCRM.Controllers
             public string OpenItem(string nome, int id)
             {
                 return "<li class=\"nav-item\">" +
-                            "<a class=\"nav-link text-dark align-middle p-1\" href=\"Clientes?id=" + id + "\" >" +
+                            "<a class=\"nav-link text-theme-dark align-middle p-1\" href=\"Clientes?id=" + id + "\" >" +
                                 nome +
                             "</a>" +
                         "</li>";
@@ -186,15 +190,15 @@ namespace IoniCRM.Controllers
 
             public string OpenItemWithSubs(string nome, int id)
             {
-                return "<li class=\"nav-item border-bottom border-dark\">" +
+                return "<li class=\"nav-item border-bottom border-primary\">" +
                             "<div class=\"d-flex flex-row align-middle\">" +
-                                "<a class=\"nav-link text-dark p-1\" href=\"Clientes?id=" + id + "\">" +
+                                "<a class=\"nav-link text-theme-dark p-1\" href=\"Clientes?id=" + id + "\">" +
                                     nome +
                                 "</a>" +
 
                                 "<a class=\"nav-link\" href=\"#submenu-" + id +
                                     "\" data-toggle=\"collapse\" data-target=\"#submenu-" + id + "\">" +
-                                    "<img src=\"/images/arrow-down-circle.svg\" class=\"align-top wh-15\" />" +
+                                    "<img src=\"/images/arrow-down-circle.svg\" class=\"align-top btn-secondary rounded-circle wh-15\" />" +
                                 "</a>" +
                             "</div>" +
                             "<div class=\"collapse\" id=\"submenu-" + id + "\" aria-expanded=\"false\">" +

@@ -16,51 +16,26 @@ namespace IoniCRM.Controllers
     {
 
         private PostgreSQLConnection pgsqlcon;
-        private readonly SessionConfig session;
         
 
         public HomeController()
         {
             pgsqlcon = new();
-            session = new(pgsqlcon);
-
-            session.VerifySession("Home","Home");
-            ViewBag.Usuario = session.usuario;
         }
         
 
         public IActionResult Home()
         {
-            /*
-            if (HttpContext.Session.GetInt32(Session.SessionKeyName) != default)
-            {
-                string sql = String.Format(@"select * from Usuario where pk_usuario = {0}", HttpContext.Session.GetInt32(Session.SessionKeyName));
-                DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
-
-                foreach (DataRow row in rows)
-                {
-                    ViewBag.Usuario = new Usuario(
-                        int.Parse(row["pk_usuario"].ToString()),
-                        int.Parse(row["nivel"].ToString()),
-                        row["nome"].ToString(),
-                        row["email"].ToString(),
-                        row["cargo"].ToString()
-                        );
-                }
-
-
-                return View();
-            }
-            return RedirectToAction("Login", "Login");
-            */
-
+            if (Session.Empty(HttpContext.Session))
+                return RedirectToAction("Login", "Login");
+            
+            ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        // teste
+        public void Historico() { }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

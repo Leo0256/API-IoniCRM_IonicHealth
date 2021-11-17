@@ -37,7 +37,7 @@ namespace IoniCRM.Controllers
         {
             if (ViewBag.Usuario != null)
             {
-                string sql = String.Format(@"select * from Usuario where pk_usuario = {0}", HttpContext.Session.GetInt32(Session.SessionKeyName));
+                string sql = String.Format(@"select * from Usuario where pk_usuario = {0}", HttpContext.Session.GetInt32(SessionValues.SessionKeyUser));
                 DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
 
                 foreach (DataRow row in rows)
@@ -72,24 +72,39 @@ namespace IoniCRM.Controllers
                 !string.IsNullOrEmpty(login.Senha)
                 )
             {
-                string sql = String.Format(@"select login('{0}','{1}')", email, senha);
+                string sql = string.Format(@"select login('{0}','{1}')", email, senha);
                 DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
 
-                string data = String.Empty;
+                string data = string.Empty;
                 foreach (DataRow row in rows)
                     data = row["login"].ToString();
 
-                if (Boolean.Parse(data.ToString()))
+                if (bool.Parse(data.ToString()))
                 {
                     sql = string.Format(@"select * from dadosUsuario('{0}')", email);
                     rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
                     foreach(DataRow row in rows)
                     {
-                        if (HttpContext.Session.GetInt32(Session.SessionKeyName) == default)
+                        //if (Session.Empty(HttpContext.Session))
+                        //{
+                            Session.SetUser(HttpContext.Session, 
+                                new Usuario(
+                                    int.Parse(row["pk_usuario"].ToString()),
+                                    int.Parse(row["nivel"].ToString()),
+                                    row["nome"].ToString(),
+                                    row["email"].ToString(),
+                                    row["img"].ToString(),
+                                    row["cargo"].ToString()
+                                ));
+                        //}
+
+                        /*
+                        if (HttpContext.Session.GetInt32(SessionValues.SessionKeyUser) == default)
                         {
-                            HttpContext.Session.SetInt32(Session.SessionKeyName, int.Parse(row["pk_usuario"].ToString()));
-                            HttpContext.Session.SetInt32(Session.SessionKeyPermission, int.Parse(row["nivel"].ToString()));
+                            HttpContext.Session.SetInt32(SessionValues.SessionKeyUser, int.Parse(row["pk_usuario"].ToString()));
+                            HttpContext.Session.SetInt32(SessionValues.SessionKeyPermission, int.Parse(row["nivel"].ToString()));
                         }
+                        */
                     }
                     return RedirectToAction("Home", "Home");
                 }
