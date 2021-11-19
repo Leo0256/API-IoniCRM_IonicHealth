@@ -33,13 +33,13 @@
                         }
                     }
                 </div>
-                <button type="submit" class="btn btn-primary bg-light-blue rounded-pill border-dark shadow">
+                <button type="submit" class="btn btn-secondary rounded-pill border-dark shadow">
                     <h4 class="borda-texto m-1">Login</h4>
                 </button>
                 @{
                     if (ViewData["emailOrPassWrong"] != null)
                     {
-                        <small id="passHelp" class="form-text text-warning font-weight-bold w-auto ml-2">@ViewData["emailOrPassWrong"]</small>
+                        <small id="passHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["emailOrPassWrong"]</small>
                     }
                 }
             </div>

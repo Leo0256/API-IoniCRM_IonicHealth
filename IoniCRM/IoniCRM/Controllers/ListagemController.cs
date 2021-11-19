@@ -18,9 +18,6 @@ namespace IoniCRM.Controllers
 {
     public class ListagemController : Controller
     {
-        private readonly string view = "/Views/Listagem/Clientes.cshtml";
-
-        readonly LoginModel login = new();
         private PostgreSQLConnection pgsqlcon;
         
 

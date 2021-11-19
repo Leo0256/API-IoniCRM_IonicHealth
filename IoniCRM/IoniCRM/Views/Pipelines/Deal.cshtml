@@ -2,11 +2,12 @@
     ViewData["Title"] = "Deal";
 }
 
-<div class="container pt-5">
-    <div class="bg-light-blue rounded border border-dark shadow">
-
-        <h1 class="borda-texto px-3 pt-3 m-0">@ViewBag.Pipeline.nome</h1>
-        <h5 class="border-bottom border-dark px-3 pt-1 pb-3 m-0">@ViewBag.Pipeline.descr</h5>
+<div class="container py-5">
+    <div class="bg-card bg-card-dark rounded border border-dark shadow">
+        <div class="bg-card nav-dark m-1">
+            <h1 class="text-theme-dark px-3 pt-3 m-0">@ViewBag.Pipeline.nome</h1>
+            <h5 class="subtext-theme-dark px-3 pt-1 pb-3 m-0">@ViewBag.Pipeline.descr</h5>
+        </div>
 
         <section>
             @using (Html.BeginForm("UpsertDeal", "Deal", FormMethod.Post))
@@ -19,7 +20,7 @@
 
                         <div class="form-group col-md-6">
                             <h2 class="my-1">
-                                <label for="nomeTextBox" class="borda-texto m-0">Nome</label>
+                                <label for="nomeTextBox" class="text-dark m-0">Nome</label>
                             </h2>
 
                             <input id="nomeTextBox" class="form-control rounded m-0" type="text" name="nome" placeholder="Informe um nome" value="@ViewBag.Deal.nome" />
@@ -29,7 +30,7 @@
 
                         <div class="form-group col-md-6">
                             <h2 class="my-1">
-                                <label for="valorTextBox" class="borda-texto m-0">Valor</label>
+                                <label for="valorTextBox" class="text-dark m-0">Valor</label>
                             </h2>
 
                             <div class="input-group mb-3">
@@ -53,7 +54,7 @@
 
                         <div class="form-group col-md-4">
                             <h2 class="my-1">
-                                <label for="statusOptions" class="borda-texto m-0">Status</label>
+                                <label for="statusOptions" class="text-dark m-0">Status</label>
                             </h2>
 
                             <select id="statusOptions" name="status" class="form-control">
@@ -73,7 +74,7 @@
 
                         <div class="form-group col-md-4">
                             <h2 class="my-1">
-                                <label for="estagioOptions" class="borda-texto m-0">Estagio da Deal</label>
+                                <label for="estagioOptions" class="text-dark m-0">Estagio da Deal</label>
                             </h2>
 
                             <select id="estagioOptions" class="form-control" name="estagio">
@@ -94,7 +95,7 @@
 
                         <div class="form-group col-md-4">
                             <h2 class="my-1">
-                                <label for="probTextBox" class="borda-texto m-0">% de Ganho</label>
+                                <label for="probTextBox" class="text-dark m-0">% de Ganho</label>
                             </h2>
                             <input id="probTextBox" class="form-control rounded" type="number" name="prob" value="@ViewBag.Deal.probabilidade" />
                         </div>
@@ -105,7 +106,7 @@
 
                         <div class="form-group col-md-12">
                             <h2 class="my-1">
-                                <label for="clienteOptions" class="borda-texto m-0">Cliente Envolvido</label>
+                                <label for="clienteOptions" class="text-dark m-0">Cliente Envolvido</label>
                             </h2>
                             
                             <select id="clienteOptions" class="form-control" name="nome_cli">
@@ -129,7 +130,7 @@
 
                         <div class="form-group col-md-6">
                             <h2 class="my-1">
-                                <label for="aberturaDateTime" class="borda-texto m-0">Abertura</label>
+                                <label for="aberturaDateTime" class="text-dark m-0">Abertura</label>
                             </h2>
                             <div class="form-row m-0" id="aberturaDateTime">
                                 <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="aberturaDia" value="@ViewBag.aberturaDia" />
@@ -140,7 +141,7 @@
 
                         <div class="form-group col-md-6">
                             <h2 class="my-1">
-                                <label for="fechamentoDateTime" class="borda-texto m-0">Fechamento</label>
+                                <label for="fechamentoDateTime" class="text-dark m-0">Fechamento</label>
                             </h2>
                             <div class="form-row m-0" id="fechamentoDateTime">
                                 <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="fechamentoDia" value="@ViewBag.fechamentoDia" />
@@ -155,7 +156,7 @@
 
                         <div class="form-group col-md-12">
                             <h2 class="my-1">
-                                <label for="descrTextArea" class="borda-texto m-0">Descrição</label>
+                                <label for="descrTextArea" class="text-dark m-0">Descrição</label>
                             </h2>
                             <textarea id="descrTextArea" class="form-control rounded" type="text" name="descr" rows="5" value="@ViewBag.Deal.descr"></textarea>
                         </div>
@@ -164,14 +165,15 @@
 
 
                     <div class="form-row align-items-center justify-content-between">
-                        <button type="submit" class="btn btn-primary bg-light-blue rounded-pill border-dark shadow mt-3">
+                        <button type="submit" class="btn btn-secondary rounded-pill border-dark shadow mt-3">
                             <h4 class="borda-texto m-1">Salvar</h4>
                         </button>
 
                         @if (ViewBag.Deal.getId() != 0)
                         {
                             <a class="btn btn-danger rounded-pill border-dark shadow mt-3"
-                               asp-controller="Pipeline" asp-action="DelDeal" asp-route-id="@ViewBag.Deal.getId()">
+                               asp-controller="Pipeline" asp-action="DelDeal" asp-route-id="@ViewBag.Deal.getId()" 
+                               asp-route-nome="@ViewBag.Deal.nome" asp-route-pipe="@ViewBag.Pipeline.nome">
                                 <h4 class="borda-texto m-1">Deletar</h4>
                             </a>
                         }

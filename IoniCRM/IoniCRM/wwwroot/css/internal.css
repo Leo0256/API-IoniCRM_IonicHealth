@@ -7,7 +7,8 @@ a.navbar-brand {
 }
 
 a {
-  color: #0366d6;
+    color: #0366d6;
+    text-decoration: none;
 }
 
 .text-shadow {
@@ -82,17 +83,17 @@ body {
 
 .bg-card-dark {
     background-color: #B0BABF;
-    border: none;
-    max-width: 30rem;
-    border-radius: 0.25rem 0.25rem;
 }
 
 .bg-card-light {
     background-color: #B9D7EA;
+}
+
+.bg-card {
     border: none;
-    max-width: 30rem;
     border-radius: 0.25rem 0.25rem;
 }
+
 
 /*teste*/
 .sun {
@@ -111,7 +112,18 @@ body {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'> <path d='M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z'/> </svg>");
 }
 
-.sun .sun-fill .moon .moon-fill {
+.plus {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'> <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z'/> </svg>");
+    filter: invert(39%) sepia(71%) saturate(3974%) hue-rotate(196deg) brightness(92%) contrast(111%);
+}
+
+.del {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'> <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z'/> </svg>");
+    filter: invert(17%) sepia(81%) saturate(5086%) hue-rotate(354deg) brightness(100%) contrast(96%);
+}
+
+
+.sun .sun-fill .moon .moon-fill .plus .del {
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -132,9 +144,18 @@ body {
     color: #00ECFF;
 }
 
+.subtext-theme-dark {
+    color: #DBDBDB;
+}
+
 .text-theme-light {
     color: #3F3F3F;
 }
+
+.subtext-theme-light {
+    color: #3F3F3F;
+}
+
 /*Text styles*/
 
 
@@ -142,12 +163,7 @@ body {
     background-color: #53B8BB;
 }
 
-.bg-card {
-    background-color: #BFE4E5;
-    border: none;
-    max-width: 30rem;
-    border-radius: 0.25rem 0.25rem;
-}
+
 
 .text-card {
     font-size: 1.2rem;

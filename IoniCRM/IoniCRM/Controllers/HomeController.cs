@@ -24,23 +24,59 @@ namespace IoniCRM.Controllers
         }
         
 
-        public IActionResult Home()
+        public IActionResult Home(string act)
         {
             if (Session.Empty(HttpContext.Session))
                 return RedirectToAction("Login", "Login");
-            
+
             ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
+            if (!string.IsNullOrEmpty(act))
+            {
+                LimparHistorico();
+            }
+            GetHistorico();
             return View();
         }
 
         // teste
-        public void Historico() { }
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public void GetHistorico() 
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            string sql = string.Format(@"select * from dadosHistorico(null)");
+            DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+
+            List<Historico> historicos = new();
+            DateTime? data;
+            foreach (DataRow row in rows)
+            {
+                data = string.IsNullOrEmpty(row["data"].ToString()) ?
+                        null : DateTime.Parse(row["data"].ToString());
+
+                historicos.Add(new(
+                    int.Parse(row["pk_h"].ToString()),
+                    int.Parse(row["fk_usuario"].ToString()),
+                    data,
+                    row["descr"].ToString()
+                    ));
+            }
+
+            ViewBag.Historico = historicos;
+        }
+
+        public void LimparHistorico()
+        {
+            string sql = string.Format(@"select * from delHistorico(null)");
+            _ = pgsqlcon.ExecuteCmdAsync(sql);
+        }
+        //
+
+        public IActionResult Perfil()
+        {
+            return View();
+        }
+
+        public IActionResult Sair()
+        {
+            return RedirectToAction("Home", "Home");
         }
     }
 }

@@ -16,20 +16,28 @@ namespace IoniCRM.Controllers.Objects
         public string img;
         public string cargo;
 
-        public Usuario(int pk_usuario, int nivel)
+
+        // teste
+        public string theme = string.Empty;
+        //
+
+        public Usuario(int pk_usuario, int nivel, string theme)
         {
             this.pk_usuario = pk_usuario;
             this.nivel = nivel;
+            this.theme = theme;
         }
 
         [JsonConstructor]
-        public Usuario(int pk_usuario, int nivel, string nome, string email, string img, string cargo)
+        public Usuario(int pk_usuario, int nivel, string nome, string email, string img, string cargo, string theme)
         {
             this.pk_usuario = pk_usuario;
             this.nivel = nivel;
             this.nome = nome;
             this.email = email;
+            this.img = img;
             this.cargo = cargo;
+            this.theme = theme;
         }
 
         public void SetPk_Usuario(int pk_usuario) => this.pk_usuario = pk_usuario;

@@ -48,6 +48,10 @@ namespace IoniCRM.Controllers
 
         public IActionResult Deal(string id, string pipe)
         {
+            if (Session.Empty(HttpContext.Session))
+                return RedirectToAction("Login", "Login");
+
+            ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
             ViewBag.Deal = int.Parse(id) != 0 ? GetDeal(id) : new Deal();
 
             if (((DateTime?)ViewBag.Deal.abertura).HasValue)
@@ -99,7 +103,8 @@ namespace IoniCRM.Controllers
 
             DateTime? abertura = DiaHora(aberturaDia, aberturaHora);
             DateTime? fechamento = DiaHora(fechamentoDia, fechamentoHora);
-            
+
+            string mensagem;
             if (int.Parse(id_deal) == 0)
             {
                 dados = "{" +
@@ -126,6 +131,7 @@ namespace IoniCRM.Controllers
                 json = JObject.Parse(dados);
 
                 sql = string.Format(@"select addDeal('{0}')", json);
+                mensagem = string.Format("Nova Deal '{0}' da Pipeline '{1}' adicionada, por {2}.", nome, pipeline.nome, Session.GetUsuario(HttpContext.Session).nome);
             }
             else
             {
@@ -154,9 +160,21 @@ namespace IoniCRM.Controllers
                 json = JObject.Parse(dados);
 
                 sql = string.Format(@"select updateDeal('{0}')", json);
+                mensagem = string.Format("Deal '{0}' da Pipeline '{1}' atualizada, por {2}.", nome, pipeline.nome, Session.GetUsuario(HttpContext.Session).nome);
             }
 
             _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+            // Atualiza o histórico
+            json = JObject.Parse("{" +
+                "\"pk_usuario\":" + Session.GetUsuario(HttpContext.Session).GetPk_Usuario() + "," +
+                "\"data_h\":\"" + DateTime.Now + "\"," +
+                "\"descr\":\"" + mensagem + "\"" +
+                "}");
+
+            sql = string.Format(@"select addHistorico('{0}')", json);
+            _ = pgsqlcon.ExecuteCmdAsync(sql);
+
             return RedirectToAction("Pipeline", "Pipeline");
         }
 

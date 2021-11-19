@@ -3,16 +3,18 @@
 }
 
 <div class="container pt-5">
-    <div class="bg-light-blue rounded border border-dark shadow">
+    <div class="bg-card bg-card-dark rounded border border-dark shadow">
 
-        @if (ViewBag.Pipeline.GetId() == 0)
-        {
-            <h1 class="borda-texto border-bottom border-dark p-3 m-0">Nova Pipeline</h1>
-        }
-        else
-        {
-            <h1 class="borda-texto border-bottom border-dark p-3 m-0">Editar Pipeline</h1>
-        }
+        <div class="bg-card nav-dark m-1">
+            @if (ViewBag.Pipeline.GetId() == 0)
+            {
+                <h1 class="text-theme-dark p-3 m-0">Nova Pipeline</h1>
+            }
+            else
+            {
+                <h1 class="text-theme-dark p-3 m-0">Editar Pipeline</h1>
+            }
+        </div>
 
         <section>
             @using (Html.BeginForm("UpsertPipe", "Pipeline", FormMethod.Post))
@@ -25,7 +27,7 @@
 
                         <div class="form-group col-md-6">
                             <h2 class="my-1">
-                                <label for="nomeTextBox" class="borda-texto m-0">Nome</label>
+                                <label for="nomeTextBox" class="text-dark m-0">Nome</label>
                             </h2>
 
                             <textarea id="nomeTextBox" class="form-control rounded m-0" type="text" name="nome"
@@ -35,7 +37,7 @@
 
                         <div class="form-group col-md-6">
                             <h2 class="my-1">
-                                <label for="prioriOptions" class="borda-texto m-0">Prioridade</label>
+                                <label for="prioriOptions" class="text-dark m-0">Prioridade</label>
                             </h2>
 
                             <select id="prioriOptions" name="prioridade" class="form-control">
@@ -61,7 +63,7 @@
 
                         <div class="form-group col-md-12">
                             <h2 class="my-1">
-                                <label for="descrTextArea" class="borda-texto m-0">Descrição</label>
+                                <label for="descrTextArea" class="text-dark m-0">Descrição</label>
                             </h2>
                             <textarea id="descrTextArea" class="form-control rounded" type="text" name="descr" rows="5">@ViewBag.Pipeline.descr</textarea>
                         </div>
@@ -70,7 +72,7 @@
 
 
                     <div class="form-row align-items-center justify-content-between">
-                        <button type="submit" class="btn btn-primary bg-light-blue rounded-pill border-dark shadow mt-3">
+                        <button type="submit" class="btn btn-secondary rounded-pill border-dark shadow mt-3">
                             <h4 class="borda-texto m-1">Salvar</h4>
                         </button>
 
@@ -78,9 +80,16 @@
                         @if (ViewBag.Pipeline.GetId() != 0)
                         {
                             <a class="btn btn-danger rounded-pill border-dark shadow mt-3"
-                               asp-controller="Pipeline" asp-action="DelPipeline" asp-route-id="@ViewBag.Pipeline.GetId()">
+                               asp-controller="Pipeline" asp-action="DelPipeline"
+                               asp-route-id="@ViewBag.Pipeline.GetId()" asp-route-pipe="@ViewBag.Pipeline.nome">
                                 <h4 class="borda-texto m-1">Deletar</h4>
                             </a>
+
+                            <input type="hidden" name="status" value="True" />
+                        }
+                        else
+                        {
+                            <input type="hidden" name="status" value="False" />
                         }
 
                     </div>

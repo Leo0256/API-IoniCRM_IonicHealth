@@ -799,9 +799,9 @@ end $$;
 
 
 /*
-select * from dadosHistorico();
+select * from dadosHistorico(<usuario> integer);
 */
-create or replace function dadosHistorico()
+create or replace function dadosHistorico(usuario integer)
 returns table(
 	pk_h integer,
 	fk_usuario integer,
@@ -812,8 +812,14 @@ language plpgsql
 as $$
 begin
 	return query
-		select * from Historico
-		order by data;
+		select h.* from Historico h
+		where (
+			case when usuario is not null
+				then h.fk_usuario = usuario
+				else h.fk_usuario is not null
+			end
+		)
+		order by h.data;
 end $$;
 
 
@@ -831,6 +837,24 @@ begin
 		(dados->>'pk_usuario')::integer,
 		(dados->>'data')::timestamp,
 		dados->>'descr'
+	);
+end $$;
+
+
+/*
+select delHistorico(<usuario> integer);
+*/
+create or replace function delHistorico(usuario integer)
+returns void
+language plpgsql
+as $$
+begin
+	delete from Historico as h
+	where (
+		case when usuario is not null
+			then h.fk_usuario = usuario
+			else h.fk_usuario is not null
+		end
 	);
 end $$;
 
