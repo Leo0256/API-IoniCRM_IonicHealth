@@ -15,12 +15,12 @@
                 </svg>
             </a>
         </div>
-        
+
         <div class="col">
-            @foreach(var item in ViewBag.Historico as List<IoniCRM.Controllers.Objects.Historico>)
+            @foreach (var item in ViewBag.Historico as List<IoniCRM.Controllers.Objects.Historico>)
             {
                 <div class="row bg-card bg-light justify-content-between align-items-center px-3 py-2 mx-0 mb-2">
-                    
+
                     <h4 class="text-dark m-0">@item.descr</h4>
                     <div class="text-dark">@item.data</div>
 

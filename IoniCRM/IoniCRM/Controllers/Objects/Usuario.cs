@@ -9,8 +9,11 @@ namespace IoniCRM.Controllers.Objects
 {
     public class Usuario
     {
+        [JsonProperty]
         private int pk_usuario;
+        [JsonProperty]
         private int nivel;
+
         public string nome;
         private string email;
         public string img;
@@ -39,6 +42,7 @@ namespace IoniCRM.Controllers.Objects
             this.cargo = cargo;
             this.theme = theme;
         }
+
 
         public void SetPk_Usuario(int pk_usuario) => this.pk_usuario = pk_usuario;
         public int GetPk_Usuario() => pk_usuario;

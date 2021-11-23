@@ -305,7 +305,7 @@ body {
 
 
 /*Configurações para o Mobile*/
-@media (max-width: 576px){
+@media (max-width: 768px){
     .image-full-navbar {
         display: none;
     }
@@ -313,7 +313,9 @@ body {
     .image-mobile-navbar {
         display: block;
     }
+}
 
+@media (max-width: 576px){
     .w {
         width: auto;
     }

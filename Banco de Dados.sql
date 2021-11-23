@@ -101,8 +101,8 @@ create table Usuario_Pipeline(
 create table Historico (
 	pk_h serial primary key,
 	fk_usuario integer not null,
-	data timestamp default current_timestamp,
-	descr varchar default '...',
+	data timestamp,
+	descr varchar,
 	foreign key (fk_usuario) references Usuario (pk_usuario)
 );
 
@@ -149,18 +149,6 @@ returns trigger
 language plpgsql
 as $$
 begin
-	if New.data is null then
-		update Historico
-			set data = default
-		where pk_h = New.pk_h;
-	end if;
-	
-	if New.descr is null then
-		update Historico
-			set descr = default
-		where pk_h = New.pk_h;
-	end if;
-	
 	delete from Historico where
 		data < current_timestamp - interval '2 years';
 	return null;
@@ -418,6 +406,7 @@ begin
 		(dados->>'fk_emp')::integer,
 		dados->>'cpf_cnpj',
 		dados->>'crm',
+		dados->>'img',
 		dados->>'nome',
 		dados->>'razao_social',
 		dados->>'categoria',
@@ -466,7 +455,7 @@ end $$;
 
 
 /*
-select updateClienteInfo(<dados> json);
+select updateClienteInfo(<id_info> integer, <dados> json);
 */
 create or replace function updateClienteInfo(id_info integer, dados json)
 returns void
@@ -501,7 +490,7 @@ end $$;
 
 
 /*
-select updateClienteContato(<dados> json);
+select updateClienteContato(<id_contato> integer, <dados> json);
 */
 create or replace function updateClienteContato(id_contato integer, dados json)
 returns void
@@ -513,7 +502,7 @@ begin
 		fk_cliente = (dados->>'fk_cliente')::integer,
 		tipo = (dados->>'tipo')::integer,
 		contato = dados->>'contato'
-	where pk_info = id_info;
+	where pk_contato = id_contato;
 end $$;
 
 
@@ -819,7 +808,7 @@ begin
 				else h.fk_usuario is not null
 			end
 		)
-		order by h.data;
+		order by h.data desc;
 end $$;
 
 

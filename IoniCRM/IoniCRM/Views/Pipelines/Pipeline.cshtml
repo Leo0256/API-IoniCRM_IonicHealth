@@ -113,6 +113,7 @@
                                     foreach (var deal in pipeline.deals)
                                     {
                                         ViewBag.Deal = deal;
+                                        ViewBag.Pipeline = pipeline;
                                         if (deal.estagio == x)
                                         {
                                             @Html.Partial("../Pipelines/card_deal");

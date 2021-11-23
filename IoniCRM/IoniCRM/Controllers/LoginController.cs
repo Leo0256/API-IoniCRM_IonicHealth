@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using System.Web;
-
+using Newtonsoft.Json;
 
 namespace IoniCRM.Controllers
 {
@@ -61,17 +61,19 @@ namespace IoniCRM.Controllers
                     sql = string.Format(@"select * from dadosUsuario('{0}')", email);
                     rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
 
-                    foreach(DataRow row in rows)
-                        Session.SetUser(HttpContext.Session, 
-                            new Usuario(
-                                int.Parse(row["pk_usuario"].ToString()),
-                                int.Parse(row["nivel"].ToString()),
-                                row["nome"].ToString(),
-                                row["email"].ToString(),
-                                row["img"].ToString(),
-                                row["cargo"].ToString(),
-                                "dark"
-                            ));
+                    foreach (DataRow row in rows)
+                    {
+                        Usuario usuario = new(
+                            int.Parse(row["pk_usuario"].ToString()),
+                            int.Parse(row["nivel"].ToString()),
+                            row["nome"].ToString(),
+                            row["email"].ToString(),
+                            row["img"].ToString(),
+                            row["cargo"].ToString(),
+                            "dark");
+
+                        Session.SetUser(HttpContext.Session, usuario);
+                    }
                     
                     return RedirectToAction("Home", "Home");
                 }

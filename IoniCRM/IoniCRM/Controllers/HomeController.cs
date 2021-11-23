@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace IoniCRM.Controllers
 {
@@ -67,6 +68,13 @@ namespace IoniCRM.Controllers
             string sql = string.Format(@"select * from delHistorico(null)");
             _ = pgsqlcon.ExecuteCmdAsync(sql);
         }
+
+        public IActionResult teste()
+        {
+            //AddHistorico(HttpContext.Session, "Eu sou um item do histórico.");
+            return RedirectToAction("Home", "Home");
+        }
+        
         //
 
         public IActionResult Perfil()

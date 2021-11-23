@@ -142,15 +142,8 @@ namespace IoniCRM.Controllers
             _ = pgsqlcon.ExecuteCmdAsync(sql);
 
             // Atualiza o histórico
-            string mensagem = string.Format("Deal '{0}' da Pipeline '{1}' deletada, por {2}.", nome, pipe, Session.GetUsuario(HttpContext.Session).nome);
-            JObject json = JObject.Parse("{" +
-                "\"pk_usuario\":" + Session.GetUsuario(HttpContext.Session).GetPk_Usuario() + "," +
-                "\"data_h\":\"" + DateTime.Now + "\"," +
-                "\"descr\":\"" + mensagem + "\"" +
-                "}");
-
-            sql = string.Format(@"select addHistorico('{0}')", json);
-            _ = pgsqlcon.ExecuteCmdAsync(sql);
+            string mensagem = string.Format("Deal <{0}> da Pipeline <{1}> deletada, por {2}.", nome, pipe, Session.GetUsuario(HttpContext.Session).nome);
+            _ = new AddHistorico(HttpContext.Session, mensagem);
 
             return RedirectToAction("Pipeline", "Pipeline");
         }
@@ -176,22 +169,16 @@ namespace IoniCRM.Controllers
 
             // Atualiza o histórico
             string mensagem = string.Format("Pipeline '{0}' deletada, por {1}.", pipe, Session.GetUsuario(HttpContext.Session).nome);
-            JObject json = JObject.Parse("{" +
-                "\"pk_usuario\":" + Session.GetUsuario(HttpContext.Session).GetPk_Usuario() + "," +
-                "\"data_h\":\"" + DateTime.Now + "\"," +
-                "\"descr\":\"" + mensagem + "\"" +
-                "}");
-
-            sql = string.Format(@"select addHistorico('{0}')", json);
-            _ = pgsqlcon.ExecuteCmdAsync(sql);
-
+            _ = new AddHistorico(HttpContext.Session, mensagem);
+            
             return RedirectToAction("Pipeline", "Pipeline");
         }
 
         public IActionResult UpsertPipe(string id_pipe, string nomeOriginal, string nome, string prioridade, string descr, string status)
         {
             string sql;
-            JObject json = JObject.Parse("{" +
+
+            JObject pipe = JObject.Parse("{" +
                     "\"nome\":\"" + nome + "\"," +
                     "\"prioridade\":" + prioridade + "," +
                     "\"descr\":\"" + descr + "\"" +
@@ -203,26 +190,18 @@ namespace IoniCRM.Controllers
                 _ = pgsqlcon.ExecuteCmdAsync(sql);
             }
 
-            sql = string.Format(@"select upsertPipeline('{0}')", json);
+            sql = string.Format(@"select upsertPipeline('{0}')", pipe);
             _ = pgsqlcon.ExecuteCmdAsync(sql);
 
             // Atualiza o histórico
             string mensagem;
-
             if (bool.Parse(status))
-                mensagem = string.Format("Pipeline '{0}' atualizada, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome);
+                mensagem = string.Format("Pipeline <{0}> atualizada, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome);
             else
-                mensagem = string.Format("Pipeline '{0}' adicionada, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome);
+                mensagem = string.Format("Pipeline <{0}> adicionada, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome);
 
-            json = JObject.Parse("{" +
-                "\"pk_usuario\":" + Session.GetUsuario(HttpContext.Session).GetPk_Usuario() + "," +
-                "\"data_h\":\"" + DateTime.Now + "\"," +
-                "\"descr\":\"" + mensagem + "\"" +
-                "}");
-
-            sql = string.Format(@"select addHistorico('{0}')", json);
-            _ = pgsqlcon.ExecuteCmdAsync(sql);
-
+            _ = new AddHistorico(HttpContext.Session, mensagem);
+            
             return RedirectToAction("Pipeline","Pipeline");
         }
         //

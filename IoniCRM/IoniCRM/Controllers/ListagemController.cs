@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
@@ -13,6 +12,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Text;
 using Microsoft.AspNetCore.Html;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace IoniCRM.Controllers
 {
@@ -53,6 +56,167 @@ namespace IoniCRM.Controllers
             }
             
             return View();
+        }
+
+        public IActionResult AddCliente(string id)
+        {
+            if (Session.Empty(HttpContext.Session))
+                return RedirectToAction("Login", "Login");
+
+            ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
+            ViewBag.Cliente = int.Parse(id) > 0 ? GetData("Cliente", id) : null;
+            return View("/Views/Listagem/AddCliente.cshtml");
+        }
+
+        public IActionResult UpsertCliente(
+            string id_cliente, string nome, string razao_social, string emp,
+            string cpf_cnpj_antigo, string cpf_cnpj, string crm, string enderecos, 
+            string cargo, string websites, string contatos, string descr)
+        {
+            // antes de tudo, pega o id da empresa (se houver)
+            string sql = string.Format(@"select pk_cliente from Cliente where nome like {0}", emp);
+            DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+            int? emp_id = string.IsNullOrEmpty(rows[0]["pk_cliente"].ToString()) ? null : int.Parse(rows[0]["pk_cliente"].ToString());
+
+            JObject jcliente, jinfo, jcontato;
+
+            // Novo Cliente
+            if(int.Parse(id_cliente) == 0)
+            {
+                jcliente = JObject.Parse("{" +
+                    "\"fk_emp\":" + emp_id + "," +
+                    "\"cpf_cnpj\":\"" + cpf_cnpj + "\"," +
+                    "\"crm\":\"" + crm + "\"," +
+                    "\"img\":null," + // <-- mudar depois
+                    "\"nome\":\"" + nome + "\"," +
+                    "\"razao_social\":\"" + razao_social + "\"," +
+                    "\"categoria\":\"" + cargo + "\"," +
+                    "\"descr\":\"" + descr + "\"," +
+                    "}");
+
+                sql = string.Format(@"select addCliente('{0}')", jcliente);
+                _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+
+                List<string[]> info = new();
+                info.Add(enderecos.Split("\n"));
+                info.Add(websites.Split("\n"));
+
+                for (int x = 0; x < info[0].Length; x++)
+                {
+                    jinfo = JObject.Parse("{" +
+                        "\"fk_cliente\":" + id_cliente + "," +
+                        "\"endereco\":\"" + info[0][x] + "\"," +
+                        "\"fk_cliente\":\"" + info[1][x] + "\"," +
+                        "}");
+                    sql = string.Format(@"select addClienteInfo('{0}')", jinfo);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+                }
+
+                foreach (string contato in contatos.Split("\n"))
+                {
+                    int tipo_contato = contato.Contains("@") ? 1 : 0;
+                    /* tipo_contato:
+                     * 0 - Telefone
+                     * 1 - E-mail
+                     */
+
+                    jcontato = JObject.Parse("{" +
+                        "\"fk_cliente\":" + id_cliente + "," +
+                        "\"tipo\":" + tipo_contato + "," +
+                        "\"contato\":\"" + contato + "\"," +
+                        "}");
+
+                    sql = string.Format(@"select addClienteContato('{0}')", jcontato);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+                }
+            }
+            // Editar Cliente
+            else
+            {
+                // atualiza o cpf/cnpj
+                if (cpf_cnpj_antigo.Equals(cpf_cnpj))
+                {
+                    sql = string.Format(@"select atualizarCPF_CNPJ('{0}','{1}')", cpf_cnpj_antigo, cpf_cnpj);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+                }
+
+                jcliente = JObject.Parse("{" +
+                    "\"fk_emp\":" + emp_id + "," +
+                    "\"cpf_cnpj\":\"" + cpf_cnpj + "\"," +
+                    "\"crm\":\"" + crm + "\"," +
+                    "\"img\":null," + // <-- mudar depois
+                    "\"nome\":\"" + nome + "\"," +
+                    "\"razao_social\":\"" + razao_social + "\"," +
+                    "\"categoria\":\"" + cargo + "\"," +
+                    "\"descr\":\"" + descr + "\"," +
+                    "}");
+
+                sql = string.Format(@"select addCliente('{0}')", jcliente);
+                _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+
+                List<string[]> info = new();
+                info.Add(enderecos.Split("\n"));
+                info.Add(websites.Split("\n"));
+
+                for(int x = 0; x < info[0].Length; x++)
+                {
+                    sql = string.Format(@"select delClienteInfo({0})", id_cliente);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+                    jinfo = JObject.Parse("{" +
+                        "\"fk_cliente\":" + id_cliente + "," +
+                        "\"endereco\":\"" + info[0][x] + "\"," +
+                        "\"fk_cliente\":\"" + info[1][x] + "\"," +
+                        "}");
+
+                    sql = string.Format(@"select addClienteInfo('{0}')", jinfo);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+                }
+
+                foreach(string contato in contatos.Split("\n"))
+                {
+                    sql = string.Format(@"select delClienteContato({0})", id_cliente);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+                    int tipo_contato = contato.Contains("@") ? 1 : 0;
+                    /* tipo_contato:
+                     * 0 - Telefone
+                     * 1 - E-mail
+                     */
+
+                    jcontato = JObject.Parse("{" +
+                        "\"fk_cliente\":" + id_cliente + "," +
+                        "\"tipo\":" + tipo_contato + "," +
+                        "\"contato\":\"" + contato + "\"," +
+                        "}");
+
+                    sql = string.Format(@"select addClienteContato('{0}')", jcontato);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+                }
+            }
+
+
+            
+            
+
+            return RedirectToAction("Listagem", "Clientes");
+        }
+
+        public IActionResult DelCliente(string id, string nome, string emp)
+        {
+            if (Session.Empty(HttpContext.Session))
+                return RedirectToAction("Login", "Login");
+
+            string sql = string.Format(@"select delCliente({0})", id);
+            _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+            // Atualiza o histórico
+            string mensagem = string.Format("Cliente <{0}>, funcionario de <{1}>, deletado, por {2}.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
+            _ = new AddHistorico(HttpContext.Session, mensagem);
+
+            return RedirectToAction("Listagem", "Clientes");
         }
 
 
