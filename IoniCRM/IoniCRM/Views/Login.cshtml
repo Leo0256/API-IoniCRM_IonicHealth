@@ -13,7 +13,7 @@
                     <h2 class="my-1">
                         <label for="emailTextBox" class="borda-texto m-0"> E-mail</label>
                     </h2>
-                    <input id="emailTextBox" class="form-control rounded m-0" type="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" value="@ViewData["email"]" />
+                    <input id="emailTextBox" class="form-control rounded m-0" type="email" name="email" aria-describedby="emailHelp" placeholder="Informe um e-mail" value="@ViewData["email"]" />
                     @{
                         if (ViewData["emailNotInformed"] != null)
                         {
@@ -25,7 +25,7 @@
                     <h2 class="mt-2 mb-1">
                         <label for="senhaTextBox" class="borda-texto m-0">Senha</label>
                     </h2>
-                    <input id="senhaTextBox" class="form-control rounded" type="password" name="senha" aria-describedby="passHelp" placeholder="Password" value="@ViewData["senha"]" />
+                    <input id="senhaTextBox" class="form-control rounded" type="password" name="senha" aria-describedby="passHelp" placeholder="Informe a senha" value="@ViewData["senha"]" />
                     @{
                         if (ViewData["passNotInformed"] != null)
                         {

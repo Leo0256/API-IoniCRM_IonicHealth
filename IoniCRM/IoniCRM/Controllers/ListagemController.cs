@@ -42,7 +42,7 @@ namespace IoniCRM.Controllers
             ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
 
 
-            var menuRecursion = new MenuRecursion(clientes);
+            var menuRecursion = new MenuRecursion(clientes, ViewBag.Usuario.theme);
             var menuUi = menuRecursion.GetMenu();
             ViewBag.Lista = menuUi;
 
@@ -65,6 +65,9 @@ namespace IoniCRM.Controllers
 
             ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
             ViewBag.Cliente = int.Parse(id) > 0 ? GetData("Cliente", id) : null;
+
+            ViewBag.ListClientes = GetData("Cliente", "null");
+
             return View("/Views/Listagem/AddCliente.cshtml");
         }
 
@@ -197,10 +200,6 @@ namespace IoniCRM.Controllers
                 }
             }
 
-
-            
-            
-
             return RedirectToAction("Listagem", "Clientes");
         }
 
@@ -218,6 +217,9 @@ namespace IoniCRM.Controllers
 
             return RedirectToAction("Listagem", "Clientes");
         }
+
+        
+
 
 
         private bool flag = false;
@@ -340,26 +342,26 @@ namespace IoniCRM.Controllers
             List<Cliente> clientes;
 
             /*Precisa melhorar isso depois*/
-            public string OpenItem(string nome, int id)
+            public string OpenItem(string nome, int id, string tema)
             {
                 return "<li class=\"nav-item\">" +
-                            "<a class=\"nav-link text-theme-dark align-middle p-1\" href=\"Clientes?id=" + id + "\" >" +
+                            "<a class=\"nav-link text-theme-" + tema + " align-middle p-1\" href=\"Clientes?id=" + id + "\" >" +
                                 nome +
                             "</a>" +
                         "</li>";
             }
 
-            public string OpenItemWithSubs(string nome, int id)
+            public string OpenItemWithSubs(string nome, int id, string tema)
             {
                 return "<li class=\"nav-item border-bottom border-primary\">" +
                             "<div class=\"d-flex flex-row align-middle\">" +
-                                "<a class=\"nav-link text-theme-dark p-1\" href=\"Clientes?id=" + id + "\">" +
+                                "<a class=\"nav-link text-theme-" + tema + " p-1\" href=\"Clientes?id=" + id + "\">" +
                                     nome +
                                 "</a>" +
 
                                 "<a class=\"nav-link\" href=\"#submenu-" + id +
                                     "\" data-toggle=\"collapse\" data-target=\"#submenu-" + id + "\">" +
-                                    "<img src=\"/images/arrow-down-circle.svg\" class=\"align-top btn-secondary rounded-circle wh-15\" />" +
+                                    "<img src=\"/images/arrow-down-circle.svg\" class=\"align-top btn-info rounded-circle wh-15\" />" +
                                 "</a>" +
                             "</div>" +
                             "<div class=\"collapse\" id=\"submenu-" + id + "\" aria-expanded=\"false\">" +
@@ -370,15 +372,15 @@ namespace IoniCRM.Controllers
             private StringBuilder strBuilder;
             
 
-            public MenuRecursion(List<Cliente> clientes)
+            public MenuRecursion(List<Cliente> clientes, string tema)
             {
                 this.clientes = clientes;
-                strBuilder = new(GenerateMenuUi());
+                strBuilder = new(GenerateMenuUi(tema));
             }
 
             public string GetMenu() => strBuilder.ToString();
 
-            public string GenerateMenuUi()
+            public string GenerateMenuUi(string tema)
             {
                 StringBuilder builder = new();
                 List<Cliente> parentItems = clientes;
@@ -387,13 +389,13 @@ namespace IoniCRM.Controllers
                 {
                     List<Cliente> childItems = parentcat.funcionarios;
                     if (childItems.Count == 0)
-                        builder.Append(OpenItem(parentcat.nome, parentcat.GetPk_Cliente()));
+                        builder.Append(OpenItem(parentcat.nome, parentcat.GetPk_Cliente(), tema));
                     
                     else
                     {
-                        builder.Append(OpenItemWithSubs(parentcat.nome, parentcat.GetPk_Cliente()));
+                        builder.Append(OpenItemWithSubs(parentcat.nome, parentcat.GetPk_Cliente(), tema));
 
-                        builder.Append(AddChildItem(parentcat));
+                        builder.Append(AddChildItem(parentcat, tema));
 
                         builder.Append(CLOSE_SUBITEM);
                     }
@@ -401,7 +403,7 @@ namespace IoniCRM.Controllers
                 return builder.ToString();
             }
 
-            private string AddChildItem(Cliente childItem)
+            private string AddChildItem(Cliente childItem, string tema)
             {
                 StringBuilder builder = new();
                 List<Cliente> childItems = childItem.funcionarios;
@@ -409,13 +411,13 @@ namespace IoniCRM.Controllers
                 {
                     List<Cliente> subChilds = cItem.funcionarios;
                     if (subChilds.Count == 0)
-                        builder.Append(OpenItem(cItem.nome, cItem.GetPk_Cliente()));
+                        builder.Append(OpenItem(cItem.nome, cItem.GetPk_Cliente(), tema));
 
                     else
                     {
-                        builder.Append(OpenItemWithSubs(cItem.nome, cItem.GetPk_Cliente()));
+                        builder.Append(OpenItemWithSubs(cItem.nome, cItem.GetPk_Cliente(), tema));
 
-                        builder.Append(AddChildItem(cItem));
+                        builder.Append(AddChildItem(cItem, tema));
 
                         builder.Append(CLOSE_SUBITEM);
                     }

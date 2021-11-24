@@ -3,23 +3,31 @@
 }
 
 <div class="position-sticky sticky-top">
-    <div class="sidebar container nav-dark text-left rounded-right shadow-sm d-md-flex pt-2 pb-0 px-2">
+    <div class="sidebar container nav-@ViewBag.Usuario.theme text-left rounded-right shadow-sm d-md-flex p-2">
 
         <ul class="nav flex-column flex-nowrap overflow-hidden">
 
             <li class="nav-item">
-                <button class="nav-link btn btn-secondary btn-list mb-3 rounded border-dark" href="#sidebar" data-toggle="collapse" data-target="#sidebar">
-                    <img src="~/images/list.svg" class="image-full-navbar wh-25" title="Abrir lista" />
-                    <img src="~/images/arrow-down-circle.svg" class="image-mobile-navbar wh-15" title="Abrir lista" />
+                <button class="nav-link btn btn-info btn-list bg-theme-@ViewBag.Usuario.theme text-theme-@ViewBag.Usuario.theme rounded border-@ViewBag.Usuario.theme"
+                        href="#sidebar" data-toggle="collapse" data-target="#sidebar">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="image-full-navbar wh-25" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="image-mobile-navbar wh-15" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+
                 </button>
             </li>
 
             <li>
-                <div class="collapse sidebar-content" id="sidebar" aria-expanded="false">
+                <div class="collapse sidebar-content " id="sidebar" aria-expanded="false">
                     <ul class="nav flex-column flex-nowrap">
 
-                        <li class="nav-item">
-                            <a class="nav-link text-theme-dark" asp-controller="Pipeline" asp-action="AddPipeline" asp-route-id="0">
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-theme-@ViewBag.Usuario.theme" asp-controller="Pipeline" asp-action="AddPipeline" asp-route-id="0">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                                 </svg>
@@ -29,7 +37,7 @@
                         @foreach (var pipe in ViewBag.TodasPipelines as List<IoniCRM.Controllers.Objects.Pipeline>)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-theme-dark align-middle p-1"
+                                <a class="nav-link text-theme-@ViewBag.Usuario.theme align-middle p-1"
                                    asp-controller="Pipeline" asp-action="Pipeline" asp-route-id="@pipe.GetId()">
 
                                     @pipe.nome
@@ -55,14 +63,14 @@
 
     @foreach (var pipeline in ViewBag.Pipelines as List<IoniCRM.Controllers.Objects.Pipeline>)
     {
-        <div class="nav-dark rounded row justify-content-between align-items-center w-100 pt-2 pb-3 px-3 m-3">
+        <div class="nav-@ViewBag.Usuario.theme rounded row justify-content-between align-items-center w-100 pt-2 pb-3 px-3 m-3">
             <div class="mw-70p m-0">
-                <h1 class="text-theme-dark m-0">@pipeline.nome</h1>
-                <h6 class="subtext-theme-dark m-0">@pipeline.descr</h6>
+                <h1 class="text-theme-@ViewBag.Usuario.theme m-0">@pipeline.nome</h1>
+                <h6 class="subtext-theme-@ViewBag.Usuario.theme m-0">@pipeline.descr</h6>
             </div>
 
             <div class="row align-items-center m-0">
-                <a class="nav-link text-theme-dark p-0 m-1" asp-controller="Deal" asp-action="Deal" asp-route-id="0" asp-route-pipe="@pipeline.GetId()">
+                <a class="nav-link text-theme-@ViewBag.Usuario.theme p-0 m-1" asp-controller="Deal" asp-action="Deal" asp-route-id="0" asp-route-pipe="@pipeline.GetId()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                     </svg>
@@ -85,7 +93,7 @@
             @for (int x = 0; x < 5; x++)
             {
                 <div class="mw-30 mx-auto mb-4 px-2">
-                    <div class="container text-justify p-2 bg-card-dark rounded mh-100 mw-auto-content box-shadow">
+                    <div class="container text-justify p-2 bg-card-@ViewBag.Usuario.theme rounded mh-100 mw-auto-content box-shadow">
                         <div class="row border-bottom border-dark mx-0">
                             <ul class="w-auto mb-2 px-1">
                                 <li class="row align-items-center mx-1">

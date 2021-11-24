@@ -3,10 +3,10 @@
 }
 
 <div class="pb-5 mx-3">
-    <div class="container bg-card bg-card-dark text-left row py-2 mx-auto">
+    <div class="container bg-card bg-card-@ViewBag.Usuario.theme text-left row py-2 mx-auto">
 
-        <div class="row nav-dark bg-card justify-content-between w-100 py-1 px-3 m-1">
-            <h2 class="text-theme-dark m-0">Histórico de Atividades</h2>
+        <div class="row nav-@ViewBag.Usuario.theme bg-card justify-content-between w-100 py-1 px-3 m-1">
+            <h2 class="text-theme-@ViewBag.Usuario.theme m-0">Histórico de Atividades</h2>
             
             <a class="btn btn-danger px-1 py-0 m-1" asp-controller="Home" asp-action="Home" asp-route-act="limpar_historico">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

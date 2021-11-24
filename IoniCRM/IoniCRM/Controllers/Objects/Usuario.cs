@@ -43,7 +43,6 @@ namespace IoniCRM.Controllers.Objects
             this.theme = theme;
         }
 
-
         public void SetPk_Usuario(int pk_usuario) => this.pk_usuario = pk_usuario;
         public int GetPk_Usuario() => pk_usuario;
 

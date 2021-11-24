@@ -1,5 +1,18 @@
 ﻿/* https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification */
 
+
+.dropdown {
+    margin: 20px;
+}
+
+.dropdown-menu {
+    max-height: 8rem;
+    overflow-y: auto;
+}
+
+
+
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -35,6 +48,21 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(200,200,200,1);
+    border-radius: 0;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 0 6px rgba(90,90,90,0.7);
 }
 
 .footer {
@@ -153,7 +181,7 @@ body {
 }
 
 .subtext-theme-light {
-    color: #3F3F3F;
+    color: #5F6769;
 }
 
 /*Text styles*/
@@ -269,11 +297,29 @@ body {
 }
 
 .sidebar-content {
-    display: inline-block;
     max-height: 200px;
     min-height: 0px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.sidebar-content.inline-block {
+    display: inline-block;
+}
+
+.sidebar-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(200,200,200,1);
+    border-radius: 10px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 0 6px rgba(90,90,90,0.7);
 }
 
 .pipeline-content {

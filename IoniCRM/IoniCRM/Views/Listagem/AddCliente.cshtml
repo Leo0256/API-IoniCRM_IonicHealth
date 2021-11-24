@@ -59,14 +59,62 @@
 
                         <div class="form-group col-md-4">
                             <h2 class="my-1">
-                                <label for="empOptions" class="text-dark m-0">Empresa / Chefe</label>
+                                <label for="empSelect" class="text-dark m-0">Empresa / Chefe</label>
                             </h2>
 
-                            <select id="empOptions" name="emp" class="form-control">
-                                <option selected>Eu mesmo</option>
-                                <option>Trabalho para uma empresa</option>
-                                <option>Eu tenho um chefe picareta</option>
-                                <!--
+                            <div class="w-100" id="empSelect">
+
+                                <button class="btn btn-light text-left dropdown-toggle w-100" type="button" id="dropdown_select" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                    Selecionar
+                                </button>
+
+                                <div id="menu" class="dropdown-menu sidebar-content px-1" aria-labelledby="dropdown_select" style="background-color:#ddd">
+
+                                    <form class="px-4 py-2">
+                                        <input type="search" class="form-control" id="search_word" placeholder="..." autofocus="autofocus">
+                                    </form>
+
+                                    <div id="menuItems">
+                                        <input type="button" class="dropdown-item bg-theme-@ViewBag.Usuario.theme text-theme-@ViewBag.Usuario.theme rounded mt-1" value="Vazio" />
+                                        <!--
+                                        <input type="button" class="dropdown-item" value="teste" />
+                                        <input type="button" class="dropdown-item" value="zxy" />
+                                        -->
+                                    </div>
+                                    <div id="empty" class="dropdown-header">No coins found</div>
+
+                                </div>
+
+
+                                <script>
+                                    window.addEventListener('input', function () {
+                                        filter(search.value.trim().toLowerCase())
+                                    })
+
+                                    var array = [];
+
+                                    @foreach (var cliente in ViewBag.ListClientes as List<IoniCRM.Controllers.Objects.Cliente>)
+                                    {
+                                        @:array.push("@cliente.nome");
+                                    }
+        
+                                    window.onload = function () {
+                                        buildDropDown(array);
+                                    };
+        
+                                </script>
+                            </div>
+
+                            <!--
+                            <select id="empOptions" name="emp" class="form-control" data-live-search="true">
+                                <option selected>Eu mesmo (mudar esse nome depois)</option>
+                                foreach (var cliente in ViewBag.ListClientes as List<IoniCRM.Controllers.Objects.Cliente>)
+                                {
+                                    <option>cliente.nome</option>
+                                }
+
+                                <!-
                                 for (int status = 0; status < ViewBag.Status.Length; status++)
                                 {
                                     if (status == ViewBag.Deal.d_status)
@@ -78,8 +126,9 @@
                                         <option>.Status[status]</option>
                                     }
                                 }
-                                    -->
+                                    --
                             </select>
+                            -->
                         </div>
 
                         <div class="form-group col-md-4">

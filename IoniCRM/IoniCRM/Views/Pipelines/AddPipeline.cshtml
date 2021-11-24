@@ -3,16 +3,16 @@
 }
 
 <div class="container pt-5">
-    <div class="bg-card bg-card-dark rounded border border-dark shadow">
+    <div class="bg-card bg-card-@ViewBag.Usuario.theme rounded border border-dark shadow">
 
-        <div class="bg-card nav-dark m-1">
+        <div class="bg-card nav-@ViewBag.Usuario.theme m-1">
             @if (ViewBag.Pipeline.GetId() == 0)
             {
-                <h1 class="text-theme-dark p-3 m-0">Nova Pipeline</h1>
+                <h1 class="text-theme-@ViewBag.Usuario.theme p-3 m-0">Nova Pipeline</h1>
             }
             else
             {
-                <h1 class="text-theme-dark p-3 m-0">Editar Pipeline</h1>
+                <h1 class="text-theme-@ViewBag.Usuario.theme p-3 m-0">Editar Pipeline</h1>
             }
         </div>
 
@@ -72,7 +72,7 @@
 
 
                     <div class="form-row align-items-center justify-content-between">
-                        <button type="submit" class="btn btn-secondary rounded-pill border-dark shadow mt-3">
+                        <button type="submit" class="btn btn-info rounded-pill border-dark shadow mt-3">
                             <h4 class="borda-texto m-1">Salvar</h4>
                         </button>
 

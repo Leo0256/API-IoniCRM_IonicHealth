@@ -79,7 +79,20 @@ namespace IoniCRM.Controllers
 
         public IActionResult Perfil()
         {
+            if (Session.Empty(HttpContext.Session))
+                return RedirectToAction("Login", "Login");
+
+            ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
             return View();
+        }
+
+        public IActionResult ChangeTheme(string theme)
+        {
+            Usuario usuario = Session.GetUsuario(HttpContext.Session);
+            usuario.theme = theme;
+            Session.SetUser(HttpContext.Session, usuario);
+
+            return RedirectToAction("Home", "Home");
         }
 
         public IActionResult Sair()

@@ -1,6 +1,48 @@
 ﻿@{
     ViewData["Title"] = "Perfil";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<h1 id="title">@ViewData["Title"]</h1>
+
+<!--
+<div class="dropdown">
+    <!--Botão principal, onde acaba por agrupar o dropdown->
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown_coins" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+        Coin
+    </button>
+    <!--O dropdown->
+    <div id="menu" class="dropdown-menu" aria-labelledby="dropdown_coins">
+        <!--É aqui onde informa o nome da pesquisa->
+        <form class="px-4 py-2">
+            <input type="search" class="form-control" id="searchCoin" placeholder="..." autofocus="autofocus">
+        </form>
+        <!---->
+        <!--Os itens adicionados pelo javascript entram aqui, por referencia do id->
+        <div id="menuItems">
+            <!--
+            <input type="button" class="dropdown-item" value="teste" />
+            <input type="button" class="dropdown-item" value="zxy" />
+            ->
+        </div>
+        <!--->
+        <!--Se não houver itens no dropdown (seja pela falta deles ou por consequência da pesquisa) mostra este item de 'empty'->
+        <div id="empty" class="dropdown-header">No coins found</div>
+        <!->
+    </div>
+
+
+    <script>
+        window.addEventListener('input', function () {
+            filter(search.value.trim().toLowerCase())
+        })
+
+        let array = ["oi", "tchau"];
+        
+        window.onload = function () {
+            buildDropDown(array);
+        };
+        
+    </script>
+</div>
+-->
