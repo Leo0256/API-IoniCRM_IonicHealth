@@ -1,0 +1,165 @@
+﻿@{
+    ViewData["Title"] = "Dashboards";
+}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="mb-5 pb-5 mx-3">
+    <h1 id="title">@ViewData["Title"]</h1>
+
+    <div class="bg-card-dark m-2 p-2 rounded">
+        <!--
+            <canvas id="myChart" class="pie-chart"></canvas>
+        -->
+        <canvas id="myChart" class="pie-chart"></canvas>
+    </div>
+    <script>
+
+        /* */
+        function SetPieChart(chartId, title, values) {
+            const ctx = document.getElementById(chartId);
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'Qualificação',
+                        'Proposta',
+                        'Negociação',
+                        'Ganho',
+                        'Perda'
+                    ],
+                    datasets: [{
+                        label: 'Chart',
+                        data: values,
+                        backgroundColor: [
+                            '#113CFC',
+                            '#FFF',
+                            '#3F3F3F',
+                            'rgb(178, 212, 48)',
+                            'rgb(253, 0, 84)',
+
+                        ],
+                        hoverOffset: 5,
+                        borderWidth: 0
+                    }]
+                },
+
+                options: {
+                    plugins: {
+
+                        title: {
+                            display: true,
+                            text: title,
+                            font: {
+                                size: 40
+                            }
+                        },
+
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: 'rgb(0, 0, 0)',
+                                font: {
+                                    size: 15
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function SetBarChart(chartId, title, values) {
+            const ctx = document.getElementById(chartId);
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Qualificação',
+                        'Proposta',
+                        'Negociação',
+                        'Ganho',
+                        'Perda'
+                    ],
+                    datasets: [{
+                        label: 'Valor Total',
+                        data: values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+
+                    plugins: {
+
+                        title: {
+                            display: true,
+                            text: title,
+                            font: {
+                                size: 40
+                            }
+                        },
+
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: 'rgb(0, 0, 0)',
+                                font: {
+                                    size: 15
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            /*
+            new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: 'rgb(0, 0, 0)',
+                            font: {
+                                size: 15
+                            }
+                        }
+                    }
+                },
+            });
+            */
+        }
+
+
+        SetBarChart('myChart', 'Título', [12, 19, 3, 5, 2, 3]);
+
+        //SetPieChart('myChart', 'Título', [30, 50, 50, 40, 20]);
+    </script>
+</div>
+
+
+

@@ -33,7 +33,8 @@ namespace IoniCRM.Controllers
             if (!Session.Empty(HttpContext.Session))
                 ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
 
-            return View(view);
+            //return View(view);
+            return RedirectToAction("Dashboard", "Dashboard");
         }
         
         public IActionResult MakeLogin(string email, string senha)
