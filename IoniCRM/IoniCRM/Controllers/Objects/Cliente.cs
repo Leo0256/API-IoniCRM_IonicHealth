@@ -11,7 +11,7 @@ namespace IoniCRM.Controllers.Objects
         private int pk_cliente;
         private string emp;
         public string nome;
-        public string cpf_cnpj;
+        private string cpf_cnpj;
         private string crm;
         public string img;
         public string razaoSocial;
@@ -29,6 +29,15 @@ namespace IoniCRM.Controllers.Objects
             pk_cliente = 0;
             emp = string.Empty;
             nome = string.Empty;
+            cpf_cnpj = string.Empty;
+            crm = string.Empty;
+            img = "https://raw.githubusercontent.com/Leo0256/API-IoniCRM_IonicHealth/sistema/IoniCRM/IoniCRM/wwwroot/images/logo-icon-1.png";
+            razaoSocial = string.Empty;
+            categoria = string.Empty;
+            descr = string.Empty;
+            websites = Array.Empty<string>();
+            enderecos = Array.Empty<string>();
+            contatos = new();
         }
 
         public Cliente(int pk_cliente, string emp, string nome, string img) 
@@ -61,10 +70,10 @@ namespace IoniCRM.Controllers.Objects
         }
 
         public int GetPk_Cliente() => pk_cliente;
-        public void SetPk_Cliente(int pk_cliente) => this.pk_cliente = pk_cliente;
+
+        public string GetCpfCnpj() => cpf_cnpj;
 
         public string GetEmp() => emp;
-        public void SetEmp(string emp) => this.emp = emp;
 
         public void SetCRM(string crm) => this.crm = crm;
         public string GetCRM() => crm;

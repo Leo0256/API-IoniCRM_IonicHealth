@@ -507,6 +507,50 @@ end $$;
 
 
 /*
+select delCliente(<id_cliente> integer);
+*/
+create or replace function delCliente(id_cliente integer)
+returns void
+language plpgsql
+as $$
+begin
+
+	select delClienteInfo(id_cliente);
+	
+	select delClienteContato(id_cliente);
+	
+	delete from Cliente
+		where pk_cliente = id_cliente;
+end $$;
+
+
+/*
+select delClienteInfo(<id_cliente> integer);
+*/
+create or replace function delClienteInfo(id_cliente integer)
+returns void
+language plpgsql
+as $$
+begin
+	delete from Cliente_Info
+		where fk_cliente = id_cliente;
+end $$;
+
+
+/*
+select delClienteContato(<id_cliente> integer);
+*/
+create or replace function delClienteContato(id_cliente integer)
+returns void
+language plpgsql
+as $$
+begin
+	delete from Cliente_Contato
+		where fk_cliente = id_cliente;
+end $$;
+
+
+/*
 select upsertPipeline(<dados> json);
 */
 create or replace function upsertPipeline(dados json)

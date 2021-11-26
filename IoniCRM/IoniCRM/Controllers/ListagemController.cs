@@ -64,7 +64,19 @@ namespace IoniCRM.Controllers
                 return RedirectToAction("Login", "Login");
 
             ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
-            ViewBag.Cliente = int.Parse(id) > 0 ? GetData("Cliente", id) : null;
+            ViewBag.Cliente = int.Parse(id) > 0 ? GetData("Cliente", id)[0] : new Cliente();
+
+            ViewBag.websites = string.Join("\n", ViewBag.Cliente.websites);
+            ViewBag.enderecos = string.Join("\n", ViewBag.Cliente.enderecos);
+
+            if(ViewBag.Cliente.contatos.Count > 0)
+            {
+                foreach(string[] contato in ViewBag.Cliente.contatos)
+                    ViewBag.contatos += contato[1] + "\n";
+            }
+            else
+                ViewBag.contatos = string.Empty;
+
 
             ViewBag.ListClientes = GetData("Cliente", "null");
 
@@ -77,10 +89,20 @@ namespace IoniCRM.Controllers
             string cargo, string websites, string contatos, string descr)
         {
             // antes de tudo, pega o id da empresa (se houver)
-            string sql = string.Format(@"select pk_cliente from Cliente where nome like {0}", emp);
-            DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
-            int? emp_id = string.IsNullOrEmpty(rows[0]["pk_cliente"].ToString()) ? null : int.Parse(rows[0]["pk_cliente"].ToString());
+            int? emp_id;
+            string sql, hist_mensagem;
+            if (string.IsNullOrEmpty(emp) || new string[] { "Selecionar", "Vazio" }.Any(s => emp.Contains(s)))
+            {
+                emp_id = null;
+            }
+            else
+            {
+                sql = string.Format(@"select pk_cliente from Cliente where nome like '{0}'", emp);
+                DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+                emp_id = string.IsNullOrEmpty(rows[0]["pk_cliente"].ToString()) ? null : int.Parse(rows[0]["pk_cliente"].ToString());
+            }
 
+            
             JObject jcliente, jinfo, jcontato;
 
             // Novo Cliente
@@ -100,23 +122,31 @@ namespace IoniCRM.Controllers
                 sql = string.Format(@"select addCliente('{0}')", jcliente);
                 _ = pgsqlcon.ExecuteCmdAsync(sql);
 
+                sql = string.Format(@"select pk_cliente from Cliente where razao_social like '{0}'", razao_social);
+                id_cliente = pgsqlcon.ExecuteCmdAsync(sql).Result.Select()[0]["pk_cliente"].ToString();
 
-                List<string[]> info = new();
-                info.Add(enderecos.Split("\n"));
-                info.Add(websites.Split("\n"));
+                List<List<string>> info = new();
+                info.Add(enderecos.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToList());
+                info.Add(websites.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToList());
 
-                for (int x = 0; x < info[0].Length; x++)
+                if (info[0].Count > info[1].Count)
+                    info[1].Add(string.Empty);
+                else if (info[1].Count > info[0].Count)
+                    info[0].Add(string.Empty);
+                    
+
+                for (int x = 0; x < info[0].Count; x++)
                 {
                     jinfo = JObject.Parse("{" +
                         "\"fk_cliente\":" + id_cliente + "," +
                         "\"endereco\":\"" + info[0][x] + "\"," +
-                        "\"fk_cliente\":\"" + info[1][x] + "\"," +
+                        "\"website\":\"" + info[1][x] + "\"," +
                         "}");
                     sql = string.Format(@"select addClienteInfo('{0}')", jinfo);
                     _ = pgsqlcon.ExecuteCmdAsync(sql);
                 }
 
-                foreach (string contato in contatos.Split("\n"))
+                foreach (string contato in contatos.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray())
                 {
                     int tipo_contato = contato.Contains("@") ? 1 : 0;
                     /* tipo_contato:
@@ -133,12 +163,16 @@ namespace IoniCRM.Controllers
                     sql = string.Format(@"select addClienteContato('{0}')", jcontato);
                     _ = pgsqlcon.ExecuteCmdAsync(sql);
                 }
+
+                hist_mensagem = emp_id == null ?
+                    string.Format(@"Novo Cliente <{0}> adicionado, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome) :
+                    string.Format(@"Novo Cliente <{0}>, funcionario de <{1}>, adicionado, por <{2}>.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
             }
             // Editar Cliente
             else
             {
                 // atualiza o cpf/cnpj
-                if (cpf_cnpj_antigo.Equals(cpf_cnpj))
+                if (!cpf_cnpj_antigo.Equals(cpf_cnpj))
                 {
                     sql = string.Format(@"select atualizarCPF_CNPJ('{0}','{1}')", cpf_cnpj_antigo, cpf_cnpj);
                     _ = pgsqlcon.ExecuteCmdAsync(sql);
@@ -159,30 +193,35 @@ namespace IoniCRM.Controllers
                 _ = pgsqlcon.ExecuteCmdAsync(sql);
 
 
-                List<string[]> info = new();
-                info.Add(enderecos.Split("\n"));
-                info.Add(websites.Split("\n"));
+                List<List<string>> info = new();
+                info.Add(enderecos.Split("\r\n").ToList());
+                info.Add(websites.Split("\r\n").ToList());
 
-                for(int x = 0; x < info[0].Length; x++)
+                if (info[0].Count > info[1].Count)
+                    info[1].Add(string.Empty);
+                else if (info[1].Count > info[0].Count)
+                    info[0].Add(string.Empty);
+
+                sql = string.Format(@"select delClienteInfo({0})", id_cliente);
+                _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+                for (int x = 0; x < info[0].Count; x++)
                 {
-                    sql = string.Format(@"select delClienteInfo({0})", id_cliente);
-                    _ = pgsqlcon.ExecuteCmdAsync(sql);
-
                     jinfo = JObject.Parse("{" +
                         "\"fk_cliente\":" + id_cliente + "," +
                         "\"endereco\":\"" + info[0][x] + "\"," +
-                        "\"fk_cliente\":\"" + info[1][x] + "\"," +
+                        "\"website\":\"" + info[1][x] + "\"," +
                         "}");
 
                     sql = string.Format(@"select addClienteInfo('{0}')", jinfo);
                     _ = pgsqlcon.ExecuteCmdAsync(sql);
                 }
 
-                foreach(string contato in contatos.Split("\n"))
-                {
-                    sql = string.Format(@"select delClienteContato({0})", id_cliente);
-                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+                sql = string.Format(@"select delClienteContato({0})", id_cliente);
+                _ = pgsqlcon.ExecuteCmdAsync(sql);
 
+                foreach (string contato in contatos.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray())
+                {
                     int tipo_contato = contato.Contains("@") ? 1 : 0;
                     /* tipo_contato:
                      * 0 - Telefone
@@ -198,16 +237,17 @@ namespace IoniCRM.Controllers
                     sql = string.Format(@"select addClienteContato('{0}')", jcontato);
                     _ = pgsqlcon.ExecuteCmdAsync(sql);
                 }
+
+                hist_mensagem = string.Format(@"Cliente <{0}>, funcionario de <{1}>, atualizado, por <{2}>.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
             }
 
-            return RedirectToAction("Listagem", "Clientes");
+            _ = new AddHistorico(HttpContext.Session, hist_mensagem);
+
+            return RedirectToAction("Clientes", "Listagem");
         }
 
         public IActionResult DelCliente(string id, string nome, string emp)
         {
-            if (Session.Empty(HttpContext.Session))
-                return RedirectToAction("Login", "Login");
-
             string sql = string.Format(@"select delCliente({0})", id);
             _ = pgsqlcon.ExecuteCmdAsync(sql);
 
@@ -215,11 +255,8 @@ namespace IoniCRM.Controllers
             string mensagem = string.Format("Cliente <{0}>, funcionario de <{1}>, deletado, por {2}.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
             _ = new AddHistorico(HttpContext.Session, mensagem);
 
-            return RedirectToAction("Listagem", "Clientes");
+            return RedirectToAction("Clientes", "Listagem");
         }
-
-        
-
 
 
         private bool flag = false;
@@ -284,8 +321,8 @@ namespace IoniCRM.Controllers
                         row["razao_social"].ToString(),
                         row["categoria"].ToString(),
                         row["descr"].ToString(),
-                        row["website"].ToString().Split(";"),
-                        row["endereco"].ToString().Split(";"),
+                        row["website"].ToString().Split(";").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(),
+                        row["endereco"].ToString().Split(";").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(),
                         contatos
                         );
 
@@ -361,7 +398,11 @@ namespace IoniCRM.Controllers
 
                                 "<a class=\"nav-link\" href=\"#submenu-" + id +
                                     "\" data-toggle=\"collapse\" data-target=\"#submenu-" + id + "\">" +
-                                    "<img src=\"/images/arrow-down-circle.svg\" class=\"align-top btn-info rounded-circle wh-15\" />" +
+                                    "<svg xmlns = \"http://www.w3.org/2000/svg\"" +
+                                        " fill = \"currentColor\" class=\"align-top btn-info rounded-circle wh-15\" viewBox=\"0 0 16 16\">" +
+                                      "<path fill-rule=\"evenodd\" " + 
+                                        "d=\"M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z\"/>" +
+                                    "</svg>" +
                                 "</a>" +
                             "</div>" +
                             "<div class=\"collapse\" id=\"submenu-" + id + "\" aria-expanded=\"false\">" +

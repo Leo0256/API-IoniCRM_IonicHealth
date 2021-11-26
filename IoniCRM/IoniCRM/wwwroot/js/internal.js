@@ -44,6 +44,8 @@ function filter(word) {
 $('#menuItems').on('click', '.dropdown-item', function () {
     $('#dropdown_select').text($(this)[0].value)
     $("#dropdown_select").dropdown('toggle');
+
+    document.getElementById("dropdown_hidden_value").value = $(this)[0].value;
 })
 
 //$('#dropdown_select').click(buildDropDown(names))
