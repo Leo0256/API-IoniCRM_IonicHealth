@@ -40,7 +40,7 @@ namespace IoniCRM.Controllers
         public PipelineController()
         {
             pgsqlcon = new();
-            pipelines = ViewBag.TotasPipelines ?? SetList(null);
+            pipelines = ViewBag.TotasPipelines ?? SetList(pgsqlcon, null);
         }
 
         public IActionResult Pipeline(string id)
@@ -50,7 +50,7 @@ namespace IoniCRM.Controllers
 
             ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
             ViewBag.TodasPipelines = pipelines;
-            ViewBag.Pipelines = SetList(id);
+            ViewBag.Pipelines = SetList(pgsqlcon, id);
 
             string[] estagio = {
                 "Qualificação",     // 0
@@ -68,7 +68,7 @@ namespace IoniCRM.Controllers
 
         
 
-        private List<Pipeline> SetList(string id_pipe)
+        public static List<Pipeline> SetList(PostgreSQLConnection con, string id_pipe)
         {
             string sql;
             if (string.IsNullOrEmpty(id_pipe))
@@ -76,7 +76,7 @@ namespace IoniCRM.Controllers
             else
                 sql = string.Format(@"select * from Pipeline where pk_pipeline = {0}",id_pipe);
 
-            DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+            DataRow[] rows = con.ExecuteCmdAsync(sql).Result.Select();
 
             List<Pipeline> data = new();
             foreach (DataRow row in rows)
@@ -89,7 +89,7 @@ namespace IoniCRM.Controllers
                         );
 
                 sql = string.Format(@"select * from dadosPipeline({0})",pipeline.GetId());
-                DataRow[] foo = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+                DataRow[] foo = con.ExecuteCmdAsync(sql).Result.Select();
                 
                 List<Deal> deals = new();
                 DateTime? abertura;
@@ -156,7 +156,7 @@ namespace IoniCRM.Controllers
                 return RedirectToAction("Login", "Login");
 
             ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
-            ViewBag.Pipeline = int.Parse(id) != 0 ? SetList(id).First() : new Pipeline();
+            ViewBag.Pipeline = int.Parse(id) != 0 ? SetList(pgsqlcon, id).First() : new Pipeline();
             ViewBag.CorPrioridade = color;
 
             return View("/Views/Pipelines/AddPipeline.cshtml");

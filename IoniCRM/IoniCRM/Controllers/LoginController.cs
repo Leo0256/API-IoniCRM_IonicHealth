@@ -33,8 +33,7 @@ namespace IoniCRM.Controllers
             if (!Session.Empty(HttpContext.Session))
                 ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
 
-            //return View(view);
-            return RedirectToAction("Dashboard", "Dashboard");
+            return View(view);
         }
         
         public IActionResult MakeLogin(string email, string senha)
@@ -50,7 +49,7 @@ namespace IoniCRM.Controllers
                 !string.IsNullOrEmpty(senha)
                 )
             {
-                string sql = string.Format(@"select login('{0}','{1}')", email, senha);
+                string sql = string.Format(@"select login('{0}','{1}')", email, GetHashCode(senha));
                 DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
 
                 string data = string.Empty;
@@ -83,6 +82,28 @@ namespace IoniCRM.Controllers
             }
 
             return View(view);
+        }
+
+        public static int GetHashCode(string str)
+        {
+            int hash1 = (5381 << 16) + 5381;
+            int hash2 = hash1;
+
+            for (int i = 0; i < str.Length; i += 2)
+            {
+                hash1 = ((hash1 << 5) + hash1) ^ str[i];
+                if (i == str.Length - 1)
+                    break;
+                hash2 = ((hash2 << 5) + hash2) ^ str[i + 1];
+            }
+
+            return hash1 + (hash2 * 1566083941);
+        }
+
+        public IActionResult Sair()
+        {
+            Session.Exit(HttpContext.Session);
+            return RedirectToAction("Login", "Login");
         }
     }
 }

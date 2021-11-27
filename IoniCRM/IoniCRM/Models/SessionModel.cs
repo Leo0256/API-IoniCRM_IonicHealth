@@ -19,6 +19,11 @@ namespace IoniCRM.Models
             return session.GetString(SessionValues.SessionKeyUser) == default;
         }
 
+        public static void Exit(this ISession session)
+        {
+            session.Clear();
+        }
+
         public static void SetUser(this ISession session, Usuario usuario)
         {
             session.SetString(SessionValues.SessionKeyUser, JsonConvert.SerializeObject(usuario));

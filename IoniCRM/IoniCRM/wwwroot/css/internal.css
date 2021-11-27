@@ -30,7 +30,7 @@ html {
 }
 
 body {
-    margin-bottom: 3rem;
+    margin-bottom: 6rem;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -228,19 +228,12 @@ body::-webkit-scrollbar-thumb {
 
 
 /*teste*/
-.pie-chart {
-    max-width: 35rem;
-    max-height: 35rem;
+.chart {
+    max-width: 30rem;
+    max-height: 30rem;
 
     min-width: 15rem;
     min-height: 15rem;
-}
-
-.bar-chart {
-    max-width: 50rem;
-    max-height: 50rem;
-    min-width: 50rem;
-    min-height: 50rem;
 }
 /*Width/Height*/
 

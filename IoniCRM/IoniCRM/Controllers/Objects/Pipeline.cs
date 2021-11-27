@@ -56,5 +56,31 @@ namespace IoniCRM.Controllers.Objects
             }
             return valor;
         }
+
+        public int[] GetListTotalDeals()
+        {
+            int[] total = new int[] { 0, 0, 0, 0, 0};
+            for(int estagio = 0; estagio < 5; estagio++)
+                foreach(Deal deal in deals)
+                {
+                    if (deal.estagio == estagio)
+                        total[estagio] += 1;
+                }
+
+            return total;
+        }
+
+        public double[] GetListTotalValor()
+        {
+            double[] valor = new double[] { 0, 0, 0, 0, 0 };
+            for (int estagio = 0; estagio < 5; estagio++)
+                foreach (Deal deal in deals)
+                {
+                    if (deal.estagio == estagio)
+                        valor[estagio] += deal.valor;
+                }
+
+            return valor;
+        }
     }
 }

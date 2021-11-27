@@ -31,6 +31,17 @@ namespace IoniCRM.Controllers.Objects
             this.theme = theme;
         }
 
+        public Usuario()
+        {
+            pk_usuario = 0;
+            nivel = 0;
+            nome = string.Empty;
+            email = string.Empty;
+            img = "https://raw.githubusercontent.com/Leo0256/API-IoniCRM_IonicHealth/sistema/IoniCRM/IoniCRM/wwwroot/images/logo-icon-1.png";
+            cargo = string.Empty;
+            theme = "dark";
+        }
+
         [JsonConstructor]
         public Usuario(int pk_usuario, int nivel, string nome, string email, string img, string cargo, string theme)
         {
@@ -43,13 +54,11 @@ namespace IoniCRM.Controllers.Objects
             this.theme = theme;
         }
 
-        public void SetPk_Usuario(int pk_usuario) => this.pk_usuario = pk_usuario;
         public int GetPk_Usuario() => pk_usuario;
 
         public void SetNivel(int nivel) => this.nivel = nivel;
         public int GetNivel() => nivel;
 
-        public void SetEmail(string email) => this.email = email;
         public string GetEmail() => email;
 
         public void SetSenha(string senha)

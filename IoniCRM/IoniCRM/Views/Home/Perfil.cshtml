@@ -2,47 +2,149 @@
     ViewData["Title"] = "Perfil";
 }
 
-<h1 id="title">@ViewData["Title"]</h1>
+<div class="position-sticky sticky-top">
+    <div class="sidebar container nav-@ViewBag.Usuario.theme text-left rounded-right shadow-sm d-md-flex p-2">
 
-<!--
-<div class="dropdown">
-    <!--Botão principal, onde acaba por agrupar o dropdown->
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown_coins" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-        Coin
-    </button>
-    <!--O dropdown->
-    <div id="menu" class="dropdown-menu" aria-labelledby="dropdown_coins">
-        <!--É aqui onde informa o nome da pesquisa->
-        <form class="px-4 py-2">
-            <input type="search" class="form-control" id="searchCoin" placeholder="..." autofocus="autofocus">
-        </form>
-        <!---->
-        <!--Os itens adicionados pelo javascript entram aqui, por referencia do id->
-        <div id="menuItems">
-            <!--
-            <input type="button" class="dropdown-item" value="teste" />
-            <input type="button" class="dropdown-item" value="zxy" />
-            ->
-        </div>
-        <!--->
-        <!--Se não houver itens no dropdown (seja pela falta deles ou por consequência da pesquisa) mostra este item de 'empty'->
-        <div id="empty" class="dropdown-header">No coins found</div>
-        <!->
+        <ul class="nav flex-column flex-nowrap overflow-hidden">
+
+            <li class="nav-item">
+                <button class="nav-link btn btn-info btn-list bg-theme-@ViewBag.Usuario.theme text-theme-@ViewBag.Usuario.theme rounded border-@ViewBag.Usuario.theme"
+                        href="#sidebar" data-toggle="collapse" data-target="#sidebar">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="image-full-navbar wh-25" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="image-mobile-navbar wh-15" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+
+                </button>
+            </li>
+
+            <li>
+                <div class="collapse sidebar-content " id="sidebar" aria-expanded="false">
+                    <ul class="nav flex-column flex-nowrap">
+
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-theme-@ViewBag.Usuario.theme" asp-controller="Home" asp-action="Perfil" asp-route-id="0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                </svg>
+                            </a>
+                        </li>
+
+                        @foreach (var usuario in ViewBag.TodosUsuarios as List<IoniCRM.Controllers.Objects.Usuario>)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-theme-@ViewBag.Usuario.theme align-middle p-1"
+                                   asp-controller="Home" asp-action="Perfil" asp-route-id="@usuario.GetPk_Usuario()">
+
+                                    @usuario.nome
+                                </a>
+
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
     </div>
-
-
-    <script>
-        window.addEventListener('input', function () {
-            filter(search.value.trim().toLowerCase())
-        })
-
-        let array = ["oi", "tchau"];
-        
-        window.onload = function () {
-            buildDropDown(array);
-        };
-        
-    </script>
 </div>
--->
+
+<div class="mx-3">
+    <div class="container bg-card-@ViewBag.Usuario.theme rounded mx-auto p-1">
+        <section>
+            @using (Html.BeginForm("UpsertUsuario", "Home", FormMethod.Post))
+            {
+                <input type="hidden" name="pk_usuario" value="@ViewBag.Perfil.GetPk_Usuario()" />
+                
+                <div class="row nav-@ViewBag.Usuario.theme justify-content-center align-items-center rounded mx-1 mt-1 mb-3 px-2 py-1">
+                    <img title="imagem perfil" src="@ViewBag.Perfil.img" class="perfil-icon rounded-circle align-top m-2" />
+
+                    <input class="h1 text-theme-@ViewBag.Usuario.theme bg-transparent w-75 mx-1" type="text" name="nome" placeholder="Nome"
+                           value="@ViewBag.Perfil.nome" />
+                </div>
+                
+                <div class="form-group container w-75 p-3">
+                    <div class="form-row align-items-baseline">
+                        <div class="form-group col-md-6">
+
+                            <h2 class="my-1">
+                                <label for="emailTextBox" class="text-dark m-0">E-mail</label>
+                            </h2>
+                            <input type="hidden" name="emailAntigo" value="@ViewBag.Perfil.GetEmail()" />
+                            <input id="emailTextBox" class="h3 form-control rounded m-0" type="text" name="email" placeholder="Editar E-mail" value="@ViewBag.Perfil.GetEmail()" />
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+
+                            <h2 class="my-1">
+                                <label for="senhaTextBox" class="text-dark m-0">Senha</label>
+                            </h2>
+
+                            <input id="senhaTextBox" class="h3 form-control rounded m-0" type="password" name="senha" placeholder="Editar Senha" />
+
+                        </div>
+                    </div>
+
+                    <div class="form-row align-items-baseline justify-content-center">
+                        <div class="form-group col-md-4">
+
+                            <h2 class="my-1">
+                                <label for="cargoTextBox" class="text-dark m-0">Cargo</label>
+                            </h2>
+
+                            <input id="cargoTextBox" class="h3 form-control rounded m-0" type="text" name="cargo" placeholder="Editar Cargo" value="@ViewBag.Perfil.cargo" />
+
+                        </div>
+
+                        @if (ViewBag.Usuario.GetNivel() == 2)
+                        {
+                            <div class="form-group col-md-2">
+
+                                <h2 class="my-1">
+                                    <label for="nivelSelect" class="text-dark m-0">Nível</label>
+                                </h2>
+
+
+                                <select id="nivelSelect" name="nivel" class="form-control">
+                                    @for (int nivel = 0; nivel < 3; nivel++)
+                                    {
+                                        if (ViewBag.Perfil.GetNivel() == nivel)
+                                        {
+                                            <option selected>@ViewBag.nivel[nivel]</option>
+                                        }
+                                        else
+                                        {
+                                            <option>@ViewBag.nivel[nivel]</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="form-row align-items-center justify-content-between">
+                        <button type="submit" class="btn btn-info rounded-pill border-dark shadow mt-3">
+                            <h4 class="borda-texto m-1">Salvar</h4>
+                        </button>
+
+                        @if (ViewBag.Perfil.GetPk_Usuario() != 0)
+                        {
+                            <a class="btn btn-danger rounded-pill border-dark shadow mt-3"
+                                asp-controller="Home" asp-action="DelUsuario" asp-route-id="@ViewBag.Perfil.GetPk_Usuario()"
+                                asp-route-nome="@ViewBag.Perfil.nome">
+                                <h4 class="borda-texto m-1">Deletar</h4>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+

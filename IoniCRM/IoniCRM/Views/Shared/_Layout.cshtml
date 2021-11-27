@@ -22,87 +22,87 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm nav-@navbar border-bottom border-@navbar box-shadow mb-3">
             <div class="container">
-            @{
-                switch (Session.GetPermission(this.Context.Session))
-                {
-                    case 2:
-                        <a class="navbar-brand border-0" asp-area="" asp-controller="Home" asp-action="Home">
+                @{
+                    switch (Session.GetPermission(this.Context.Session))
+                    {
+                        case 2:
+                            <a class="navbar-brand border-0" asp-area="" asp-controller="Home" asp-action="Home">
+                                <div>
+                                    <img src="~/images/logo-1.png" class="image-full image-full-navbar mb-0" />
+                                    <img src="~/images/logo-icon-1.png" class="image-mobile image-mobile-navbar mb-0" />
+                                </div>
+                            </a>
+                            <div class="btn-group" role="group">
+                                @{
+                                    if (theme.Equals("dark")) //theme dark
+                                    {
+                                        <a class="btn btn-light pt-1" asp-controller="Home" asp-action="ChangeTheme" asp-route-theme="light">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+                                            </svg>
+                                        </a>
+
+                                        <button class="btn btn-outline-secondary pt-1" disabled>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z" />
+                                            </svg>
+                                        </button>
+                                    }
+                                    else //theme light
+                                    {
+                                        <button class="btn btn-outline-light pt-1" disabled>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+                                            </svg>
+                                        </button>
+
+                                        <a class="btn btn-secondary pt-1" asp-controller="Home" asp-action="ChangeTheme" asp-route-theme="dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+                                            </svg>
+                                        </a>
+                                    }
+                                }
+                            </div>
+
+                            <button class="navbar-toggler btn-info bg-theme-@theme" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="wh-25" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                </svg>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-theme-@theme  font-weight-bold" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-theme-@theme  font-weight-bold" asp-area="" asp-controller="Listagem" asp-action="Clientes">Clientes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-theme-@theme  font-weight-bold" asp-area="" asp-controller="Pipeline" asp-action="Pipeline">Pipeline</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-theme-@theme  font-weight-bold" asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Dashboards</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            break;
+
+                        default:
                             <div>
                                 <img src="~/images/logo-1.png" class="image-full image-full-navbar mb-0" />
                                 <img src="~/images/logo-icon-1.png" class="image-mobile image-mobile-navbar mb-0" />
                             </div>
-                        </a>
-                        <div class="btn-group" role="group">
-                            @{
-                                if (theme.Equals("dark")) //theme dark
-                                {
-                                    <a class="btn btn-light pt-1" asp-controller="Home" asp-action="ChangeTheme" asp-route-theme="light">    
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
-                                        </svg>
-                                    </a>
 
-                                    <button class="btn btn-outline-secondary pt-1" disabled>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z" />
-                                        </svg>
-                                    </button>
-                                }
-                                else //theme light
-                                {
-                                    <button class="btn btn-outline-light pt-1" disabled>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
-                                        </svg>
-                                    </button>
-
-                                    <a class="btn btn-secondary pt-1" asp-controller="Home" asp-action="ChangeTheme" asp-route-theme="dark">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
-                                        </svg>
-                                    </a>
-                                }
-                            }
-                        </div>
-
-                        <button class="navbar-toggler btn-info bg-theme-@theme" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="wh-25" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                            </svg>
-                        </button>
-                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link text-theme-@theme  font-weight-bold" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-theme-@theme  font-weight-bold" asp-area="" asp-controller="Listagem" asp-action="Clientes">Clientes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-theme-@theme  font-weight-bold" asp-area="" asp-controller="Pipeline" asp-action="Pipeline">Pipeline</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-theme-@theme  font-weight-bold" asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Dashboards</a>
-                                </li>
-                            </ul>
-                        </div>
-                        break;
-
-                    default:
-                        <div>
-                            <img src="~/images/logo-1.png" class="image-full image-full-navbar mb-0" />
-                            <img src="~/images/logo-icon-1.png" class="image-mobile image-mobile-navbar mb-0" />
-                        </div>
-
-                        break;
+                            break;
+                    }
                 }
-            }
             </div>
         </nav>
     </header>
 
-    <main role="main" class="mb-4">
+    <main role="main" class="">
         @RenderBody()
     </main>
 
@@ -116,7 +116,7 @@
                     <a class="text-light p-0" asp-area="" asp-controller="Home" asp-action="Perfil">Perfil</a>
 
                     <div class="px-1 m-0">|</div>
-                    <a class="text-danger p-0" asp-area="" asp-controller="Home" asp-action="Sair">Sair</a>
+                    <a class="text-danger p-0" asp-area="" asp-controller="Login" asp-action="Sair">Sair</a>
                 }
             </div>
         </div>

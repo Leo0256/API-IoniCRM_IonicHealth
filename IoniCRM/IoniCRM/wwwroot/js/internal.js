@@ -3,8 +3,7 @@
 
 
 
-// Testes com select picker //
-
+//-Select picker-//
 let search = document.getElementById("search_word")
 let items = document.getElementsByClassName("dropdown-item")
 
@@ -51,4 +50,8 @@ $('#menuItems').on('click', '.dropdown-item', function () {
 //$('#dropdown_select').click(buildDropDown(names))
 
 //buildDropDown(names)
+//-Select picker-//
+
+
+
 

@@ -203,7 +203,12 @@ begin
 		x.img, x.nome, x.email,
 		x.cargo
 	from Usuario as x
-	where x.pk_usuario = id_usuario;
+	where (
+		case when id_usuario is not null
+			then x.pk_usuario = id_usuario
+			else x.pk_usuario is not null
+		end
+	);
 end $$;
 
 create or replace function dadosUsuario(email_usuario varchar)
@@ -224,8 +229,14 @@ begin
 		x.img, x.nome, x.email,
 		x.cargo
 	from Usuario as x
-	where x.email = email_usuario;
+	where (
+		case when email_usuario is not null
+			then x.email = email_usuario
+			else x.email is not null
+		end
+	);
 end $$;
+
 
 /*
 select addUsuario(<dados> json);
@@ -254,6 +265,34 @@ begin
 		cargo = excluded.cargo;
 		
 end $$;
+
+
+/*
+select updateEmailUsuario(<antigo> varchar, <novo> varchar);
+*/
+create or replace function updateEmailUsuario(antigo varchar, novo varchar)
+returns void
+language plpgsql
+as $$
+begin
+	update Usuario
+		set email = novo
+		where email like antigo;
+end $$;
+
+
+/*
+select delUsuario(<id_usuario> integer);
+*/
+create or replace function delUsuario(id_usuario integer)
+returns void
+language plpgsql
+as $$
+begin
+	delete from Usuario
+		where pk_usuario = id_usuario;
+end $$;
+
 
 /*
 select * from dadosCliente(<pk_cliente> integer);

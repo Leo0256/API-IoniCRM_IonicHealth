@@ -12,10 +12,10 @@ namespace IoniCRM.Controllers.Objects
     {
         public AddHistorico(ISession session, string mensagem)
         {
-            AdHistorico(session, mensagem);
+            NewHistorico(session, mensagem);
         }
 
-        public static void AdHistorico(ISession session, string mensagem)
+        public static void NewHistorico(ISession session, string mensagem)
         {
             PostgreSQLConnection con = new();
             JObject hist = JObject.Parse("{" +
