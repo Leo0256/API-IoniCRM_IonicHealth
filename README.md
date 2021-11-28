@@ -1,25 +1,25 @@
-# Sprint 3 - Gerenciamento de Pipelines
-###### :calendar: 18/10 - 07/11
+# Sprint 4 - Últimas funcionalidades, Manual de Uso e Finalização do Sistema
+###### :calendar: 08/11 - 28/11
 ---
 
 ## :dart: Objetivo
-Entregar as funcionalidades referentes ao gerenciamento de Pipelines, tando visualização, edição e remoção `(CRUD)`.
+Entregar as últimas funcionalidades restantes (dashboards, visualizar/editar perfil e clientes), o manual de uso do sistema (para o auxílio de novos usuários) e a finalização do sistema própriamente dito.
+
+> **Nota:** Não foi possível realizar a entrega de todas as funcionalidades.
 
 
-## :clipboard: Backlog - Sprint 3
+> **Nota:** Todos os wireframes de prototipação desenvolvidos estão disponíveis no [Figma](https://www.figma.com/file/6BJJym43ssfnVHOuOOVHJf/IoniCRM?node-id=0%3A1).
+
+## :clipboard: Backlog - Sprint 4
 <p align="center">
-  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Card%20Sprint%203.png">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Card%20Sprint%204.png">
 </p>
 
+## :clipboard: Manual de Uso //falta colocar o arquivo e o link
+- [Manual_de_Uso.pdf](https://google.com/)
 
-## :page_with_curl: Wireframes
-###### Desenvolvidos através do [Figma](https://www.figma.com/file/6BJJym43ssfnVHOuOOVHJf/IoniCRM?node-id=0%3A1).
-<p align="center">
-    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Wireframes/Pipeline.png">
-</p>
 
-  
-## :movie_camera: Gif das Funcionalidades Implementadas
+## :movie_camera: Gif das Funcionalidades Implementadas //falta colocar os arquivos e os gifs
 <p align="center">
     <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Pipeline%20(Desktop).gif">
     <br><br>
@@ -27,31 +27,35 @@ Entregar as funcionalidades referentes ao gerenciamento de Pipelines, tando visu
 </p>
 
 
-## :bar_chart: Diagrama de Caso de Uso
-> **Nota:** Este diagrama ilustra as funcionalidades do sistema.
+## :movie_camera: Gif das Outras Funcionalidades Entregues //falta colocar os arquivos e os gifs
 <p align="center">
-  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Diagrama%20de%20Caso%20de%20Uso.jpeg" width="450" height="770">
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Pipeline%20(Desktop).gif">
+    <br><br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Pipeline%20(Mobile).gif">
 </p>
 
 
 ## :scroll: Sistema: Códigos
 - [Código fonte](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/sistema)
-- [Banco de Dados.sql](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_2/C%C3%B3digos/Banco%20de%20Dados.sql)
+- [Banco de Dados.sql](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Banco%20de%20Dados.sql)
 
-- [Views](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_3/C%C3%B3digos/Views)
-  - [Pipeline.cshtml](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Views/Pipeline.cshtml)
-  - [card_deal.cshtml](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Views/card_deal.cshtml)
-  - [AddPipeline.cshtml](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Views/AddPipeline.cshtml)
-  - [Deal.cshtml](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Views/Deal.cshtml)
+- [Views](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_4/C%C3%B3digos/Views)
+  - [Home.cshtml](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Views/Home/Home.cshtml)
+  - [Perfil.cshtml](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Views/Home/Perfil.cshtml)
+  - [AddCliente.cshtml](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Views/Listagem/AddCliente.cshtml)
+  - [Dashboard.cshtml](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Views/Dashboard/Dashboard.cshtml)
 
-- [Modelos/Objects](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_3/C%C3%B3digos/Models)
-  - [Cliente.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Models/Objects/Cliente.cs)
-  - [Deal.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Models/Objects/Deal.cs)
-  - [Pipeline.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Models/Objects/Pipeline.cs)
+- [Objects](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_4/C%C3%B3digos/Controllers/Objects)
+  - [AddHistorico.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Controllers/Objects/AddHistorico.cs)
+  - [Historico.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Controllers/Objects/Historico.cs)
 
-- [Controladores](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_3/C%C3%B3digos/Controllers)
-  - [ListagemController.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Controllers/DealController.cs)
-  - [ListagemController.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/C%C3%B3digos/Controllers/PipelineController.cs)
+- [Controladores](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_4/C%C3%B3digos/Controllers)
+  - [Dashboard.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Controllers/DashboardController.cs)
+  - [Home.cs](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/Controllers/HomeController.cs)
+
+- [Estilos do Layout](https://github.com/Leo0256/API-IoniCRM_IonicHealth/tree/Sprint_4/C%C3%B3digos/wwwroot)
+  - [CSS](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/wwwroot/css/internal.css)
+  - [Javascript](https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/C%C3%B3digos/wwwroot/js/internal.js)
   
 
 ## :computer: Tecnologias Utilizadas
@@ -67,8 +71,8 @@ Entregar as funcionalidades referentes ao gerenciamento de Pipelines, tando visu
 [![](https://img.shields.io/badge/-C%23-783bd2?style=flat&logo=csharp&logoColor=white)](https://docs.microsoft.com/pt-br/dotnet/csharp/ "C#") [![](https://img.shields.io/badge/-PostgreSQL-00758f?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/ "PostgreSQL")
 
 
-## Burndown :chart_with_downwards_trend:
+## :chart_with_downwards_trend: Burndown  //falta colocar o arquivo e o link
 <p align="center">
-  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/burndown.png">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/burndown.png">
 </p>
 
