@@ -172,7 +172,8 @@ namespace IoniCRM.Controllers
             Regex regex = new("[\"']");
 
             nome = regex.Replace(nome, "´");
-            nomeOriginal = regex.Replace(nomeOriginal, "´");
+            if (string.IsNullOrEmpty(descr))
+                descr = string.Empty;
             descr = regex.Replace(descr, "´");
 
             JObject pipe = JObject.Parse("{" +
