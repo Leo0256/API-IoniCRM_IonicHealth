@@ -91,7 +91,7 @@ Entregar as últimas funcionalidades restantes (dashboards, visualizar/editar pe
 [![](https://img.shields.io/badge/-C%23-783bd2?style=flat&logo=csharp&logoColor=white)](https://docs.microsoft.com/pt-br/dotnet/csharp/ "C#") [![](https://img.shields.io/badge/-PostgreSQL-00758f?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/ "PostgreSQL")
 
 
-## :chart_with_downwards_trend: Burndown  //falta colocar o arquivo e o link
+## :chart_with_downwards_trend: Burndown
 <p align="center">
   <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Burndown.png">
 </p>
