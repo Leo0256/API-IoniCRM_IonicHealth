@@ -1,0 +1,230 @@
+﻿@{
+    ViewData["Title"] = "Deal";
+}
+
+<div class="container pt-5">
+    <div class="bg-card bg-card-@ViewBag.Usuario.theme rounded border border-dark shadow">
+        <div class="bg-card nav-@ViewBag.Usuario.theme m-1">
+            <h1 class="text-theme-@ViewBag.Usuario.theme px-3 pt-3 m-0">@ViewBag.Pipeline.nome</h1>
+            <h5 class="subtext-theme-@ViewBag.Usuario.theme px-3 pt-1 pb-3 m-0">@ViewBag.Pipeline.descr</h5>
+        </div>
+
+        <section>
+            @using (Html.BeginForm("UpsertDeal", "Deal", FormMethod.Post))
+            {
+                <input type="hidden" name="id_deal" value="@ViewBag.Deal.getId()" />
+                <input type="hidden" name="id_pipe" value="@ViewBag.Pipeline.GetId()" />
+
+                <div class="form-group container w-75 p-3">
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="nomeTextBox" class="text-dark m-0">Nome</label>
+                            </h2>
+
+                            <input id="nomeTextBox" class="form-control rounded m-0" type="text" name="nome" placeholder="Informe um nome" value="@ViewBag.Deal.nome" />
+
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="valorTextBox" class="text-dark m-0">Valor</label>
+                            </h2>
+
+                            <div class="input-group mb-3">
+
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">R$</span>
+                                </div>
+
+                                <input type="number" id="valorTextBox" class="form-control" name="valor" placeholder="00" aria-label="00" value="@ViewBag.Deal.valor">
+                            
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="statusOptions" class="text-dark m-0">Status</label>
+                            </h2>
+
+                            <select id="statusOptions" name="status" class="form-control">
+                                @for (int status = 0; status < ViewBag.Status.Length; status++)
+                                {
+                                    if (status == ViewBag.Deal.d_status)
+                                    {
+                                        <option selected>@ViewBag.Status[status]</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@ViewBag.Status[status]</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="estagioOptions" class="text-dark m-0">Estagio da Deal</label>
+                            </h2>
+
+                            <select id="estagioOptions" class="form-control" name="estagio">
+                                @for (int estagio = 0; estagio < ViewBag.Estagio.Length; estagio++)
+                                {
+                                    if (estagio == ViewBag.Deal.estagio)
+                                    {
+                                        <option selected>@ViewBag.Estagio[estagio]</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@ViewBag.Estagio[estagio]</option>
+                                    }
+                                }
+                            </select>
+
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="probTextBox" class="text-dark m-0">% de Ganho</label>
+                            </h2>
+                            <input id="probTextBox" class="form-control rounded" type="number" name="prob" value="@ViewBag.Deal.probabilidade" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h2 class="my-1">
+                                <label for="clienteSelect" class="text-dark m-0">Cliente Envolvido</label>
+                            </h2>
+
+                            @{
+                                string cli_nome = "Selecionar";
+
+                                if (ViewBag.Deal.cliente.GetPk_Cliente() != 0)
+                                {
+                                    var cliente = ((List<IoniCRM.Controllers.Objects.Cliente>)ViewBag.Clientes).Find(i => i.GetPk_Cliente() == ViewBag.Deal.cliente.GetPk_Cliente());
+                                    cli_nome = cliente.nome;
+                                }
+                            }
+
+                            <input type="hidden" id="dropdown_hidden_value" name="nome_cli" value="@cli_nome" />
+
+                            <div class="w-100" id="clienteSelect">
+
+                                <button class="btn btn-light text-left dropdown-toggle w-100" type="button" id="dropdown_select" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    @cli_nome
+                                </button>
+
+                                <div id="menu" class="dropdown-menu sidebar-content px-1" aria-labelledby="dropdown_select" style="background-color:#ddd">
+
+                                    <form class="px-4 py-2">
+                                        <input type="search" class="form-control" id="search_word" placeholder="..." autofocus="autofocus">
+                                    </form>
+
+                                    <div id="menuItems"></div>
+                                    <div id="empty" class="dropdown-header">Nenhum resultado encontrado</div>
+
+                                </div>
+
+
+
+                                <script>
+                                    window.addEventListener('input', function () {
+                                        filter(search.value.trim().toLowerCase())
+                                    })
+
+                                    var array = [];
+
+                                    @foreach (var cliente in ViewBag.Clientes as List<IoniCRM.Controllers.Objects.Cliente>)
+                                    {
+                                        @:array.push("@cliente.nome");
+                                    }
+
+                                    window.onload = function () {
+                                        buildDropDown(array);
+                                    };
+
+
+
+                                </script>
+
+                            </div>
+
+                        </div>
+
+                        
+
+                    </div>
+
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="aberturaDateTime" class="text-dark m-0">Abertura</label>
+                            </h2>
+                            <div class="form-row m-0" id="aberturaDateTime">
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="aberturaDia" value="@ViewBag.aberturaDia" />
+
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="time" name="aberturaHora" value="@ViewBag.aberturaHora" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="fechamentoDateTime" class="text-dark m-0">Fechamento</label>
+                            </h2>
+                            <div class="form-row m-0" id="fechamentoDateTime">
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="date" name="fechamentoDia" value="@ViewBag.fechamentoDia" />
+
+                                <input class="form-control col-sm rounded mx-1 mb-1" type="time" name="fechamentoHora" value="@ViewBag.fechamentoHora" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h2 class="my-1">
+                                <label for="descrTextArea" class="text-dark m-0">Descrição</label>
+                            </h2>
+                            <textarea id="descrTextArea" class="form-control rounded" type="text" name="descr" rows="5" value="@ViewBag.Deal.descr"></textarea>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row align-items-center justify-content-between">
+                        <button type="submit" class="btn btn-info rounded-pill border-dark shadow mt-3">
+                            <h4 class="borda-texto m-1">Salvar</h4>
+                        </button>
+
+                        @if (ViewBag.Deal.getId() != 0)
+                        {
+                            <a class="btn btn-danger rounded-pill border-dark shadow mt-3"
+                               asp-controller="Pipeline" asp-action="DelDeal" asp-route-id="@ViewBag.Deal.getId()" 
+                               asp-route-nome="@ViewBag.Deal.nome" asp-route-pipe="@ViewBag.Pipeline.nome">
+                                <h4 class="borda-texto m-1">Deletar</h4>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+
+        </section>
+
+    </div>
+</div>

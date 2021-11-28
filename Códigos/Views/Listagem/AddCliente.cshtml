@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "Visão do Cliente";
+}
+
+<div class="container pt-5">
+    <div class="bg-card bg-card-dark rounded border border-dark shadow">
+
+        <div class="row bg-card nav-dark align-items-center m-1">
+            <img title="imagem perfil" src="@ViewBag.Cliente.img" class="perfil-icon rounded-circle align-top m-2" />
+            <h1 class="text-theme-dark px-3 py-3 m-0">Editar Cliente</h1>
+        </div>
+
+        <section>
+            @using (Html.BeginForm("UpsertCliente", "Listagem", FormMethod.Post))
+            {
+                <input type="hidden" name="id_cliente" value="@ViewBag.Cliente.GetPk_Cliente()" />
+
+                <div class="form-group container w-75 p-3">
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-6">
+
+                            <h2 class="my-1">
+                                <label for="nomeTextBox" class="text-dark m-0">Nome</label>
+                            </h2>
+
+                            <input id="nomeTextBox" class="form-control rounded m-0" type="text" name="nome" placeholder="Informe um nome"
+                                   value="@ViewBag.Cliente.nome" aria-describedby="nomeHelp" />
+                            @{
+                                if (ViewData["nomeNotInformed"] != null)
+                                {
+                                    <small id="nomeHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["nomeNotInformed"]</small>
+                                }
+                            }
+
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+
+                            <h2 class="my-1">
+                                <label for="razaoSocialTextBox" class="text-dark m-0">Razão Social / Nome Completo</label>
+                            </h2>
+
+                            <input id="razaoSocialTextBox" class="form-control rounded m-0" type="text" name="razao_social" placeholder="Informe o Nome Completo"
+                                   value="@ViewBag.Cliente.razaoSocial" aria-describedby="razaoHelp"/>
+                            @{
+                                if (ViewData["razaoNotInformed"] != null)
+                                {
+                                    <small id="razaoHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["razaoNotInformed"]</small>
+                                }
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="empSelect" class="text-dark m-0" id="xyz">Empresa / Chefe</label>
+                            </h2>
+
+                            @{
+                                string emp_nome = "Selecionar";
+
+                                if (!string.IsNullOrEmpty(ViewBag.Cliente.GetEmp()))
+                                {
+                                    emp_nome = ViewBag.Cliente.GetEmp();
+                                }
+                            }
+
+                            <input type="hidden" id="dropdown_hidden_value" name="emp" value="@emp_nome" />
+
+                            <div class="w-100" id="empSelect">
+
+                                <button class="btn btn-light text-left dropdown-toggle w-100" type="button" id="dropdown_select" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    @emp_nome
+                                </button>
+
+                                <div id="menu" class="dropdown-menu sidebar-content px-1" aria-labelledby="dropdown_select" style="background-color:#ddd">
+
+                                    <form class="px-4 py-2">
+                                        <input type="search" class="form-control" id="search_word" placeholder="..." autofocus="autofocus">
+                                    </form>
+
+                                    <div id="menuItems">
+                                        <input type="button" value="Vazio"
+                                               class="dropdown-item bg-theme-@ViewBag.Usuario.theme text-theme-@ViewBag.Usuario.theme rounded mt-1" />
+                                    </div>
+                                    <div id="empty" class="dropdown-header">Nenhum resultado encontrado</div>
+
+                                </div>
+
+
+
+                                <script>
+                                    window.addEventListener('input', function () {
+                                        filter(search.value.trim().toLowerCase())
+                                    })
+
+                                    var array = [];
+
+                                    @foreach (var cliente in ViewBag.ListClientes as List<IoniCRM.Controllers.Objects.Cliente>)
+                                    {
+                                        @:array.push("@cliente.nome");
+                                    }
+
+                                    window.onload = function () {
+                                        buildDropDown(array);
+                                    };
+
+                                    
+
+                                </script>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-md-4">
+
+                            <input type="hidden" name="cpf_cnpj_antigo" value="@ViewBag.Cliente.GetCpfCnpj()" />
+                            <h2 class="my-1">
+                                <label for="cpfCnpjTextBox" class="text-dark m-0">CPF/CNPJ</label>
+                            </h2>
+                            <input id="cpfCnpjTextBox" class="form-control rounded" type="text" name="cpf_cnpj" placeholder="Informe o CPF / CNPJ"
+                                   value="@ViewBag.Cliente.GetCpfCnpj()" aria-describedby="cpfcnpjHelp" />
+                            @{
+                                if (ViewData["cpfcnpjNotInformed"] != null)
+                                {
+                                    <small id="cpfcnpjHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["cpfcnpjNotInformed"]</small>
+                                }
+                            }
+
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="crmTextBox" class="text-dark m-0">CRM</label>
+                            </h2>
+                            <input id="crmTextBox" class="form-control rounded" type="text" name="crm" placeholder="(Opcional)" 
+                                   value="@ViewBag.Cliente.GetCRM()" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-row align-items-baseline">
+                        
+                        <div class="form-group col-md-12">
+
+                            <h2 class="my-1">
+                                <label for="endTextArea" class="text-dark m-0">Endereços</label>
+                            </h2>
+
+                            <textarea id="endTextArea" class="form-control rounded sidebar-content" type="text" name="enderecos" rows="2" placeholder="(Opcional)"
+                                      >@ViewBag.enderecos</textarea>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-row align-items-baseline">
+                        
+                        <div class="form-group col-md-4">
+
+                            <h2 class="my-1">
+                                <label for="catTextBox" class="text-dark m-0">Categoria / Cargo</label>
+                            </h2>
+
+                            <input id="catTextBox" class="form-control rounded" type="text" name="cargo" placeholder="Informe o Cargo" 
+                                   value="@ViewBag.Cliente.categoria" />
+                            
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            
+                            <h2 class="my-1">
+                                <label for="webTextArea" class="text-dark m-0">Websites</label>
+                            </h2>
+
+                            <textarea id="webTextArea" class="form-control rounded sidebar-content" type="text" name="websites" rows="2" placeholder="(Opcional)"
+                                      >@ViewBag.websites</textarea>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <h2 class="my-1">
+                                <label for="contatoTextArea" class="text-dark m-0">Contatos</label>
+                            </h2>
+
+                            <textarea id="contatoTextArea" class="form-control rounded sidebar-content" type="text" name="contatos" rows="2" 
+                                      placeholder="Telefone / E-mail">@ViewBag.contatos</textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h2 class="my-1">
+                                <label for="descrTextArea" class="text-dark m-0">Descrição</label>
+                            </h2>
+                            <textarea id="descrTextArea" class="form-control rounded sidebar-content" type="text" name="descr" rows="5"
+                                      >@ViewBag.Cliente.descr</textarea>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row align-items-center justify-content-between">
+                        <button type="submit" class="btn btn-secondary rounded-pill border-dark shadow mt-3">
+                            <h4 class="borda-texto m-1">Salvar</h4>
+                        </button>
+
+                        @if (ViewBag.Cliente.GetPk_Cliente() != 0)
+                        {
+                            <a class="btn btn-danger rounded-pill border-dark shadow mt-3"
+                               asp-controller="Listagem" asp-action="DelCliente" asp-route-id="@ViewBag.Cliente.GetPk_Cliente()" 
+                               asp-route-nome="@ViewBag.Cliente.nome" asp-route-emp="@ViewBag.Cliente.GetEmp()">
+                                <h4 class="borda-texto m-1">Deletar</h4>
+                            </a>
+                        }
+                        </div>
+                </div>
+            }
+
+        </section>
+
+    </div>
+</div>

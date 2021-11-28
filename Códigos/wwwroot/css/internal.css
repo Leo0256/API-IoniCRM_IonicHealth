@@ -1,0 +1,351 @@
+﻿/* https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.text-shadow {
+    text-shadow: 0.05rem 0.1rem 0 rgb(0 0 0 / 15%);
+}
+
+.borda-texto{
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(88,89,91);
+    color: #fff;
+    font-weight: 700;
+}
+    
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 6rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(200,200,200,1);
+    border-radius: 0;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 0 6px rgba(90,90,90,0.7);
+}
+
+.footer {
+    position: absolute;
+    background-color: black;
+    opacity: 50%;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+.dropdown {
+    margin: 20px;
+}
+
+.dropdown-menu {
+    max-height: 8rem;
+    overflow-y: auto;
+}
+
+.btn-list {
+    padding: 0.5rem;
+    width: auto;
+    height: auto;
+}
+
+
+/*Backgrounds*/
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-dark {
+    background-color: #323643;
+}
+
+.nav-light {
+    background-color: #53B8BB;
+}
+
+.bg-theme-login {
+    background: linear-gradient(315deg, #9AC3C5 50%, #58595B 50%);
+}
+
+.bg-theme-dark {
+    background-color: #606470;
+}
+
+.bg-theme-light {
+    background-color: #FAF8F8;
+}
+
+.bg-card-dark {
+    background-color: #B0BABF;
+}
+
+.bg-card-light {
+    background-color: #B9D7EA;
+}
+
+.bg-card {
+    border: none;
+    border-radius: 0.25rem 0.25rem;
+}
+/*Backgrounds*/
+
+
+/*Text styles*/
+.text-theme-dark {
+    color: #00ECFF;
+}
+
+.subtext-theme-dark {
+    color: #DBDBDB;
+}
+
+.text-theme-light {
+    color: #3F3F3F;
+}
+
+.subtext-theme-light {
+    color: #5F6769;
+}
+
+/*Text styles*/
+
+
+.bg-light-blue {
+    background-color: #53B8BB;
+}
+
+
+
+.text-card {
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+.text-card-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.title {
+    font-size: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.main-logo {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 64px;
+    width: auto;
+    border: none;
+}
+
+.perfil-icon {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    width: auto;
+    max-height: 7rem;
+    max-width: 7rem;
+    border: 0.5px solid black;
+}
+
+.btn-2 {
+    width: 2rem;
+    height: 2rem;
+}
+
+/*Width/Height*/
+.mw-6 {
+    max-width: 6rem;
+}
+
+.mw-30 {
+    max-width: 30rem;
+}
+
+.mw-70p {
+    max-width: 70%;
+}
+
+.circle {
+    min-width: 2.2rem;
+    min-height: 2.2rem;
+}
+
+.image-full {
+    height: 45px;
+    width: 203px;
+}
+
+.image-mobile {
+    height: 45px;
+    width: 45px;
+}
+
+.chart {
+    max-width: 30rem;
+    max-height: 30rem;
+
+    min-width: 15rem;
+    min-height: 15rem;
+}
+/*Width/Height*/
+
+
+.image-full-navbar {
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.image-mobile-navbar {
+    display: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.align-text-left {
+    text-align: left;
+}
+
+.mw-auto-content {
+    max-width: max-content;
+}
+
+.sidebar {
+    margin-left: 0%;
+    width: max-content;
+    position: absolute;
+}
+
+.sidebar-content {
+    max-height: 200px;
+    min-height: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar-content.inline-block {
+    display: inline-block;
+}
+
+.sidebar-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(200,200,200,1);
+    border-radius: 10px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 0 6px rgba(90,90,90,0.7);
+}
+
+.pipeline-content {
+    display: inline-block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+@media(max-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+
+    .main-logo {
+        height: 45px;
+    }
+}
+
+.wh-15 {
+    width: 15px;
+    height: 15px;
+}
+
+.wh-25 {
+    width: 25px;
+    height: 25px;
+}
+
+
+/*Configurações para o Mobile*/
+@media (max-width: 768px){
+    .image-full-navbar {
+        display: none;
+    }
+
+    .image-mobile-navbar {
+        display: block;
+    }
+}
+
+@media (max-width: 576px){
+    .w {
+        width: auto;
+    }
+
+    .title {
+        padding-left: 0.5rem;
+    }
+
+}
+
+
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+
+

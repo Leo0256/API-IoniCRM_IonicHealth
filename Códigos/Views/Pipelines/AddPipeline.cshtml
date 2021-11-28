@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Visão da Pipeline";
+}
+
+<div class="container pt-5">
+    <div class="bg-card bg-card-@ViewBag.Usuario.theme rounded border border-dark shadow">
+
+        <div class="bg-card nav-@ViewBag.Usuario.theme m-1">
+            @if (ViewBag.Pipeline.GetId() == 0)
+            {
+                <h1 class="text-theme-@ViewBag.Usuario.theme p-3 m-0">Nova Pipeline</h1>
+            }
+            else
+            {
+                <h1 class="text-theme-@ViewBag.Usuario.theme p-3 m-0">Editar Pipeline</h1>
+            }
+        </div>
+
+        <section>
+            @using (Html.BeginForm("UpsertPipe", "Pipeline", FormMethod.Post))
+            {
+                <input type="hidden" name="id_pipe" value="@ViewBag.Pipeline.GetId()" />
+                <input type="hidden" name="nomeOriginal" value="@ViewBag.Pipeline.nome" />
+
+                <div class="form-group container w-75 p-3">
+                    <div class="form-row align-items-baseline">
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="nomeTextBox" class="text-dark m-0">Nome</label>
+                            </h2>
+
+                            <textarea id="nomeTextBox" class="form-control rounded m-0" type="text" name="nome"
+                                      placeholder="Informe um nome" rows="1">@ViewBag.Pipeline.nome</textarea>
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <h2 class="my-1">
+                                <label for="prioriOptions" class="text-dark m-0">Prioridade</label>
+                            </h2>
+
+                            <select id="prioriOptions" name="prioridade" class="form-control">
+
+                                @for (int x = ViewBag.CorPrioridade.Length - 1; x >= 0; x--)
+                                {
+                                    if (x + 1 == ViewBag.Pipeline.prioridade)
+                                    {
+                                        <option class="font-weight-bold text-dark" style="background-color:@ViewBag.CorPrioridade[x]" selected>@(x+1)</option>
+                                    }
+                                    else
+                                    {
+                                        <option class="font-weight-bold text-dark" style="background-color:@ViewBag.CorPrioridade[x]">@(x+1)</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <h2 class="my-1">
+                                <label for="descrTextArea" class="text-dark m-0">Descrição</label>
+                            </h2>
+                            <textarea id="descrTextArea" class="form-control rounded" type="text" name="descr" rows="5">@ViewBag.Pipeline.descr</textarea>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row align-items-center justify-content-between">
+                        <button type="submit" class="btn btn-info rounded-pill border-dark shadow mt-3">
+                            <h4 class="borda-texto m-1">Salvar</h4>
+                        </button>
+
+
+                        @if (ViewBag.Pipeline.GetId() != 0)
+                        {
+                            <a class="btn btn-danger rounded-pill border-dark shadow mt-3"
+                               asp-controller="Pipeline" asp-action="DelPipeline"
+                               asp-route-id="@ViewBag.Pipeline.GetId()" asp-route-pipe="@ViewBag.Pipeline.nome">
+                                <h4 class="borda-texto m-1">Deletar</h4>
+                            </a>
+
+                            <input type="hidden" name="status" value="True" />
+                        }
+                        else
+                        {
+                            <input type="hidden" name="status" value="False" />
+                        }
+
+                    </div>
+                </div>
+            }
+
+        </section>
+
+    </div>
+</div>

@@ -1,0 +1,206 @@
+﻿@{
+    ViewData["Title"] = "Dashboards";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    //-Charts-//
+    function SetPieChart(chartId, values) {
+        const ctx = document.getElementById(chartId);
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Qualificação',
+                    'Proposta',
+                    'Negociação',
+                    'Ganho',
+                    'Perda'
+                ],
+                datasets: [{
+                    label: 'Chart',
+                    data: values,
+                    backgroundColor: [
+                        'rgb(17, 60, 252)',
+                        'rgb(255, 255, 255)',
+                        'rgb(63, 63, 63)',
+                        'rgb(178, 212, 48)',
+                        'rgb(253, 0, 55)'
+                    ],
+                    hoverOffset: 5,
+                    borderWidth: 0
+                }]
+            },
+
+            options: {
+                plugins: {
+
+                    title: {
+                        display: false
+                    },
+
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: 'rgb(0, 0, 0)',
+                            font: {
+                                size: 15
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function SetBarChart(chartId, values) {
+        const ctx = document.getElementById(chartId);
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Qualificação',
+                    'Proposta',
+                    'Negociação',
+                    'Ganho',
+                    'Perda'
+                ],
+                datasets: [{
+                    label: 'Valor Total',
+                    data: values,
+                    backgroundColor: [
+                        'rgb(17, 60, 252, 0.75)',
+                        'rgb(255, 255, 255, 0.75)',
+                        'rgb(63, 63, 63, 0.75)',
+                        'rgb(178, 212, 48, 0.75)',
+                        'rgb(253, 0, 55, 0.75)'
+                    ],
+                    borderColor: [
+                        'rgb(17, 60, 252, 1)',
+                        'rgb(255, 255, 255, 1)',
+                        'rgb(63, 63, 63, 1)',
+                        'rgb(178, 212, 48, 1)',
+                        'rgb(253, 0, 55, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+
+                plugins: {
+
+                    title: {
+                        display: false
+                    },
+
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: 'rgb(0, 0, 0)',
+                            font: {
+                                size: 15
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    //-Chart-//
+</script>
+
+<div class="position-sticky sticky-top">
+    <div class="sidebar container nav-@ViewBag.Usuario.theme text-left rounded-right shadow-sm d-md-flex p-2">
+
+        <ul class="nav flex-column flex-nowrap overflow-hidden">
+
+            <li class="nav-item">
+                <button class="nav-link btn btn-info btn-list bg-theme-@ViewBag.Usuario.theme text-theme-@ViewBag.Usuario.theme rounded border-@ViewBag.Usuario.theme"
+                        href="#sidebar" data-toggle="collapse" data-target="#sidebar">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="image-full-navbar wh-25" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="image-mobile-navbar wh-15" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+
+                </button>
+            </li>
+
+            <li>
+                <div class="collapse sidebar-content " id="sidebar" aria-expanded="false">
+                    <ul class="nav flex-column flex-nowrap">
+
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-theme-@ViewBag.Usuario.theme" asp-controller="Pipeline" asp-action="AddPipeline" asp-route-id="0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                </svg>
+                            </a>
+                        </li>
+
+                        @foreach (var pipe in ViewBag.TotasPipelines as List<IoniCRM.Controllers.Objects.Pipeline>)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-theme-@ViewBag.Usuario.theme align-middle p-1"
+                                   asp-controller="Dashboard" asp-action="Dashboard" asp-route-id="@pipe.GetId()">
+
+                                    @pipe.nome
+                                </a>
+
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="mx-3">
+    @{
+        for (int x = 0; x < ViewBag.Pipeline.Count; x++)
+        {
+            var pipe = ViewBag.Pipeline[x];
+
+            <div class="container bg-card-dark rounded mx-auto mb-3 p-2">
+                <div class="row nav-@ViewBag.Usuario.theme text-center rounded m-0">
+                    <h1 class="text-theme-@ViewBag.Usuario.theme w-100">@pipe.nome</h1>
+                </div>
+                
+                <div class="row justify-content-center m-0">
+                    <canvas id="pie-@pipe.GetId()" class="chart m-1"></canvas>
+                    <canvas id="bar-@pipe.GetId()" class="chart m-1"></canvas>
+
+                    <script>
+                        var pie_data = [];
+                        @foreach(var item in pipe.GetListTotalDeals())
+                        {
+                            @:pie_data.push('@item');
+                        }
+
+                        var bar_data = [];
+                        @foreach(var item in pipe.GetListTotalValor())
+                        {
+                            @:bar_data.push('@item');
+                        }
+
+                        SetPieChart('pie-@pipe.GetId()', pie_data);
+                        SetBarChart('bar-@pipe.GetId()', bar_data);
+                    </script>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+
