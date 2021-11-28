@@ -3,7 +3,7 @@
 ---
 
 ## :dart: Objetivo
-Entregar as últimas funcionalidades restantes (dashboards, visualizar/editar perfil e clientes), o manual de uso do sistema (para o auxílio de novos usuários) e a finalização do sistema própriamente dito.
+Entregar as últimas funcionalidades restantes (dashboards, visualizar/editar perfil e clientes), o manual de uso do sistema (para o auxílio de novos usuários) e a finalização do sistema, incluindo a alteração do layout.
 
 > **Nota:** Não foi possível realizar a entrega de todas as funcionalidades.
 
@@ -15,23 +15,43 @@ Entregar as últimas funcionalidades restantes (dashboards, visualizar/editar pe
   <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Card%20Sprint%204.png">
 </p>
 
-## :clipboard: Manual de Uso //falta colocar o arquivo e o link
-- [Manual_de_Uso.pdf](https://google.com/)
+## :clipboard: Manual de Uso
+- [Manual_de_Uso.pdf](https://fatecspgov-my.sharepoint.com/:b:/g/personal/leonardo_ribeiro11_fatec_sp_gov_br/ET63Jg6PN0JLr54cyKB0NC8BU-M6LJsb-H1-_MrcPlaBzA?e=Vh5zOu)
 
 
-## :movie_camera: Gif das Funcionalidades Implementadas //falta colocar os arquivos e os gifs
+## :movie_camera: Gif das Funcionalidades Implementadas
 <p align="center">
-    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Pipeline%20(Desktop).gif">
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Desktop/Historico-Dashboard.gif">
+    <br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Mobile/Historico-Dashboard.gif">
     <br><br>
-    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Pipeline%20(Mobile).gif">
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Desktop/Perfil.gif">
+    <br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Mobile/Perfil.gif">
+    <br><br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Desktop/Add-Del%20Clientes.gif">
+    <br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Mobile/Add-Del%20Clientes.gif">
 </p>
 
 
 ## :movie_camera: Gif das Outras Funcionalidades Entregues //falta colocar os arquivos e os gifs
 <p align="center">
-    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Pipeline%20(Desktop).gif">
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Desktop/Login.gif">
+    <br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Mobile/Login.gif">
     <br><br>
-    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_3/Pipeline%20(Mobile).gif">
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Desktop/Clientes.gif">
+    <br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Mobile/Clientes.gif">
+    <br><br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Desktop/Pipeline.gif">
+    <br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Mobile/Pipeline.gif">
+    <br><br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Desktop/Deal.gif">
+    <br>
+    <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Mobile/Deal.gif">
 </p>
 
 
@@ -73,6 +93,6 @@ Entregar as últimas funcionalidades restantes (dashboards, visualizar/editar pe
 
 ## :chart_with_downwards_trend: Burndown  //falta colocar o arquivo e o link
 <p align="center">
-  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/burndown.png">
+  <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Burndown.png">
 </p>
 
