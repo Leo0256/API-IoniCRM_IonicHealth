@@ -46,10 +46,6 @@ $('#menuItems').on('click', '.dropdown-item', function () {
 
     document.getElementById("dropdown_hidden_value").value = $(this)[0].value;
 })
-
-//$('#dropdown_select').click(buildDropDown(names))
-
-//buildDropDown(names)
 //-Select picker-//
 
 

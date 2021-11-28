@@ -35,7 +35,7 @@ create table Cliente_Info(
 	fk_cliente integer not null,
 	endereco varchar(200),
 	website varchar(50),
-	foreign key (fk_cliente) references Cliente (pk_cliente)
+	foreign key (fk_cliente) references Cliente (pk_cliente) on delete cascade
 );
 
 create table Cliente_Contato(
@@ -47,7 +47,7 @@ create table Cliente_Contato(
 		1 - E-mail
 	*/
 	contato varchar(80),
-	foreign key (fk_cliente) references Cliente (pk_cliente)
+	foreign key (fk_cliente) references Cliente (pk_cliente) on delete cascade
 );
 
 create table Pipeline(
@@ -78,7 +78,7 @@ create table Deal(
 	*/
 	d_status integer default 0, 
 	valor numeric(7,2) default 0.00,
-	foreign key (fk_pipeline) references Pipeline (pk_pipeline),
+	foreign key (fk_pipeline) references Pipeline (pk_pipeline) on delete cascade,
 	foreign key (fk_df) references Deal_Info (pk_df)
 );
 
@@ -86,7 +86,7 @@ create table Deal_Cliente(
 	pk_dc serial primary key,
 	fk_deal integer not null,
 	fk_cliente integer not null,
-	foreign key (fk_deal) references Deal (pk_deal),
+	foreign key (fk_deal) references Deal (pk_deal) on delete cascade,
 	foreign key (fk_cliente) references Cliente (pk_cliente)
 );
 
@@ -340,7 +340,7 @@ begin
 		),
 
 		emp_x as (
-			select x.pk_cliente as pk_emp, x.nome as nome
+			select distinct x.pk_cliente as pk_emp, x.nome as nome
 			from 
 				Cliente as x,
 				Cliente as y
@@ -350,7 +350,6 @@ begin
 					or
 					x.pk_cliente = y.fk_emp
 				)
-				and x.pk_cliente = y.fk_emp
 		)
 
 	select
@@ -554,9 +553,11 @@ language plpgsql
 as $$
 begin
 
-	select delClienteInfo(id_cliente);
+	delete from Cliente_Info
+		where fk_cliente = id_cliente;
 	
-	select delClienteContato(id_cliente);
+	delete from Cliente_Contato
+		where fk_cliente = id_cliente;
 	
 	delete from Cliente
 		where pk_cliente = id_cliente;
@@ -658,7 +659,7 @@ begin
 end $$;
 
 
-/*teste
+/*
 select delPipeline(<id_pipe> integer);
 */
 create or replace function delPipeline(id_pipe integer)
@@ -667,13 +668,6 @@ language plpgsql
 as $$
 declare id_deal integer;
 begin
-
-	for id_deal in 
-		select * from dadosPipeline(id_pipe)
-	loop
-		select delDeal(next id_deal);
-	end loop;
-	
 	delete from Pipeline
 		where pk_pipeline = id_pipe;
 end $$;
@@ -859,9 +853,6 @@ as $$
 declare
 	fk_df integer := (select x.fk_df from Deal x where pk_deal = id_deal);
 begin
-	delete from Deal_Cliente
-		where fk_deal = id_deal;
-	
 	delete from Deal 
 		where pk_deal = id_deal;
 	

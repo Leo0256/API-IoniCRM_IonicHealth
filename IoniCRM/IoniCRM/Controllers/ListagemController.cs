@@ -2,20 +2,12 @@
 using IoniCRM.Controllers.Objects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-
-using System.Web;
 using System.Text;
-using Microsoft.AspNetCore.Html;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace IoniCRM.Controllers
 {
@@ -64,7 +56,7 @@ namespace IoniCRM.Controllers
                 return RedirectToAction("Login", "Login");
 
             ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
-            ViewBag.Cliente = int.Parse(id) > 0 ? GetData("Cliente", id)[0] : new Cliente();
+            ViewBag.Cliente = !string.IsNullOrEmpty(id) && int.Parse(id) > 0 ? GetData("Cliente", id)[0] : new Cliente();
 
             ViewBag.websites = string.Join("\n", ViewBag.Cliente.websites);
             ViewBag.enderecos = string.Join("\n", ViewBag.Cliente.enderecos);
@@ -80,6 +72,10 @@ namespace IoniCRM.Controllers
 
             ViewBag.ListClientes = GetData("Cliente", "null");
 
+            ViewData["nomeNotInformed"] = !string.IsNullOrWhiteSpace(TempData["nomeNotInformed"] as string) ? "!! Campo vazio." : null;
+            ViewData["razaoNotInformed"] = !string.IsNullOrWhiteSpace(TempData["razaoNotInformed"] as string) ? "!! Campo vazio." : null;
+            ViewData["cpfcnpjNotInformed"] = !string.IsNullOrWhiteSpace(TempData["cpfcnpjNotInformed"] as string) ? "!! Campo vazio." : null;
+
             return View("/Views/Listagem/AddCliente.cshtml");
         }
 
@@ -88,138 +84,161 @@ namespace IoniCRM.Controllers
             string cpf_cnpj_antigo, string cpf_cnpj, string crm, string enderecos, 
             string cargo, string websites, string contatos, string descr)
         {
-            // antes de tudo, pega o id da empresa (se houver)
-            int? emp_id;
-            string sql, hist_mensagem;
-            if (string.IsNullOrEmpty(emp) || new string[] { "Selecionar", "Vazio" }.Any(s => emp.Contains(s)))
+            if (!string.IsNullOrWhiteSpace(nome) && !string.IsNullOrWhiteSpace(razao_social) && !string.IsNullOrWhiteSpace(cpf_cnpj))
             {
-                emp_id = null;
-            }
-            else
-            {
-                sql = string.Format(@"select pk_cliente from Cliente where nome like '{0}'", emp);
-                DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
-                emp_id = string.IsNullOrEmpty(rows[0]["pk_cliente"].ToString()) ? null : int.Parse(rows[0]["pk_cliente"].ToString());
-            }
+                // antes de tudo, pega o id da empresa (se houver)
+                string emp_id;
+                string sql, hist_mensagem;
+                if (string.IsNullOrEmpty(emp) || new string[] { "Selecionar", "Vazio" }.Any(s => emp.Contains(s)))
+                {
+                    emp_id = "null";
+                }
+                else
+                {
+                    sql = string.Format(@"select pk_cliente from Cliente where nome like '{0}'", emp);
+                    DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+                    emp_id = string.IsNullOrEmpty(rows[0]["pk_cliente"].ToString()) ? null : rows[0]["pk_cliente"].ToString();
+                }
 
-            
-            JObject jcliente, jinfo, jcontato;
+                if (string.IsNullOrEmpty(contatos))
+                    contatos = string.Empty;
 
-            // Novo Cliente
-            if(int.Parse(id_cliente) == 0)
-            {
-                jcliente = JObject.Parse("{" +
-                    "\"fk_emp\":" + emp_id + "," +
-                    "\"cpf_cnpj\":\"" + cpf_cnpj + "\"," +
-                    "\"crm\":\"" + crm + "\"," +
-                    "\"img\":null," + // <-- mudar depois
-                    "\"nome\":\"" + nome + "\"," +
-                    "\"razao_social\":\"" + razao_social + "\"," +
-                    "\"categoria\":\"" + cargo + "\"," +
-                    "\"descr\":\"" + descr + "\"," +
-                    "}");
 
-                sql = string.Format(@"select addCliente('{0}')", jcliente);
-                _ = pgsqlcon.ExecuteCmdAsync(sql);
+                JObject json;
+                Regex regex = new("[\"']");
+                nome = regex.Replace(nome, "´");
+                razao_social = regex.Replace(razao_social, "´");
 
-                sql = string.Format(@"select pk_cliente from Cliente where razao_social like '{0}'", razao_social);
-                id_cliente = pgsqlcon.ExecuteCmdAsync(sql).Result.Select()[0]["pk_cliente"].ToString();
+                if (string.IsNullOrEmpty(descr)) 
+                    descr = string.Empty;
+                descr = regex.Replace(descr, "´");
 
-                List<List<string>> info = new();
-                info.Add(enderecos.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToList());
-                info.Add(websites.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToList());
+                // Novo Cliente
+                if (int.Parse(id_cliente) == 0)
+                {
+                    json = JObject.Parse("{" +
+                        "\"fk_emp\":" + emp_id + "," +
+                        "\"cpf_cnpj\":\"" + cpf_cnpj + "\"," +
+                        "\"crm\":\"" + crm + "\"," +
+                        "\"img\":null," + //
+                        "\"nome\":\"" + nome + "\"," +
+                        "\"razao_social\":\"" + razao_social + "\"," +
+                        "\"categoria\":\"" + cargo + "\"," +
+                        "\"descr\":\"" + descr + "\"," +
+                        "}");
 
-                if (info[0].Count > info[1].Count)
-                    info[1].Add(string.Empty);
-                else if (info[1].Count > info[0].Count)
-                    info[0].Add(string.Empty);
+                    sql = string.Format(@"select addCliente('{0}')", json);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+                    sql = string.Format(@"select pk_cliente from Cliente where razao_social like '{0}'", razao_social);
+                    id_cliente = pgsqlcon.ExecuteCmdAsync(sql).Result.Select()[0]["pk_cliente"].ToString();
+
+                    AddInfoContato(false, id_cliente, enderecos, websites, contatos);
+
+                    hist_mensagem = string.Equals(emp_id, "null") ?
+                        string.Format(@"Novo Cliente <{0}> adicionado, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome) :
+                        string.Format(@"Novo Cliente <{0}>, funcionario de <{1}>, adicionado, por <{2}>.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
+                }
+                // Editar Cliente
+                else
+                {
+                    // atualiza o cpf/cnpj
+                    if (!cpf_cnpj_antigo.Equals(cpf_cnpj))
+                    {
+                        sql = string.Format(@"select atualizarCPF_CNPJ('{0}','{1}')", cpf_cnpj_antigo, cpf_cnpj);
+                        _ = pgsqlcon.ExecuteCmdAsync(sql);
+                    }
+
+                    json = JObject.Parse("{" +
+                        "\"fk_emp\":" + emp_id + "," +
+                        "\"cpf_cnpj\":\"" + cpf_cnpj + "\"," +
+                        "\"crm\":\"" + crm + "\"," +
+                        "\"img\":null," + //
+                        "\"nome\":\"" + nome + "\"," +
+                        "\"razao_social\":\"" + razao_social + "\"," +
+                        "\"categoria\":\"" + cargo + "\"," +
+                        "\"descr\":\"" + descr + "\"," +
+                        "}");
+
+                    sql = string.Format(@"select addCliente('{0}')", json);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+                    AddInfoContato(true, id_cliente, enderecos, websites, contatos);
                     
-
-                for (int x = 0; x < info[0].Count; x++)
-                {
-                    jinfo = JObject.Parse("{" +
-                        "\"fk_cliente\":" + id_cliente + "," +
-                        "\"endereco\":\"" + info[0][x] + "\"," +
-                        "\"website\":\"" + info[1][x] + "\"," +
-                        "}");
-                    sql = string.Format(@"select addClienteInfo('{0}')", jinfo);
-                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+                    hist_mensagem = string.Equals(emp_id, "null") ?
+                        string.Format(@"Cliente <{0}> atualizado, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome) :
+                        string.Format(@"Cliente <{0}>, funcionario de <{1}>, atualizado, por <{2}>.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
                 }
 
-                foreach (string contato in contatos.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray())
-                {
-                    int tipo_contato = contato.Contains("@") ? 1 : 0;
-                    /* tipo_contato:
-                     * 0 - Telefone
-                     * 1 - E-mail
-                     */
-
-                    jcontato = JObject.Parse("{" +
-                        "\"fk_cliente\":" + id_cliente + "," +
-                        "\"tipo\":" + tipo_contato + "," +
-                        "\"contato\":\"" + contato + "\"," +
-                        "}");
-
-                    sql = string.Format(@"select addClienteContato('{0}')", jcontato);
-                    _ = pgsqlcon.ExecuteCmdAsync(sql);
-                }
-
-                hist_mensagem = emp_id == null ?
-                    string.Format(@"Novo Cliente <{0}> adicionado, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome) :
-                    string.Format(@"Novo Cliente <{0}>, funcionario de <{1}>, adicionado, por <{2}>.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
+                _ = new AddHistorico(HttpContext.Session, hist_mensagem);
             }
-            // Editar Cliente
             else
             {
-                // atualiza o cpf/cnpj
-                if (!cpf_cnpj_antigo.Equals(cpf_cnpj))
-                {
-                    sql = string.Format(@"select atualizarCPF_CNPJ('{0}','{1}')", cpf_cnpj_antigo, cpf_cnpj);
-                    _ = pgsqlcon.ExecuteCmdAsync(sql);
-                }
+                TempData["nomeNotInformed"] = string.IsNullOrWhiteSpace(nome) ? "campo vazio." : null;
+                TempData["razaoNotInformed"] = string.IsNullOrWhiteSpace(razao_social) ? "campo vazio." : null;
+                TempData["cpfcnpjNotInformed"] = string.IsNullOrWhiteSpace(cpf_cnpj) ? "campo vazio" : null;
+                return RedirectToAction("AddCliente", "Listagem", new { id = id_cliente });
+            }
 
-                jcliente = JObject.Parse("{" +
-                    "\"fk_emp\":" + emp_id + "," +
-                    "\"cpf_cnpj\":\"" + cpf_cnpj + "\"," +
-                    "\"crm\":\"" + crm + "\"," +
-                    "\"img\":null," + // <-- mudar depois
-                    "\"nome\":\"" + nome + "\"," +
-                    "\"razao_social\":\"" + razao_social + "\"," +
-                    "\"categoria\":\"" + cargo + "\"," +
-                    "\"descr\":\"" + descr + "\"," +
-                    "}");
+            return RedirectToAction("Clientes", "Listagem");
+        }
 
-                sql = string.Format(@"select addCliente('{0}')", jcliente);
-                _ = pgsqlcon.ExecuteCmdAsync(sql);
+        private void AddInfoContato(bool clienteEditado, string id_cliente, string enderecos, string websites, string contatos)
+        {
+            List<List<string>> info = new();
+            JObject json;
+            Regex regex = new("[\"']");
+            string sql;
+
+            // Endereços
+            if (string.IsNullOrEmpty(enderecos))
+                info.Add(new() { string.Empty, string.Empty });
+            else
+            {
+                enderecos = regex.Replace(enderecos, "´");
+                info.Add(enderecos.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToList());
+            }
+            
+            // Websites
+            if (string.IsNullOrEmpty(websites))
+                info.Add(new() { string.Empty, string.Empty });
+            else
+            {
+                websites = regex.Replace(websites, "´");
+                info.Add(websites.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToList());
+            }
 
 
-                List<List<string>> info = new();
-                info.Add(enderecos.Split("\r\n").ToList());
-                info.Add(websites.Split("\r\n").ToList());
+            if (info[0].Count > info[1].Count)
+                info[1].Add(string.Empty);
+            else if (info[1].Count > info[0].Count)
+                info[0].Add(string.Empty);
 
-                if (info[0].Count > info[1].Count)
-                    info[1].Add(string.Empty);
-                else if (info[1].Count > info[0].Count)
-                    info[0].Add(string.Empty);
 
+            if (clienteEditado)
+            {
                 sql = string.Format(@"select delClienteInfo({0})", id_cliente);
                 _ = pgsqlcon.ExecuteCmdAsync(sql);
 
-                for (int x = 0; x < info[0].Count; x++)
-                {
-                    jinfo = JObject.Parse("{" +
-                        "\"fk_cliente\":" + id_cliente + "," +
-                        "\"endereco\":\"" + info[0][x] + "\"," +
-                        "\"website\":\"" + info[1][x] + "\"," +
-                        "}");
-
-                    sql = string.Format(@"select addClienteInfo('{0}')", jinfo);
-                    _ = pgsqlcon.ExecuteCmdAsync(sql);
-                }
-
                 sql = string.Format(@"select delClienteContato({0})", id_cliente);
                 _ = pgsqlcon.ExecuteCmdAsync(sql);
+            }
 
+            for (int x = 0; x < info[0].Count; x++)
+            {
+                json = JObject.Parse("{" +
+                    "\"fk_cliente\":" + id_cliente + "," +
+                    "\"endereco\":\"" + info[0][x] + "\"," +
+                    "\"website\":\"" + info[1][x] + "\"," +
+                    "}");
+
+                sql = string.Format(@"select addClienteInfo('{0}')", json);
+                _ = pgsqlcon.ExecuteCmdAsync(sql);
+            }
+
+            if (!string.IsNullOrWhiteSpace(contatos))
+            {
+                contatos = regex.Replace(contatos, "´");
                 foreach (string contato in contatos.Split("\r\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray())
                 {
                     int tipo_contato = contato.Contains("@") ? 1 : 0;
@@ -228,22 +247,27 @@ namespace IoniCRM.Controllers
                      * 1 - E-mail
                      */
 
-                    jcontato = JObject.Parse("{" +
+                    json = JObject.Parse("{" +
                         "\"fk_cliente\":" + id_cliente + "," +
                         "\"tipo\":" + tipo_contato + "," +
                         "\"contato\":\"" + contato + "\"," +
                         "}");
 
-                    sql = string.Format(@"select addClienteContato('{0}')", jcontato);
+                    sql = string.Format(@"select addClienteContato('{0}')", json);
                     _ = pgsqlcon.ExecuteCmdAsync(sql);
                 }
-
-                hist_mensagem = string.Format(@"Cliente <{0}>, funcionario de <{1}>, atualizado, por <{2}>.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
             }
+            else
+            {
+                json = JObject.Parse("{" +
+                        "\"fk_cliente\":" + id_cliente + "," +
+                        "\"tipo\":0," +
+                        "\"contato\":\" \"," +
+                        "}");
 
-            _ = new AddHistorico(HttpContext.Session, hist_mensagem);
-
-            return RedirectToAction("Clientes", "Listagem");
+                sql = string.Format(@"select addClienteContato('{0}')", json);
+                _ = pgsqlcon.ExecuteCmdAsync(sql);
+            }
         }
 
         public IActionResult DelCliente(string id, string nome, string emp)
@@ -251,8 +275,9 @@ namespace IoniCRM.Controllers
             string sql = string.Format(@"select delCliente({0})", id);
             _ = pgsqlcon.ExecuteCmdAsync(sql);
 
-            // Atualiza o histórico
-            string mensagem = string.Format("Cliente <{0}>, funcionario de <{1}>, deletado, por {2}.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
+            string mensagem = string.IsNullOrEmpty(emp) ?
+                string.Format("Cliente <{0}> deletado, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome):
+                string.Format("Cliente <{0}>, funcionario de <{1}>, deletado, por <{2}>.", nome, emp, Session.GetUsuario(HttpContext.Session).nome);
             _ = new AddHistorico(HttpContext.Session, mensagem);
 
             return RedirectToAction("Clientes", "Listagem");
@@ -374,11 +399,11 @@ namespace IoniCRM.Controllers
             return cliente;
         }
 
+        /* */
         public class MenuRecursion
         {
             List<Cliente> clientes;
 
-            /*Precisa melhorar isso depois*/
             public string OpenItem(string nome, int id, string tema)
             {
                 return "<li class=\"nav-item\">" +
@@ -466,5 +491,6 @@ namespace IoniCRM.Controllers
                 return builder.ToString();
             }
         }
+        /* */
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace IoniCRM.Controllers.Objects
 {
@@ -14,8 +11,7 @@ namespace IoniCRM.Controllers.Objects
 
         public List<Deal> deals;
 
-        // remover depois?
-        private Usuario usuario;
+        //private Usuario usuario;
 
         public Pipeline() 
         {

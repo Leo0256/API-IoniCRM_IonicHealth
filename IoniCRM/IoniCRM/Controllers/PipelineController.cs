@@ -2,17 +2,12 @@ using IoniCRM.Models;
 using IoniCRM.Controllers.Objects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using IoniCRM.Controllers;
-using System.Globalization;
-using System.Drawing;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace IoniCRM.Controllers
 {
@@ -137,11 +132,9 @@ namespace IoniCRM.Controllers
             if (Session.Empty(HttpContext.Session))
                 return RedirectToAction("Login", "Login");
 
-            // Deleta a deal
             string sql = string.Format(@"select delDeal({0})", id);
             _ = pgsqlcon.ExecuteCmdAsync(sql);
 
-            // Atualiza o histórico
             string mensagem = string.Format("Deal <{0}> da Pipeline <{1}> deletada, por {2}.", nome, pipe, Session.GetUsuario(HttpContext.Session).nome);
             _ = new AddHistorico(HttpContext.Session, mensagem);
 
@@ -167,8 +160,7 @@ namespace IoniCRM.Controllers
             string sql = string.Format(@"select delPipeline({0})", id);
             _ = pgsqlcon.ExecuteCmdAsync(sql);
 
-            // Atualiza o histórico
-            string mensagem = string.Format("Pipeline '{0}' deletada, por {1}.", pipe, Session.GetUsuario(HttpContext.Session).nome);
+            string mensagem = string.Format("Pipeline <{0}> deletada, por <{1}>.", pipe, Session.GetUsuario(HttpContext.Session).nome);
             _ = new AddHistorico(HttpContext.Session, mensagem);
             
             return RedirectToAction("Pipeline", "Pipeline");
@@ -177,6 +169,11 @@ namespace IoniCRM.Controllers
         public IActionResult UpsertPipe(string id_pipe, string nomeOriginal, string nome, string prioridade, string descr, string status)
         {
             string sql;
+            Regex regex = new("[\"']");
+
+            nome = regex.Replace(nome, "´");
+            nomeOriginal = regex.Replace(nomeOriginal, "´");
+            descr = regex.Replace(descr, "´");
 
             JObject pipe = JObject.Parse("{" +
                     "\"nome\":\"" + nome + "\"," +
@@ -193,12 +190,11 @@ namespace IoniCRM.Controllers
             sql = string.Format(@"select upsertPipeline('{0}')", pipe);
             _ = pgsqlcon.ExecuteCmdAsync(sql);
 
-            // Atualiza o histórico
             string mensagem;
             if (bool.Parse(status))
-                mensagem = string.Format("Pipeline <{0}> atualizada, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome);
+                mensagem = string.Format("Pipeline <{0}> atualizada, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome);
             else
-                mensagem = string.Format("Pipeline <{0}> adicionada, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome);
+                mensagem = string.Format("Pipeline <{0}> adicionada, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome);
 
             _ = new AddHistorico(HttpContext.Session, mensagem);
             

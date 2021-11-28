@@ -2,16 +2,12 @@ using IoniCRM.Models;
 using IoniCRM.Controllers.Objects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using IoniCRM.Controllers;
-using System.Globalization;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace IoniCRM.Controllers
 {
@@ -104,7 +100,21 @@ namespace IoniCRM.Controllers
             DateTime? abertura = DiaHora(aberturaDia, aberturaHora);
             DateTime? fechamento = DiaHora(fechamentoDia, fechamentoHora);
 
+            if (string.IsNullOrEmpty(nome_cli) || string.Equals(nome_cli, "Selecionar"))
+            {
+                sql = "select razao_social from Cliente limit 1";
+                DataRow[] rows = pgsqlcon.ExecuteCmdAsync(sql).Result.Select();
+                nome_cli = string.IsNullOrEmpty(rows[0]["razao_social"].ToString()) ? null : rows[0]["razao_social"].ToString();
+            }
+
             string mensagem;
+            Regex regex = new("[\"\']");
+
+            nome = regex.Replace(nome, "´");
+            if (string.IsNullOrEmpty(descr)) 
+                descr = string.Empty;
+            descr = regex.Replace(descr, "´");
+
             if (int.Parse(id_deal) == 0)
             {
                 dados = "{" +
@@ -160,7 +170,7 @@ namespace IoniCRM.Controllers
                 json = JObject.Parse(dados);
 
                 sql = string.Format(@"select updateDeal('{0}')", json);
-                mensagem = string.Format("Deal <{0}> da Pipeline <{1}> atualizada, por {2}.", nome, pipeline.nome, Session.GetUsuario(HttpContext.Session).nome);
+                mensagem = string.Format("Deal <{0}> da Pipeline <{1}> atualizada, por <{2}>.", nome, pipeline.nome, Session.GetUsuario(HttpContext.Session).nome);
             }
 
             _ = pgsqlcon.ExecuteCmdAsync(sql);

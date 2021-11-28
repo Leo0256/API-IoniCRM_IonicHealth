@@ -26,7 +26,6 @@ D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.TagHelpers.o
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.RazorCoreGenerate.cache
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Home\Home.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Listagem\Clientes.cshtml.g.cs
-D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Login.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -92,4 +91,5 @@ D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Pipeline
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Home\Perfil.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Listagem\AddCliente.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Dashboard\Dashboard.cshtml.g.cs
+D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\Razor\Views\Shared\Login.cshtml.g.cs
 D:\API-IoniCRM_IonicHealth\IoniCRM\IoniCRM\obj\Debug\net5.0\IoniCRM.csprojAssemblyReference.cache

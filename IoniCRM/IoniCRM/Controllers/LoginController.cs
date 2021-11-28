@@ -2,29 +2,18 @@
 using IoniCRM.Controllers.Objects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-using System.Web;
-using Newtonsoft.Json;
 
 namespace IoniCRM.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly ILogger<LoginController> _logger;
-        private readonly string view = "/Views/Login.cshtml";
+        //private readonly string view = "/Views/Login.cshtml";
 
         private PostgreSQLConnection pgsqlcon;
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController()
         {
-            _logger = logger;
             pgsqlcon = new();
         }
 
@@ -33,7 +22,10 @@ namespace IoniCRM.Controllers
             if (!Session.Empty(HttpContext.Session))
                 ViewBag.Usuario = Session.GetUsuario(HttpContext.Session);
 
-            return View(view);
+            ViewData["emailNotInformed"] = !string.IsNullOrEmpty(TempData["email"] as string) ? "!! Digite um e-mail." : null;
+            ViewData["passNotInformed"] = !string.IsNullOrEmpty(TempData["pass"] as string) ? "!! Digite uma senha." : null;
+            ViewData["emailOrPassWrong"] = !string.IsNullOrEmpty(TempData["emailOrPassWrong"] as string) ? "!! E-mail ou Senha incorretos." : null;
+            return View();
         }
         
         public IActionResult MakeLogin(string email, string senha)
@@ -41,8 +33,8 @@ namespace IoniCRM.Controllers
             ViewData["email"] = email;
             ViewData["senha"] = senha;
 
-            ViewData["emailNotInformed"] = string.IsNullOrEmpty(email) ? "!! Digite um e-mail." : null;
-            ViewData["passNotInformed"] = string.IsNullOrEmpty(senha) ? "!! Digite uma senha." : null;
+            TempData["email"] = string.IsNullOrEmpty(email) ? "email vazio" : null;
+            TempData["pass"] = string.IsNullOrEmpty(senha) ? "senha vazia" : null;
 
             if (
                 !string.IsNullOrEmpty(email) &&
@@ -78,10 +70,10 @@ namespace IoniCRM.Controllers
                     return RedirectToAction("Home", "Home");
                 }
                 else
-                    ViewData["emailOrPassWrong"] = "!! E-mail ou Senha incorretos.";
+                    TempData["emailOrPassWrong"] = "E-mail ou Senha incorretos";
             }
 
-            return View(view);
+            return RedirectToAction("Login", "Login");
         }
 
         public static int GetHashCode(string str)

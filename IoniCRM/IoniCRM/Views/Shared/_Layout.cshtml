@@ -25,7 +25,7 @@
                 @{
                     switch (Session.GetPermission(this.Context.Session))
                     {
-                        case 2:
+                        case >= 1:
                             <a class="navbar-brand border-0" asp-area="" asp-controller="Home" asp-action="Home">
                                 <div>
                                     <img src="~/images/logo-1.png" class="image-full image-full-navbar mb-0" />

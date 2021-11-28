@@ -106,23 +106,66 @@
 
                         <div class="form-group col-md-12">
                             <h2 class="my-1">
-                                <label for="clienteOptions" class="text-dark m-0">Cliente Envolvido</label>
+                                <label for="clienteSelect" class="text-dark m-0">Cliente Envolvido</label>
                             </h2>
-                            
-                            <select id="clienteOptions" class="form-control" name="nome_cli">
-                                @foreach(var cliente in ViewBag.Clientes as List<IoniCRM.Controllers.Objects.Cliente>)
+
+                            @{
+                                string cli_nome = "Selecionar";
+
+                                if (ViewBag.Deal.cliente.GetPk_Cliente() != 0)
                                 {
-                                    if(cliente.GetPk_Cliente() == ViewBag.Deal.cliente.GetPk_Cliente())
-                                    {
-                                        <option selected>@cliente.nome</option>
-                                    }
-                                    else
-                                    {
-                                        <option>@cliente.nome</option>
-                                    }
+                                    var cliente = ((List<IoniCRM.Controllers.Objects.Cliente>)ViewBag.Clientes).Find(i => i.GetPk_Cliente() == ViewBag.Deal.cliente.GetPk_Cliente());
+                                    cli_nome = cliente.nome;
                                 }
-                            </select>
+                            }
+
+                            <input type="hidden" id="dropdown_hidden_value" name="nome_cli" value="@cli_nome" />
+
+                            <div class="w-100" id="clienteSelect">
+
+                                <button class="btn btn-light text-left dropdown-toggle w-100" type="button" id="dropdown_select" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    @cli_nome
+                                </button>
+
+                                <div id="menu" class="dropdown-menu sidebar-content px-1" aria-labelledby="dropdown_select" style="background-color:#ddd">
+
+                                    <form class="px-4 py-2">
+                                        <input type="search" class="form-control" id="search_word" placeholder="..." autofocus="autofocus">
+                                    </form>
+
+                                    <div id="menuItems"></div>
+                                    <div id="empty" class="dropdown-header">Nenhum resultado encontrado</div>
+
+                                </div>
+
+
+
+                                <script>
+                                    window.addEventListener('input', function () {
+                                        filter(search.value.trim().toLowerCase())
+                                    })
+
+                                    var array = [];
+
+                                    @foreach (var cliente in ViewBag.Clientes as List<IoniCRM.Controllers.Objects.Cliente>)
+                                    {
+                                        @:array.push("@cliente.nome");
+                                    }
+
+                                    window.onload = function () {
+                                        buildDropDown(array);
+                                    };
+
+
+
+                                </script>
+
+                            </div>
+
                         </div>
+
+                        
 
                     </div>
 

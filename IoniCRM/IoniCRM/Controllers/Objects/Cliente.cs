@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IoniCRM.Controllers.Objects
 {
-    public class Cliente : EqualityComparer<Cliente>
+    public class Cliente
     {
         private int pk_cliente;
         private string emp;
@@ -70,21 +67,9 @@ namespace IoniCRM.Controllers.Objects
         }
 
         public int GetPk_Cliente() => pk_cliente;
-
         public string GetCpfCnpj() => cpf_cnpj;
-
         public string GetEmp() => emp;
-
-        public void SetCRM(string crm) => this.crm = crm;
         public string GetCRM() => crm;
-
         public void AddFuncionario(Cliente cliente) => funcionarios.Add(cliente);
-
-        public override bool Equals(Cliente x, Cliente y) =>
-            x.pk_cliente == y.pk_cliente;
-
-        public override int GetHashCode([DisallowNull] Cliente obj) =>
-            throw new NotImplementedException();
-        
     }
 }

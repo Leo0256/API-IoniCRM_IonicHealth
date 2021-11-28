@@ -18,7 +18,6 @@ a {
 .borda-texto{
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgb(88,89,91);
-    /* font-size: 3em; */
     color: #fff;
     font-weight: 700;
 }
@@ -117,17 +116,6 @@ body::-webkit-scrollbar-thumb {
     border: none;
     border-radius: 0.25rem 0.25rem;
 }
-
-
-
-
-/*
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-*/
 /*Backgrounds*/
 
 
@@ -226,8 +214,6 @@ body::-webkit-scrollbar-thumb {
     width: 45px;
 }
 
-
-/*teste*/
 .chart {
     max-width: 30rem;
     max-height: 30rem;
@@ -259,10 +245,6 @@ body::-webkit-scrollbar-thumb {
 .mw-auto-content {
     max-width: max-content;
 }
-
-/*
-    Precisa resolver o bug no height quando tem muitos elementos na lista
-*/
 
 .sidebar {
     margin-left: 0%;
@@ -343,12 +325,6 @@ body::-webkit-scrollbar-thumb {
     .title {
         padding-left: 0.5rem;
     }
-
-    /*
-    .sidebar {
-        position: initial;
-    }
-    */
 
 }
 

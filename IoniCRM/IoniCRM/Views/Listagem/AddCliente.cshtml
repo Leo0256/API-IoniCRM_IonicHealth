@@ -24,8 +24,14 @@
                                 <label for="nomeTextBox" class="text-dark m-0">Nome</label>
                             </h2>
 
-                            <input id="nomeTextBox" class="form-control rounded m-0" type="text" name="nome" placeholder="Informe um nome" 
-                                   value="@ViewBag.Cliente.nome" />
+                            <input id="nomeTextBox" class="form-control rounded m-0" type="text" name="nome" placeholder="Informe um nome"
+                                   value="@ViewBag.Cliente.nome" aria-describedby="nomeHelp" />
+                            @{
+                                if (ViewData["nomeNotInformed"] != null)
+                                {
+                                    <small id="nomeHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["nomeNotInformed"]</small>
+                                }
+                            }
 
                         </div>
 
@@ -36,8 +42,14 @@
                                 <label for="razaoSocialTextBox" class="text-dark m-0">Razão Social / Nome Completo</label>
                             </h2>
 
-                            <input id="razaoSocialTextBox" class="form-control rounded m-0" type="text" name="razao_social" placeholder="Informe o Nome Completo" 
-                                   value="@ViewBag.Cliente.razaoSocial" />
+                            <input id="razaoSocialTextBox" class="form-control rounded m-0" type="text" name="razao_social" placeholder="Informe o Nome Completo"
+                                   value="@ViewBag.Cliente.razaoSocial" aria-describedby="razaoHelp"/>
+                            @{
+                                if (ViewData["razaoNotInformed"] != null)
+                                {
+                                    <small id="razaoHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["razaoNotInformed"]</small>
+                                }
+                            }
 
                         </div>
 
@@ -114,8 +126,14 @@
                             <h2 class="my-1">
                                 <label for="cpfCnpjTextBox" class="text-dark m-0">CPF/CNPJ</label>
                             </h2>
-                            <input id="cpfCnpjTextBox" class="form-control rounded" type="text" name="cpf_cnpj" placeholder="Informe o CPF / CNPJ" 
-                                   value="@ViewBag.Cliente.GetCpfCnpj()" />
+                            <input id="cpfCnpjTextBox" class="form-control rounded" type="text" name="cpf_cnpj" placeholder="Informe o CPF / CNPJ"
+                                   value="@ViewBag.Cliente.GetCpfCnpj()" aria-describedby="cpfcnpjHelp" />
+                            @{
+                                if (ViewData["cpfcnpjNotInformed"] != null)
+                                {
+                                    <small id="cpfcnpjHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["cpfcnpjNotInformed"]</small>
+                                }
+                            }
 
                         </div>
 

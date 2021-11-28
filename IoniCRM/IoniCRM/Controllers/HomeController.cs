@@ -1,15 +1,13 @@
 ﻿using IoniCRM.Models;
 using IoniCRM.Controllers.Objects;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace IoniCRM.Controllers
 {
@@ -94,6 +92,13 @@ namespace IoniCRM.Controllers
                 ViewBag.Perfil = GetUsuarios(id).First();
 
             ViewBag.TodosUsuarios = GetUsuarios("null");
+
+            ViewData["emailNotInformed"] = string.IsNullOrEmpty(TempData["emailNotInformed"] as string) ?
+                null : "!! Campo vazio";
+
+            ViewData["passNotInformed"] = string.IsNullOrEmpty(TempData["passNotInformed"] as string) ?
+                null : "!! Campo vazio";
+
             return View();
         }
 
@@ -128,35 +133,47 @@ namespace IoniCRM.Controllers
             )
         {
             string sql, dados;
+            Regex regex = new("[\"']");
 
-            if (string.Equals(emailAntigo, email))
+            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(senha))
             {
-                sql = string.Format(@"select updateEmailUsuario('{0}','{1}')", emailAntigo, email);
+
+                nome = regex.Replace(nome, "´");
+
+                if (string.Equals(emailAntigo, email))
+                {
+                    sql = string.Format(@"select updateEmailUsuario('{0}','{1}')", emailAntigo, email);
+                    _ = pgsqlcon.ExecuteCmdAsync(sql);
+                }
+
+                dados = "{" +
+                    "\"nivel\":" + Array.IndexOf(this.nivel, nivel) + "," +
+                    "\"img\":null," + //
+                    "\"nome\":\"" + nome + "\"," +
+                    "\"email\":\"" + email + "\"," + 
+                    "\"hash_senha\":\"" + LoginController.GetHashCode(senha) + "\"," +
+                    "\"cargo\":\"" + cargo + "\"" +
+                    "}";
+
+                JObject usuario = JObject.Parse(dados);
+
+                sql = string.Format(@"select addUsuario('{0}')", usuario);
                 _ = pgsqlcon.ExecuteCmdAsync(sql);
+
+                string mensagem = string.Equals(pk_usuario, "0") ?
+                    string.Format(@"Novo Usuario <{0}> adicionado, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome) :
+                    string.Format(@"Usuario <{0}> editado, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome);
+
+                _ = new AddHistorico(HttpContext.Session, mensagem);
             }
-
-            dados = "{" +
-                "\"nivel\":" + Array.IndexOf(this.nivel, nivel) + "," +
-                "\"img\":null," + //<-- mudar depois
-                "\"nome\":\"" + nome + "\"," +
-                "\"email\":\"" + email + "\",";
-
-            if (!string.IsNullOrEmpty(senha))
-                dados += "\"hash_senha\":\"" + LoginController.GetHashCode(senha) + "\",";
-
-            dados += "\"cargo\":\"" + cargo + "\"" +
-                "}";
-
-            JObject usuario = JObject.Parse(dados);
-
-            sql = string.Format(@"select addUsuario('{0}')", usuario);
-            _ = pgsqlcon.ExecuteCmdAsync(sql);
-
-            string mensagem = string.Equals(pk_usuario, "0") ?
-                string.Format(@"Novo Usuario <{0}> adicionado, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome) :
-                string.Format(@"Usuario <{0}> editado, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome);
+            else
+            {
+                TempData["emailNotInformed"] = string.IsNullOrEmpty(email) ? "campo vazio" : null;
+                TempData["passNotInformed"] = string.IsNullOrEmpty(senha) ? "campo vazio" : null;
+                return RedirectToAction("Perfil", "Home", new { id = pk_usuario });
+            }
             
-            _ = new AddHistorico(HttpContext.Session, mensagem);
+
             return RedirectToAction("Home", "Home");
         }
 
@@ -164,7 +181,7 @@ namespace IoniCRM.Controllers
         {
             _ = pgsqlcon.ExecuteCmdAsync(string.Format(@"select delUsuario({0})", id));
 
-            string mensagem = string.Format(@"Usuario <{0}> deletado, por {1}.", nome, Session.GetUsuario(HttpContext.Session).nome);
+            string mensagem = string.Format(@"Usuario <{0}> deletado, por <{1}>.", nome, Session.GetUsuario(HttpContext.Session).nome);
             _ = new AddHistorico(HttpContext.Session, mensagem);
             return RedirectToAction("Perfil", "Home");
         }

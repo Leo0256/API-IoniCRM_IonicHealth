@@ -75,8 +75,14 @@
                                 <label for="emailTextBox" class="text-dark m-0">E-mail</label>
                             </h2>
                             <input type="hidden" name="emailAntigo" value="@ViewBag.Perfil.GetEmail()" />
-                            <input id="emailTextBox" class="h3 form-control rounded m-0" type="text" name="email" placeholder="Editar E-mail" value="@ViewBag.Perfil.GetEmail()" />
-
+                            <input id="emailTextBox" class="h3 form-control rounded m-0" type="text" name="email" placeholder="Editar E-mail" 
+                                   value="@ViewBag.Perfil.GetEmail()" aria-describedby="emailHelp"/>
+                            @{
+                                if (ViewData["emailNotInformed"] != null)
+                                {
+                                    <small id="emailHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["emailNotInformed"]</small>
+                                }
+                            }
                         </div>
 
                         <div class="form-group col-md-6">
@@ -85,8 +91,14 @@
                                 <label for="senhaTextBox" class="text-dark m-0">Senha</label>
                             </h2>
 
-                            <input id="senhaTextBox" class="h3 form-control rounded m-0" type="password" name="senha" placeholder="Editar Senha" />
-
+                            <input id="senhaTextBox" class="h3 form-control rounded m-0" type="password" name="senha" placeholder="Editar Senha" 
+                                   aria-describedby="passHelp"/>
+                            @{
+                                if (ViewData["passNotInformed"] != null)
+                                {
+                                    <small id="passHelp" class="form-text text-danger font-weight-bold w-auto ml-2">@ViewData["passNotInformed"]</small>
+                                }
+                            }
                         </div>
                     </div>
 
