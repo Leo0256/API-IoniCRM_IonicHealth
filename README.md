@@ -35,7 +35,7 @@ Entregar as últimas funcionalidades restantes (dashboards, visualizar/editar pe
 </p>
 
 
-## :movie_camera: Gif das Outras Funcionalidades Entregues //falta colocar os arquivos e os gifs
+## :movie_camera: Gif das Outras Funcionalidades Entregues
 <p align="center">
     <img src="https://github.com/Leo0256/API-IoniCRM_IonicHealth/blob/Sprint_4/Gifs/Desktop/Login.gif">
     <br>
